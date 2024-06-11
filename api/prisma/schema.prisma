@@ -184,7 +184,7 @@ model users {
 model linked_accounts {
   id           String @id @default(uuid())
   owner_id     String
-  user         users @relation(fields: [owner_id], references: [id])
+  user         users  @relation(fields: [owner_id], references: [id])
 
   provider     Provider // Discord, Steam, Epic Games, Xbox, Play Station, etc
   version      String @default("v1") // The version of the provider's API we're using
@@ -194,7 +194,7 @@ model linked_accounts {
   username     String // Ex: Discord username
   token        String // Ex: Discord auth token
 
-  metadata     Json @default("{}") // Any extra data the provider gives us, that we need to save
+  metadata     Json     @default("{}") // Any extra data the provider gives us, that we need to save
 
   created_at   DateTime @default(now())
   last_used_at DateTime @default(now())
@@ -202,9 +202,9 @@ model linked_accounts {
 }
 
 model passwords {
-  id           String @id @default(uuid())
+  id           String   @id @default(uuid())
   owner_id     String
-  user         users @relation(fields: [owner_id], references: [id])
+  user         users    @relation(fields: [owner_id], references: [id])
 
   value        String
   created_at   DateTime @default(now())
@@ -213,18 +213,18 @@ model passwords {
 model preferences {
   id           String @id @default(uuid())
   owner_id     String @unique
-  user         users @relation(fields: [owner_id], references: [id])
+  user         users  @relation(fields: [owner_id], references: [id])
 
   language     String @default("en")
 }
 
 model status {
-  id           String @id @default(uuid())
-  owner_id     String @unique
-  user         users @relation(fields: [owner_id], references: [id])
+  id           String   @id @default(uuid())
+  owner_id     String   @unique
+  user         users    @relation(fields: [owner_id], references: [id])
 
-  online       Boolean @default(false)
-  time_active  Int     @default(0) // In seconds
+  online       Boolean  @default(true)
+  time_active  Int      @default(0) // In seconds
   last_seen    DateTime @default(now())
 }
 

@@ -12,4 +12,8 @@ export async function initDatabase() {
     console.log("[PASS] Database ready")
 }
 
+export async function closeDatabase() {
+    await prisma.$disconnect()
+}
+
 export default prisma

@@ -8,7 +8,8 @@ import { routes } from './src/functions'
 
 // Application
 import { version } from './src/version'
-import { initDatabase } from './src/lib/database';
+import { initDatabase, closeDatabase } from './src/lib/database';
+import { initRedis, closeRedis, redisStore } from '@/lib/redis';
 
 // Middleware
 
@@ -28,21 +29,27 @@ const app = express({
   publicFolderPath: path.join(rootDirectory, 'public'),
   routes: routes as any[],
 
-  // Memory store:
-  // store: store as any,
+  store: redisStore as any,
 })
 
-// Node.js error reporting
-app.on('error', (error: any) => {
-  console.error('Crashed', error)
-})
+async function gracefulShutdown(){
+  console.log('Shutting down')
+  await Promise.all([
+    closeDatabase(),
+    closeRedis(),
+  ])
+  process.exit(0)
+}
+
 process.on('uncaughtException', async function (err: any) {
   console.log('Crashed', err)
-  process.exit(1)
-});
+  await gracefulShutdown()
+  process.exit(0)
+})
 
 Promise.all([
   initDatabase(),
+  initRedis(),
 ]).then(() => {
   app.listen(API_PORT, () => console.log(`
 API Startup Complete
