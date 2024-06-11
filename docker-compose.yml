@@ -50,6 +50,8 @@ services:
     restart: unless-stopped
     networks:
       - default
+    volumes:
+      - redis-data:/data
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -73,6 +75,7 @@ services:
 
 volumes:
   postgres-data:
+  redis-data:
   pgadmin-data:
  
 networks:

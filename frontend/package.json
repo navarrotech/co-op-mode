@@ -37,6 +37,7 @@
     "redux": "^5.0.1",
     "sass": "^1.77.4",
     "storybook": "^8.1.6",
+    "vite-plugin-commonjs": "^0.10.1",
     "yup": "^1.4.0"
   },
   "devDependencies": {

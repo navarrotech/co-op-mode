@@ -23,6 +23,6 @@
          ],
        }
     },
-    "include": ["src/**/*.ts", "index.ts"],
+    "include": ["src/**/*.ts", "index.ts", "src/lib/protobuf/schema_pb.js"],
     "exclude": ["node_modules", "**/*.spec.ts"]
  }

@@ -3,7 +3,6 @@
 // Typescript
 import type { users } from "@prisma/client"
 import type { Route } from "navarrotech-express"
-import type { ApiResponse } from "@/types"
 
 // Preferences
 import { languageValidator } from "@/lib/validators"
@@ -87,11 +86,11 @@ const route: Route = {
             })
 
             if (existingUser) {
-                response.status(401).send({
-                    code: 401,
-                    message: "An account with this email already exists.",
-                    success: false
-                } as ApiResponse)
+                // response.status(401).send({
+                //     code: 401,
+                //     message: "An account with this email already exists.",
+                //     success: false
+                // } as ApiResponse)
                 return
             }
 
@@ -148,28 +147,28 @@ const route: Route = {
             ])
 
         } catch (error) {
-            response.status(500).send({
-                code: 500,
-                message: "An error occurred while creating your account. Please try again.",
-                success: false
-            } as ApiResponse)
+            // response.status(500).send({
+            //     code: 500,
+            //     message: "An error occurred while creating your account. Please try again.",
+            //     success: false
+            // } as ApiResponse)
             return
         }
         
         request.session.user = user
         request.session.authorized = true
 
-        response
-            .status(200)
-            .send({
-                code: 200,
-                message: "Successfully created account.",
-                success: true,
-                data: {
-                    user,
-                    authorized: true
-                }
-            } as ApiResponse)
+        // response
+        //     .status(200)
+        //     .send({
+        //         code: 200,
+        //         message: "Successfully created account.",
+        //         success: true,
+        //         data: {
+        //             user,
+        //             authorized: true
+        //         }
+        //     } as ApiResponse)
 
         await request.session.saveAsync()
     }

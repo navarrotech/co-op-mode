@@ -1,8 +1,7 @@
 // Copyright © 2024 Navarrotech
 
 // Typescript
-import type { Route } from "navarrotech-express"
-import type { ApiResponse } from "@/types"
+import type { Route } from "@/types"
 
 // Utility
 import requireAuth from "@/middleware/requireAuth"
@@ -50,17 +49,19 @@ const route: Route = {
             })
         ])
 
-        response
-            .status(200)
-            .send({
-                code: 200,
-                message: "Successfully synced user data.",
-                success: true,
-                data: {
-                    user,
-                    conversations,
-                }
-            } as ApiResponse)
+        // apiresponse
+        // response
+        //     .status(200)
+        //     .sendProto("users", )
+        //     .send({
+        //         code: 200,
+        //         message: "Successfully synced user data.",
+        //         success: true,
+        //         data: {
+        //             user,
+        //             conversations,
+        //         }
+        //     })
 
         await request.session.saveAsync()
     }

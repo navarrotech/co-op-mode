@@ -9,6 +9,7 @@ import path from 'path'
 import react from '@vitejs/plugin-react-swc'
 import tsconfigPaths from 'vite-tsconfig-paths' // https://www.npmjs.com/package/vite-tsconfig-paths
 import svgr from "vite-plugin-svgr"; // https://www.npmjs.com/package/vite-plugin-svgr
+import commonjs from "vite-plugin-commonjs"; // https://www.npmjs.com/package/vite-plugin-commonjs
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -19,6 +20,8 @@ export default defineConfig({
     react(),
     // Svgs:
     svgr(),
+    // Commonjs:
+    commonjs(),
   ],
   css: {
     preprocessorOptions: {

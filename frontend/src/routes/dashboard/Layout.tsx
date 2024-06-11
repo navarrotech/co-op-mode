@@ -8,7 +8,7 @@ export default function DashboardLayout() {
         <Button
             onClick={() => {
                 API.post('/test').then(res => {
-                    console.log(res)
+                    console.log({res: res.data})
                 })
             }}
         >Click to test</Button>

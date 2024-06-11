@@ -8,21 +8,26 @@ import { routes } from './src/functions'
 
 // Application
 import { version } from './src/version'
-import { initDatabase, closeDatabase } from './src/lib/database';
-import { initRedis, closeRedis, redisStore } from '@/lib/redis';
+import { initDatabase, closeDatabase } from './src/lib/database'
+import { initRedis, closeRedis, redisStore } from '@/lib/redis'
+import { buildAdapters } from '@/lib/protobuf/adapters'
 
 // Middleware
+import protobufMiddleware from '@/middleware/parseProtobuf'
 
 // Environment Variables
 import { API_PORT, NODE_ENV } from "src/env"
 
 const rootDirectory = process.cwd();
 
+console.log("Starting up")
+
 // @ts-ignore
 const app = express({
   // Application:
   cors: NODE_ENV === "development",
   customMiddleware: [
+    protobufMiddleware,
   ],
 
   // Routes
@@ -50,6 +55,7 @@ process.on('uncaughtException', async function (err: any) {
 Promise.all([
   initDatabase(),
   initRedis(),
+  buildAdapters(),
 ]).then(() => {
   app.listen(API_PORT, () => console.log(`
 API Startup Complete

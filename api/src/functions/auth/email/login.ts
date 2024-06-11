@@ -2,7 +2,6 @@
 
 // Typescript
 import type { Route } from "navarrotech-express"
-import type { ApiResponse } from "@/types"
 
 // Utility
 import * as yup from 'yup'
@@ -55,29 +54,29 @@ const route: Route = {
 
         const latestPassword = user.passwords.sort((a, b) => a.created_at > b.created_at ? -1 : 1)[0]
         if (!user || !latestPassword) {
-            response.status(401).send({
-                code: 401,
-                message:"Invalid email/password combination",
-                success: false,
-                data: {
-                    authorized: false,
-                    user: null
-                }
-            } as ApiResponse)
+            // response.status(401).send({
+            //     code: 401,
+            //     message:"Invalid email/password combination",
+            //     success: false,
+            //     data: {
+            //         authorized: false,
+            //         user: null
+            //     }
+            // } as ApiResponse)
             return
         }
 
         const isValid = passwordHash.verify(password, latestPassword.value)
         if (!isValid){
-            response.status(401).send({
-                code: 401,
-                message:"Invalid email/password combination",
-                success: false,
-                data: {
-                    authorized: false,
-                    user: null
-                }
-            } as ApiResponse)
+            // response.status(401).send({
+            //     code: 401,
+            //     message:"Invalid email/password combination",
+            //     success: false,
+            //     data: {
+            //         authorized: false,
+            //         user: null
+            //     }
+            // } as ApiResponse)
             return
         }
 
@@ -85,17 +84,17 @@ const route: Route = {
         request.session.user = user
         request.session.authorized = true
 
-        response
-            .status(200)
-            .send({
-                code: 200,
-                message: "Successfully logged in.",
-                success: true,
-                data: {
-                    authorized: true,
-                    user,
-                }
-            } as ApiResponse)
+        // response
+        //     .status(200)
+        //     .send({
+        //         code: 200,
+        //         message: "Successfully logged in.",
+        //         success: true,
+        //         data: {
+        //             authorized: true,
+        //             user,
+        //         }
+        //     } as ApiResponse)
 
         await request.session.saveAsync()
     }
