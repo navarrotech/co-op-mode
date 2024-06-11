@@ -1,10 +1,35 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+// Copyright © 2024 Navarrotech
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+// React.js
+import { createRoot } from 'react-dom/client'
+
+// Application
+import Initialization from './store/Initialization'
+import ApplicationRouter from './routes/Router'
+
+// Firebase
+import './firebase'
+
+// Keycloak
+import { ReactKeycloakProvider } from '@react-keycloak/web'
+import keycloak from "./modules/KeyCloak"
+
+// Redux
+import { Provider as ReduxProvider } from 'react-redux'
+import store from './store/store'
+
+// Core CSS packages
+import './index.sass'
+
+const container = document.getElementById('root') as HTMLElement
+const root = createRoot(container)
+
+root.render(
+    <ReduxProvider store={store}>
+        <ReactKeycloakProvider authClient={keycloak}>
+            <Initialization>
+                <ApplicationRouter />
+            </Initialization>
+        </ReactKeycloakProvider>
+    </ReduxProvider>
 )

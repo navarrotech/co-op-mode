@@ -1,0 +1,8 @@
+You have to use the dev container to create the latest migration.
+It will wipe your existing database, you will lose all data.
+
+In the container command line:
+cd /app
+yarn install
+yarn prisma generate
+yarn prisma migrate dev --name name_here
