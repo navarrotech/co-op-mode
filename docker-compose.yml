@@ -24,6 +24,9 @@ services:
       - type: bind
         source: "./api"
         target: "/app"
+      - type: bind
+        source: "./schema.proto"
+        target: "/schema.proto"
     command: yarn run dev
     ports:
       - 3000:80
@@ -50,6 +53,8 @@ services:
     restart: unless-stopped
     networks:
       - default
+    volumes:
+      - redis-data:/data
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -74,6 +79,7 @@ services:
 volumes:
   postgres-data:
   pgadmin-data:
+  redis-data:
  
 networks:
   default:

@@ -12,22 +12,26 @@ import { initDatabase, closeDatabase } from './src/lib/database';
 import { initRedis, closeRedis, redisStore } from '@/lib/redis';
 
 // Middleware
+import { protobufMiddleware } from '@/lib/protobuf';
 
 // Environment Variables
 import { API_PORT, NODE_ENV } from "src/env"
 
 const rootDirectory = process.cwd();
 
+console.log("Starting up")
+
 // @ts-ignore
 const app = express({
   // Application:
   cors: NODE_ENV === "development",
   customMiddleware: [
+    protobufMiddleware,
   ],
 
   // Routes
   publicFolderPath: path.join(rootDirectory, 'public'),
-  routes: routes as any[],
+  routes,
 
   store: redisStore as any,
 })

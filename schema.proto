@@ -1,0 +1,321 @@
+syntax = "proto3";
+
+// General Messages
+message ServerError {
+    string message = 1;
+}
+
+message ClientError {
+    string message = 1;
+    string stack_trace = 2;
+}
+
+// User-Related Messages
+message User {
+    string id = 1;
+    string email = 2;
+    string first_name = 3;
+    string last_name = 4;
+    string created_at = 5;
+    string updated_at = 6;
+    Preferences preferences = 7;
+    DatingProfile dating_profile = 8;
+    Limits limits = 9;
+    repeated Media media = 10;
+    repeated Likes likes = 11;
+    repeated Dislikes dislikes = 12;
+}
+
+message Preferences {
+    string id = 1;
+    string owner_id = 2;
+    string language = 3;
+}
+
+message DatingProfile {
+    string id = 1;
+    string owner_id = 2;
+    int32 age = 3;
+    Gender gender = 4;
+    repeated string fav_vgames = 5;
+    repeated string fav_vgenres = 6;
+    repeated Platforms fav_vplatforms = 7;
+    string fav_vcharacter = 8;
+    bool likes_dnd = 9;
+    bool likes_anime = 10;
+    bool likes_bgames = 11;
+    repeated string fav_bgames = 12;
+    int32 height = 13;
+    string bio = 14;
+    repeated string prompts = 15;
+    repeated string known_langs = 16;
+    string location = 17;
+    string location2 = 18;
+    string school = 19;
+    string job_title = 20;
+    string company = 21;
+    string top_song = 22;
+    string top_artist = 23;
+    string pronouns = 24;
+    HeightUnit height_unit = 25;
+    Sexuality sexuality = 26;
+    Education education = 27;
+    Seeking looking_for = 28;
+    Relationship relationship = 29;
+    FamilyPlans family_plans = 30;
+    Workout workout = 31;
+    Personality personality = 32;
+    Smokes smokes = 33;
+    Drinks drinks = 34;
+    Cannabis cannabis = 35;
+    bool banned = 36;
+    bool use_smart_photos = 37;
+    bool hide_distance = 38;
+    bool hide_age = 39;
+    bool dnd_mode = 40;
+    bool show_sexuality = 41;
+    bool show_gender = 42;
+    bool show_pronouns = 43;
+    string created_at = 44;
+    string updated_at = 45;
+}
+
+// Enum Definitions
+enum Platforms {
+    UNKNOWN = 0;
+    PC = 1;
+    PLAYSTATION = 2;
+    XBOX = 3;
+    SWITCH = 4;
+    MOBILE = 5;
+    OTHER = 6;
+}
+
+enum Gender {
+    UNKNOWN = 0;
+    MALE = 1;
+    FEMALE = 2;
+    OTHER = 3;
+}
+
+enum HeightUnit {
+    UNKNOWN = 0;
+    IMPERIAL = 1;
+    METRIC = 2;
+}
+
+enum Sexuality {
+    UNKNOWN = 0;
+    STRAIGHT = 1;
+    GAY = 2;
+    LESBIAN = 3;
+    BISEXUAL = 4;
+    ASEXUAL = 5;
+    DEMISEXUAL = 6;
+    PANSEXUAL = 7;
+    QUEER = 8;
+    QUESTIONING = 9;
+}
+
+enum Education {
+    UNKNOWN = 0;
+    BACHELORS = 1;
+    IN_COLLEGE = 2;
+    HIGH_SCHOOL = 3;
+    PHD = 4;
+    IN_GRAD_SCHOOL = 5;
+    MASTERS = 6;
+    TRADE_SCHOOL = 7;
+}
+
+enum Seeking {
+    UNKNOWN = 0;
+    LONG_TERM_RELATIONSHIP = 1;
+    SHORT_TERM_RELATIONSHIP = 2;
+    LONG_TERM_OPEN_TO_SHORT = 3;
+    SHORT_TERM_OPEN_TO_LONG = 4;
+    NEW_FRIENDS = 5;
+    UNSURE = 6;
+}
+
+enum Relationship {
+    UNKNOWN = 0;
+    MONOGAMY = 1;
+    ETHICAL_NON_MONOGAMY = 2;
+    OPEN_RELATIONSHIP = 3;
+    POLYAMORY = 4;
+    OPEN_TO_EXPLORING = 5;
+}
+
+enum FamilyPlans {
+    UNKNOWN = 0;
+    WANTS_CHILDREN = 1;
+    DOESNT_WANT_CHILDREN = 2;
+    HAVE_CHILDREN_WANT_MORE = 3;
+    HAVE_CHILDREN_DONT_WANT_MORE = 4;
+    UNSURE = 5;
+}
+
+enum Workout {
+    UNKNOWN = 0;
+    EVERYDAY = 1;
+    OFTEN = 2;
+    SOMETIMES = 3;
+    NEVER = 4;
+}
+
+enum Personality {
+    UNKNOWN = 0;
+    INTJ = 1;
+    INTP = 2;
+    ENTJ = 3;
+    ENTP = 4;
+    INFJ = 5;
+    INFP = 6;
+    ENFJ = 7;
+    ISTJ = 8;
+    ISFJ = 9;
+    ESTJ = 10;
+    ESFJ = 11;
+    ISTP = 12;
+    ISFP = 13;
+    ESTP = 14;
+    ESFP = 15;
+}
+
+enum Smokes {
+    UNKNOWN = 0;
+    YES = 1;
+    OCCASIONALLY = 2;
+    SOCIALLY = 3;
+    NEVER = 4;
+}
+
+enum Drinks {
+    UNKNOWN = 0;
+    NOT_FOR_ME = 1;
+    SOBER = 2;
+    ON_SPECIAL_OCCASIONS = 3;
+    SOCIALLY = 4;
+    REGULARLY = 5;
+}
+
+enum Cannabis {
+    UNKNOWN = 0;
+    YES = 1;
+    OCCASIONALLY = 2;
+    SOCIALLY = 3;
+    NEVER = 4;
+}
+
+message Limits {
+    PermanentLimits permanent = 1;
+    DailyLimits daily = 2;
+    MonthlyLimits monthly = 3;
+}
+
+message PermanentLimits {
+    string id = 1;
+    string owner_id = 2;
+    int32 images = 3;
+    int32 video = 4;
+}
+
+message DailyLimits {
+    string id = 1;
+    string owner_id = 2;
+    int32 likes = 3;
+    int32 dislikes = 4;
+    int32 messages = 5;
+    string renews_at = 6;
+}
+
+message MonthlyLimits {
+    string id = 1;
+    string owner_id = 2;
+    int32 superlikes = 3;
+    int32 boosts = 4;
+    string renews_at = 5;
+}
+
+message Media {
+    string id = 1;
+    string owner_id = 2;
+    int32  likes = 3;
+    int32  superlikes = 4;
+    int32  dislikes = 5;
+    int32  time_spent = 6;
+    string url = 7;
+    string mime_type = 8;
+    string file_size = 9;
+    string created_at = 10;
+    string updated_at = 11;
+}
+
+message Likes {
+    string id = 1;
+    string owner_id = 2;
+    string target_id = 3;
+    string created_at = 4;
+    bool is_super = 5;
+}
+
+message Dislikes {
+    string id = 1;
+    string owner_id = 2;
+    string target_id = 3;
+    string created_at = 4;
+}
+
+message Conversations {
+    string id = 1;
+    string user1_id = 2;
+    string user2_id = 3;
+    bool blocked = 4;
+    string who_blocked = 5;
+    string who_reported = 6;
+    string created_at = 7;
+    string last_message = 8;
+}
+
+message Messages {
+    string id = 1;
+    string owner_id = 2;
+    string conversation_id = 3;
+    string content = 4;
+    bool is_read = 5;
+    string time_read = 6;
+    bool is_sent = 7;
+    string time_sent = 8;
+    bool is_received = 9;
+    string time_received = 10;
+    bool is_deleted = 11;
+    string created_at = 12;
+}
+
+message VideoGames {
+    string id = 1;
+    string name = 2;
+    string image_url = 3;
+    string publisher = 4;
+    string release = 5;
+    repeated string platforms = 6;
+    repeated string genres = 7;
+    repeated string tags = 8;
+    string description = 9;
+}
+
+// Authentication Messages
+message LoginRequest {
+    string provider = 1;
+    string token = 2;
+    string secret = 3;
+    bool is_signup = 4;
+    string first_name = 5;
+    string last_name = 6;
+}
+
+message AuthResponse {
+    bool authorized = 1;
+    repeated User users = 2;
+}
