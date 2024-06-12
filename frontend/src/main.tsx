@@ -10,10 +10,6 @@ import ApplicationRouter from './routes/Router'
 // Firebase
 import './firebase'
 
-// Keycloak
-import { ReactKeycloakProvider } from '@react-keycloak/web'
-import keycloak from "./modules/KeyCloak"
-
 // Redux
 import { Provider as ReduxProvider } from 'react-redux'
 import store from './store/store'
@@ -26,10 +22,8 @@ const root = createRoot(container)
 
 root.render(
     <ReduxProvider store={store}>
-        <ReactKeycloakProvider authClient={keycloak}>
-            <Initialization>
-                <ApplicationRouter />
-            </Initialization>
-        </ReactKeycloakProvider>
+        <Initialization>
+            <ApplicationRouter />
+        </Initialization>
     </ReduxProvider>
 )

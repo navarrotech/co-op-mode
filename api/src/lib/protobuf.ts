@@ -1,6 +1,5 @@
 // Copyright © 2024 Navarrotech
 
-import { users, likes, dislikes, preferences } from "@prisma/client"
 import * as ProtoBufLibrary from "./generated/schema"
 
 export const ProtoBufs = {
@@ -20,13 +19,7 @@ export const ProtoBufs = {
     VideoGames: ProtoBufLibrary.VideoGames,
     LoginRequest: ProtoBufLibrary.LoginRequest,
     AuthResponse: ProtoBufLibrary.AuthResponse,
-}
-
-export type matchingTables = {
-    users: users,
-    likes: likes,
-    dislikes: dislikes,
-    preferences: preferences
+    SyncResponse: ProtoBufLibrary.SyncResponse,
 }
 
 export type ProtoBufTables = keyof typeof ProtoBufs
@@ -95,4 +88,30 @@ export function protobufMiddleware(request: Request, response: Response, next: N
     }
 
     next()
+}
+
+export type Sanitized<T> = {
+    [K in keyof T]: T[K] extends Date ? string : T[K] extends object ? Sanitized<T[K]> : T[K]
+}
+export function sanitize<T>(object: T): Sanitized<T> {
+
+    // You can never be too safe ;)
+    // @ts-ignore
+    delete object.passwords
+    // @ts-ignore
+    delete object.password
+
+    const keys = Object.keys(object) as Array<keyof T>
+
+    for (const key of keys) {
+        if (!object[key]) {
+            continue
+        } else if (object[key] instanceof Date) {
+            object[key] = (object[key] as Date).toISOString() as any
+        } else if (typeof object[key] === "object") {
+            object[key] = sanitize(object[key]) as any
+        }
+    }
+
+    return object as Sanitized<T>
 }

@@ -1,12 +1,12 @@
 // Copyright © 2024 Navarrotech
 
 // Typescript
-import type { Route } from "navarrotech-express"
-import type { ApiResponse } from "@/types"
+import type { Route } from "@/types"
 
 // Utility
 import * as yup from 'yup'
 import database from "@/lib/database"
+import { sanitize } from "@/lib/protobuf"
 import passwordHash from "password-hash"
 
 type Body = {
@@ -53,31 +53,25 @@ const route: Route = {
             }
         })
 
-        const latestPassword = user.passwords.sort((a, b) => a.created_at > b.created_at ? -1 : 1)[0]
+        const latestPassword = user?.passwords?.sort((a, b) => a.created_at > b.created_at ? -1 : 1)[0]
         if (!user || !latestPassword) {
-            response.status(401).send({
-                code: 401,
-                message:"Invalid email/password combination",
-                success: false,
-                data: {
-                    authorized: false,
-                    user: null
-                }
-            } as ApiResponse)
+            response.status(401)
+            response.sendProto("AuthResponse", {
+                authorized: false,
+                user: null,
+                message: request.__("login_invalid")
+            })
             return
         }
 
         const isValid = passwordHash.verify(password, latestPassword.value)
         if (!isValid){
-            response.status(401).send({
-                code: 401,
-                message:"Invalid email/password combination",
-                success: false,
-                data: {
-                    authorized: false,
-                    user: null
-                }
-            } as ApiResponse)
+            response.status(401)
+            response.sendProto("AuthResponse", {
+                authorized: false,
+                user: null,
+                message: request.__("login_invalid")
+            })
             return
         }
 
@@ -85,17 +79,12 @@ const route: Route = {
         request.session.user = user
         request.session.authorized = true
 
-        response
-            .status(200)
-            .send({
-                code: 200,
-                message: "Successfully logged in.",
-                success: true,
-                data: {
-                    authorized: true,
-                    user,
-                }
-            } as ApiResponse)
+        response.status(200)
+        response.sendProto("AuthResponse", {
+            authorized: true,
+            user: sanitize(user),
+            message: request.__("login_success")
+        })
 
         await request.session.saveAsync()
     }

@@ -8,16 +8,17 @@ import { routes } from './src/functions'
 
 // Application
 import { version } from './src/version'
-import { initDatabase, closeDatabase } from './src/lib/database';
-import { initRedis, closeRedis, redisStore } from '@/lib/redis';
+import { initDatabase, closeDatabase } from './src/lib/database'
+import { initRedis, closeRedis, redisStore } from '@/lib/redis'
 
 // Middleware
-import { protobufMiddleware } from '@/lib/protobuf';
+import i18n from '@/lib/i18n'
+import { protobufMiddleware } from '@/lib/protobuf'
 
 // Environment Variables
 import { API_PORT, NODE_ENV } from "src/env"
 
-const rootDirectory = process.cwd();
+const rootDirectory = process.cwd()
 
 console.log("Starting up")
 
@@ -27,6 +28,7 @@ const app = express({
   cors: NODE_ENV === "development",
   customMiddleware: [
     protobufMiddleware,
+    i18n.init,
   ],
 
   // Routes

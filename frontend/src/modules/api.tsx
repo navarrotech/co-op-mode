@@ -2,13 +2,38 @@
 
 import ProtoBufs, { type ProtoBufMessages } from '@/modules/protobuf'
 
+// This should be synced with the user's preferences eventually!
+const defaults: Record<string, string> = {
+    language: 'en'
+}
+
+Object.keys(defaults).forEach(key => {
+    const savedValue = localStorage.getItem('defaults:' + key)
+    if (savedValue){
+        defaults[key] = savedValue
+    }
+})
+
+export function setApiDefault(key: string, value: string) {
+    defaults[key] = value
+    localStorage.setItem('defaults:' + key, value)
+}
+
 export type ProtoResponse<T = any> = {
     data: T
     status: number
     headers: any
 }
 
-export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: typeof ProtoBufs[T]): Promise<ProtoResponse<K> | undefined> {
+
+// Type utility to get the properties of a type that are not functions
+type NonFunctionProperties<T> = {
+    [K in keyof T]: T[K] extends Function ? never : K;
+}[keyof T];
+
+type NonFunction<T> = Pick<T, NonFunctionProperties<T>>;
+
+export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>): Promise<ProtoResponse<K> | undefined> {
     const Construct = ProtoBufs[struct]
     const buffer = Construct.fromObject(data)
 
@@ -17,8 +42,9 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
         {
             method: 'POST',
             headers: {
-                'X-Protobuf-Struct': struct,
                 'Content-Type': 'Application/X-Protobuf',
+                'X-Protobuf-Struct': struct,
+                'Accept-Language': defaults.language,
             },
             body: Construct.encode(buffer).finish(),
         }

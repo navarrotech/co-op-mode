@@ -6,7 +6,7 @@ import type { Route } from "navarrotech-express"
 const route: Route = {
     method: "post",
     path: "/auth/logout",
-    handler: async function loginHandler(request, response) {
+    handler: async function logoutHandler(request, response) {
         try{
             await request.session.destroyAsync()
         } catch(e){}

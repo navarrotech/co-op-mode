@@ -1,11 +1,11 @@
 // Copyright © 2024 Navarrotech
 
 // Typescript
-import type { Route } from "navarrotech-express"
-import type { ApiResponse } from "@/types"
+import type { Route } from "@/types"
 
 // Utility
 import requireAuth from "@/middleware/requireAuth"
+import { sanitize } from "@/lib/protobuf"
 import database from "@/lib/database"
 
 const route: Route = {
@@ -21,20 +21,20 @@ const route: Route = {
                     id: userid
                 },
                 include: {
-                    // Don't include:
-                    passwords: false,
-                    linked_accounts: false,
-                    limits: false,
-                    daily_limits: false,
-                    monthly_limits: false,
-                    status: false,
+                    // // Don't include:
+                    // passwords: false,
+                    // linked_accounts: false,
+                    // limits: false,
+                    // daily_limits: false,
+                    // monthly_limits: false,
+                    // status: false,
 
-                    // Include:
-                    preferences: true,
-                    dating_profile: true,
-                    media: true,
-                    likes: true,
-                    dislikes: true,
+                    // // Include:
+                    // preferences: true,
+                    // dating_profile: true,
+                    // media: true,
+                    // likes: true,
+                    // dislikes: true,
                 }
             }),
             database.conversations.findMany({
@@ -50,17 +50,12 @@ const route: Route = {
             })
         ])
 
-        response
-            .status(200)
-            .send({
-                code: 200,
-                message: "Successfully synced user data.",
-                success: true,
-                data: {
-                    user,
-                    conversations,
-                }
-            } as ApiResponse)
+        response.status(200)
+        response.sendProto("SyncResponse", {
+            message: request.__("authorized"),
+            conversations: conversations.map(sanitize),
+            user: sanitize(user),
+        })
 
         await request.session.saveAsync()
     }

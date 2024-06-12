@@ -11,9 +11,9 @@ const route: Route = {
         console.log(request.body)
 
         const mockData: preferences = {
-            id: "-1111111111",
+            id: "-1",
+            owner_id: "-1",
             language: "en",
-            owner_id: "-11111111111",
         }
 
         response.status(200)

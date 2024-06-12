@@ -2,8 +2,7 @@
 
 // Typescript
 import type { users } from "@prisma/client"
-import type { Route } from "navarrotech-express"
-import type { ApiResponse } from "@/types"
+import type { Route } from "@/types"
 
 // Preferences
 import { languageValidator } from "@/lib/validators"
@@ -12,6 +11,7 @@ import { defaultLanguage } from "@/lib/language"
 // Utility
 import * as yup from 'yup'
 import database from "@/lib/database"
+import { sanitize } from "@/lib/protobuf"
 import passwordHash from "password-hash"
 
 type Body = {
@@ -75,33 +75,39 @@ const route: Route = {
         } = request.body as Body
 
         email = email.trim().toLowerCase()
+        password = password.trim()
         first_name = first_name.trim()
         last_name = last_name.trim()
 
         let user: users;
         try {
-            const existingUser = await database.users.findUnique({
-                where: {
-                    email
+            try {
+                user = await database.users.create({
+                    data: {
+                        first_name,
+                        last_name,
+                        email,
+                    },
+                })
+            } catch (error) {
+                if (error?.code === "P2002") {
+                    response.status(409)
+                    response.sendProto("AuthResponse", {
+                        message: request.__("signup_exists"),
+                        authorized: false,
+                        user: null,
+                    })
+                    return
+                } else {
+                    console.error("[Signup Error] :: ", error)
+                    response.status(500)
+                    response.sendProto("AuthResponse", {
+                        message: request.__("generic_error"),
+                        authorized: false,
+                        user: null,
+                    })
                 }
-            })
-
-            if (existingUser) {
-                response.status(401).send({
-                    code: 401,
-                    message: "An account with this email already exists.",
-                    success: false
-                } as ApiResponse)
-                return
             }
-
-            user = await database.users.create({
-                data: {
-                    first_name,
-                    last_name,
-                    email,
-                }
-            })
 
             const startTime = Date.now()
             const generatedPassword = passwordHash.generate(password, {
@@ -148,28 +154,24 @@ const route: Route = {
             ])
 
         } catch (error) {
-            response.status(500).send({
-                code: 500,
-                message: "An error occurred while creating your account. Please try again.",
-                success: false
-            } as ApiResponse)
+            response.status(500)
+            response.sendProto("AuthResponse", {
+                message: request.__("generic_error"),
+                authorized: false,
+                user: null,
+            })
             return
         }
         
         request.session.user = user
         request.session.authorized = true
 
-        response
-            .status(200)
-            .send({
-                code: 200,
-                message: "Successfully created account.",
-                success: true,
-                data: {
-                    user,
-                    authorized: true
-                }
-            } as ApiResponse)
+        response.status(200)
+        response.sendProto("AuthResponse", {
+            message: request.__("signup_success"),
+            authorized: true,
+            user: sanitize(user),
+        })
 
         await request.session.saveAsync()
     }

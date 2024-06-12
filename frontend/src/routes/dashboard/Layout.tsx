@@ -1,6 +1,6 @@
 // Copyright © 2024 Navarrotech
 
-import { sendProto } from '@/modules/axios'
+import { sendProto } from '@/modules/api'
 import Button from '@/elements/Button'
 
 export default function DashboardLayout() {

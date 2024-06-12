@@ -1,0 +1,22 @@
+{
+    "login_invalid":  "Invalid email/password combination.",
+	"login_success":  "You have successfully logged in.",
+    
+    "signup_exists":  "An account with this email already exists.",
+    "signup_success": "You have successfully signed up.",
+    
+    "authorized":     "You are authorized.",
+    "unauthorized":   "You are not authorized.",
+    "unauthorized_action": "You are not authorized to perform this action.",
+    "unauthorized_access": "You are not authorized to access this resource.",
+
+    "validator_required": "{{what}} is required.",
+    "validator_short": "{{what}} must be at least {{length}} characters long.",
+    "validator_long": "{{what}} must be less than {{length}} characters long.",
+    "validator_type": "{{what}} must be a {{type}}.",
+
+    "validator_email": "Please provide a valid email address",
+    "validator_password": "Password must include at least one special character",
+
+    "generic_error":  "Something went wrong. Please try again."
+}
