@@ -1468,7 +1468,7 @@ protobufjs-cli@^1.1.2:
     tmp "^0.2.1"
     uglify-js "^3.7.7"
 
-protobufjs@^7.3.1:
+protobufjs@^7.3.0:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/protobufjs/-/protobufjs-7.3.1.tgz#43e1dfc97c66592239fcdfb634b0860e4d8e8f86"
   integrity sha512-Shz47psl/+SrwbPBf3aDf8PReJ93u/nPS7FfVjOGVVdg3yvFReKHRUz77k527kX3W+nDN29tSmmMCawbntOFHQ==

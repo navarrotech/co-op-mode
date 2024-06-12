@@ -1,6 +1,7 @@
 // Copyright © 2024 Navarrotech
 
 import * as ProtoBufLibrary from "./schema"
+
 // import schema from './schema?raw'
 
 // export type Message = protobuf.Message

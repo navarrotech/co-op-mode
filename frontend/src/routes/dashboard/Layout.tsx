@@ -13,7 +13,7 @@ export default function DashboardLayout() {
                     owner_id: "-11111111111",
                 }
 
-                sendProto('/test', "Preferences", mockData).then(res => console.log(res.data))
+                sendProto('/test', "Preferences", mockData).then(res => console.log(res?.data))
             }}
         >Click to test</Button>
     </>

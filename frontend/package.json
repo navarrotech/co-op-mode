@@ -8,7 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "proto": "pbjs -t static-module --es6 --no-beautify --no-comments --keep-case -w es6 -o ./src/modules/protobuf/schema.js ../schema.proto && pbts -o ./src/modules/protobuf/schema.d.ts ./src/modules/protobuf/schema.js",
+    "proto": "pbjs -t static-module --es6 --keep-case -w es6 -o ./src/modules/protobuf/schema.js ../schema.proto && pbts -o ./src/modules/protobuf/schema.d.ts ./src/modules/protobuf/schema.js",
     "deploy:production": "firebase deploy",
     "deploy:staging": "firebase hosting:channel:deploy staging",
     "analyze": "vite-bundle-analyzer"
@@ -29,6 +29,7 @@
     "i18next-http-backend": "^2.5.2",
     "keycloak-js": "^24.0.5",
     "moment": "^2.30.1",
+    "protobufjs": "^7.3.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-i18next": "^14.1.2",

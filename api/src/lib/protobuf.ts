@@ -68,25 +68,18 @@ export function protobufMiddleware(request: Request, response: Response, next: N
         if (struct && typeof struct === "string" && Construct) {
             try {
                 const buffer: Uint8Array[] = []
-                let bufferSize = 0
-
-                request.on('data', (chunk) => {
-                    buffer.push(chunk)
-                    bufferSize += chunk.length
-                })
-
+                request.on('data', (chunk) => buffer.push(chunk))
                 request.on('end', () => {
                     try {
-                        const data = Buffer.concat(buffer, bufferSize)
-                        const buffy = Buffer.from(new Uint8Array(data))
-                        // request.body = Construct.decode(buffy).toJSON()
-                        request.body = ProtoBufs.Preferences.decode(buffy).toJSON()
-                        console.log("Parsed Protobuf Body: ", request.body) // Log the parsed body
-                    } catch (error) {
-                        console.error("[Protobuf Parsing Error] :: ", error.message, struct, buffer)
-                        response.status(400)
-                        response.sendProto("ServerError", { message: "Invalid protobuf payload given!" })
-                        return
+                        const buffy = Buffer.concat(buffer)
+                        request.body = ProtoBufs[struct].decode(buffy).toJSON()
+                    } catch (error){
+                        console.error("[Protobuf Parsing Error 1] :: ", error.message, struct, buffer)
+                        if (!response.headersSent) {
+                            response.status(400)
+                            response.sendProto("ServerError", { message: "Invalid protobuf payload given!" })
+                            return
+                        }
                     }
                     next()
                 })
