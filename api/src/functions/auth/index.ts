@@ -1,6 +1,6 @@
 // Copyright © 2024 Navarrotech
 
-import type { Route } from 'navarrotech-express'
+import type { Route } from '@/types'
 
 // Email
 import emailLogin from './email/login'

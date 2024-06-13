@@ -8,9 +8,9 @@ export default function DashboardLayout() {
         <Button
             onClick={() => {
                 const mockData = {
-                    id: "foopy noop noop",
+                    id: "foopyfoopy",
                     language: "en",
-                    owner_id: "-11111111111",
+                    // owner_id: "foopyfoopy",
                 }
 
                 sendProto('/test', "Preferences", mockData).then(res => console.log(res?.data))

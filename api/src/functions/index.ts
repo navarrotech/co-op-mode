@@ -1,7 +1,7 @@
 // Copyright © 2023 Navarrotech
 
 // Typescript
-import type { Route } from 'navarrotech-express'
+import type { Route } from '@/types'
 
 // Routes
 import auth from './auth'

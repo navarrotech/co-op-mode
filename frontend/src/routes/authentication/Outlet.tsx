@@ -12,17 +12,17 @@ export function AuthorizedOutlet(){
     const authorized = useSelector(state => state.user.authorized);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (!authorized){
-            console.log('Unauthorized, redirecting to login');
-            navigate('/login');
-            return;
-        }
-    }, [ authorized ])
+    // useEffect(() => {
+    //     if (!authorized){
+    //         console.log('Unauthorized, redirecting to login');
+    //         navigate('/login');
+    //         return;
+    //     }
+    // }, [ authorized ])
 
-    if (!authorized){
-        return <></>
-    }
+    // if (!authorized){
+    //     return <></>
+    // }
 
     return <div>
         <Topbar />

@@ -32,6 +32,8 @@ export const ProtoBufs = {
     LoginRequest: ProtoBufLibrary.LoginRequest,
     AuthResponse: ProtoBufLibrary.AuthResponse,
     SyncResponse: ProtoBufLibrary.SyncResponse,
+    FormInvalid: ProtoBufLibrary.FormInvalid,
+    FormsInvalid: ProtoBufLibrary.FormsInvalid,
 }
 
 export type ProtoBufMessages = keyof typeof ProtoBufs

@@ -26,7 +26,7 @@ const validator = yup.object().shape({
     body: yup.object().shape({
         first_name: yup
             .string()
-            .typeError("First name must be a string")
+            .typeError("validator_type::First name::string")
             .trim()
             .max(32, "First name must be less than 32 characters")
             .min(3, "First name must be at least 3 characters")

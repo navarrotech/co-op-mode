@@ -1,13 +1,13 @@
 syntax = "proto3";
 
-// General Messages
-message ServerError {
+message FormInvalid {
     string message = 1;
+    string key = 2;
+    string value = 3;
 }
 
-message ClientError {
-    string message = 1;
-    string stack_trace = 2;
+message FormsInvalid {
+    repeated FormInvalid payloads = 1;
 }
 
 // User-Related Messages
@@ -325,4 +325,14 @@ message SyncResponse {
     User user = 1;
     repeated Conversations conversations = 2;
     string message = 3;
+}
+
+// General Messages
+message ServerError {
+    string message = 1;
+}
+
+message ClientError {
+    string message = 1;
+    string stack_trace = 2;
 }

@@ -1,7 +1,7 @@
 // Copyright © 2024 Navarrotech
 
 // Typescript
-import type { Route } from "navarrotech-express"
+import type { Route } from "@/types"
 
 const route: Route = {
     method: "post",

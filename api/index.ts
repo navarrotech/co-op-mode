@@ -1,42 +1,155 @@
 // Copyright © 2023 Navarrotech
 
-import express from 'navarrotech-express'
+// Typescript
+import type { Request, Response } from "@/types"
+
+// Express
+import express from "express"
+import helmet from "helmet"
+
+// Core middleware
+import expressSession from "express-session"
+import cookieParser from "cookie-parser"
+import rateLimit from "express-rate-limit"
+import cors from "cors"
+
+// Custom Middleware
+import i18n from "@/lib/i18n"
+import validateMiddleware from "@/middleware/validate"
+import { protobufMiddleware } from "@/lib/protobuf"
 
 // Routing
-import path from 'path'
-import { routes } from './src/functions'
+import { routes } from "./src/functions"
+import { v4 as uuid } from "uuid"
 
 // Application
-import { version } from './src/version'
-import { initDatabase, closeDatabase } from './src/lib/database'
-import { initRedis, closeRedis, redisStore } from '@/lib/redis'
+import { version } from "./src/version"
 
-// Middleware
-import i18n from '@/lib/i18n'
-import { protobufMiddleware } from '@/lib/protobuf'
+// Initialization
+import { initDatabase, closeDatabase } from "./src/lib/database"
+import { initRedis, closeRedis, redisStore } from "@/lib/redis"
 
 // Environment Variables
-import { API_PORT, NODE_ENV } from "src/env"
-
-const rootDirectory = process.cwd()
+import { API_PORT, NODE_ENV, SESSION_SECRET } from "src/env"
 
 console.log("Starting up")
+const initialization = Promise.all([
+  initDatabase(),
+  initRedis(),
+])
 
-// @ts-ignore
-const app = express({
-  // Application:
-  cors: NODE_ENV === "development",
-  customMiddleware: [
-    protobufMiddleware,
-    i18n.init,
-  ],
+const app = express()
 
-  // Routes
-  publicFolderPath: path.join(rootDirectory, 'public'),
-  routes,
+if (NODE_ENV === "development") {
+  app.use("*", cors({
+    origin: true,
+    credentials: true,
+  }))
+}
 
-  store: redisStore as any,
+// Trust the proxy
+app.set("trust proxy", 1)
+
+// Security middlware
+app.use('*',
+  helmet({
+    contentSecurityPolicy: false,
+  }),
+  // Rate limiter:
+  rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 1 * 1000, // Limit each IP to 1000 requests per `window` (here, per 15 minutes) (66 requests per minute)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  }),
+)
+
+app.all("/ping", (req, res) => res.status(200).send("pong"))
+
+// Custom middlewares
+app.use('*',
+  cookieParser(),
+  // Sessions!
+  expressSession({
+    secret: SESSION_SECRET,
+    genid: function(req) {
+      return uuid() // use UUIDs for session IDs
+    },
+    name: "sid",
+    resave: true, // Save even if nothing is changed
+    saveUninitialized: false, // Save even if nothing has been set in req.session yet
+    rolling: true,
+    cookie: {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production",
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24, // 24 hours
+    },
+    store: redisStore,
+  }),
+  // Fixing session middleware to be async
+  function sessionMiddleware(req, res, next){
+    if(req.session){
+      // @ts-ignore
+      req.session.saveAsync = () => new Promise(acc => req.session.save(() => acc(true)))
+      // @ts-ignore
+      req.session.destroyAsync = () => new Promise(acc => req.session.destroy(() => acc(true)))
+      // @ts-ignore
+      req.session.reloadAsync = () => new Promise(acc => req.session.reload(() => acc(true)))
+      // @ts-ignore
+      req.session.regenerateAsync = () => new Promise(acc => req.session.regenerate(() => acc(true)))
+      // @ts-ignore
+      if(!!req.session?.user?.id){
+        // @ts-ignore
+        req.session.authorized = true
+      }
+    }
+    next()
+  },
+  // Custom middlware
+  i18n.init, // Internationalization
+  protobufMiddleware, // Automated proto buffers
+)
+
+// Routes
+routes.forEach((func) => {
+  const { handler, method="post", path, validator, middlewares = [] } = func
+  app[method](path, ...middlewares, async (request: Request, response: Response) => {
+
+    const validatedBody = await validateMiddleware(request, response, validator)
+    if (validatedBody === null){
+      return // Error response already sent, don't continue to route
+    }
+
+    try {
+      request.body = validatedBody.body
+      request.query = validatedBody.query
+      handler(request, response, null)
+    } catch (err: any) {
+      console.error(err)
+      if(!response.headersSent){
+        response.status(500)
+        response.sendProto("ServerError", {
+          message: request.__("generic_error"),
+        })
+      }
+    }
+  })
 })
+
+// 404 - Attempt to serve static public folder first for all GET requests
+// const publicDist = path.join(rootDirectory, 'public')
+// app.use(express.static(publicDist))
+// app.get("*", (req, res) =>
+//   res.sendFile(path.join(publicDist, "index.html"))
+// )
+
+// 404 - Return a 404 for everything else
+app.all("*", (req: any, res: any) =>
+  res.status(404).send({
+    code: 404,
+    message: "Route not found",
+  })
+)
 
 async function gracefulShutdown(){
   console.log('Shutting down')
@@ -47,21 +160,21 @@ async function gracefulShutdown(){
   process.exit(0)
 }
 
+process.on('SIGINT', gracefulShutdown)
+process.on('SIGTERM', gracefulShutdown)
 process.on('uncaughtException', async function (err: any) {
   console.log('Crashed', err)
   await gracefulShutdown()
   process.exit(0)
 })
 
-Promise.all([
-  initDatabase(),
-  initRedis(),
-]).then(() => {
-  app.listen(API_PORT, () => console.log(`
-API Startup Complete
-Port: ${API_PORT}
-Version: ${version}
-Environment: ${NODE_ENV}
-Created by Navarrotech 2023
-  `.trim()))
-})
+initialization
+  .then(() => {
+    app.listen(API_PORT, () => console.log(`
+      API Startup Complete
+        > Port: ${API_PORT}
+        > Version: ${version}
+        > Environment: ${NODE_ENV}
+        > Created by Navarrotech 2023
+    `.trim().replaceAll(/^\s*\>/gmi, '  >')))
+  })
