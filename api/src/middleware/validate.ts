@@ -37,10 +37,9 @@ export default async function validateMiddleware(
                     const key = (error.path?.replace(/((body)|(query))\./gi, '')) ?? ""
 
                     let value: string = error.params.originalValue || error.value
-                    let message = request.__("generic_error")
+                    let message = error.message // <-- Default to unlocalized message
 
                     const type = error.type as ValidationErrorTypes
-
                     const what = startCase(key)
 
                     // If the reason for the error is a bad password
@@ -59,12 +58,15 @@ export default async function validateMiddleware(
                         const length = error.params.min as string
                         message = request.__("validator_short", { what, length })
                     }
-                    else if (type === "typeError"){
+                    else if (type === "typeError") {
                         const type = error.params.type as string
                         message = request.__("validator_type", { what, type })
                     }
-                    else if (type === "optionality"){
+                    else if (type === "optionality") {
                         message = request.__("validator_required", { what })
+                    }
+                    else {
+                        console.error("!!!! Unhandled error type, sending unlocalized error message", validationError)
                     }
 
                     payloads.push({ key, value, message })
