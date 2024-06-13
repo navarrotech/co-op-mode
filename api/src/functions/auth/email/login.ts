@@ -18,20 +18,20 @@ const validator = yup.object().shape({
     body: yup.object().shape({
         email: yup
             .string()
-            .typeError("Email must be a string")
-            .email("Please provide a valid email address")
+            .typeError("")
+            .email()
             .trim()
             .lowercase()
-            .max(128, "Email must be less than 128 characters")
-            .min(3, "Email must be at least 3 characters")
-            .required("Email is required"),
+            .max(128)
+            .min(3)
+            .required(),
         password: yup
             .string()
-            .typeError("Password must be a string")
+            .typeError("")
             .trim()
-            .min(8, "Password must be at least 8 characters")
-            .max(128, "Password must be less than 128 characters")
-            .required("Password is required")
+            .min(8)
+            .max(128)
+            .required()
     })
 })
 

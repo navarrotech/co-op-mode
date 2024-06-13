@@ -26,35 +26,35 @@ const validator = yup.object().shape({
     body: yup.object().shape({
         first_name: yup
             .string()
-            .typeError("validator_type::First name::string")
+            .typeError("")
             .trim()
-            .max(32, "First name must be less than 32 characters")
-            .min(3, "First name must be at least 3 characters")
-            .required("First name is required"),
+            .max(32)
+            .min(3)
+            .required(),
         last_name: yup
             .string()
-            .typeError("Last name must be a string")
+            .typeError("")
             .trim()
-            .max(32, "Last name must be less than 32 characters")
-            .min(3, "Last name must be at least 3 characters")
-            .required("Last name is required"),
+            .max(32)
+            .min(3)
+            .required(),
         email: yup
             .string()
-            .typeError("Email must be a string")
-            .email("Please provide a valid email address")
+            .typeError("")
+            .email()
             .trim()
             .lowercase()
-            .max(128, "Email must be less than 128 characters")
-            .min(3, "Email must be at least 3 characters")
-            .required("Email is required"),
+            .max(128)
+            .min(3)
+            .required(),
         password: yup
             .string()
-            .typeError("Password must be a string")
+            .typeError("")
             .trim()
-            .min(8, "Password must be at least 8 characters")
-            .max(128, "Password must be less than 128 characters")
-            .matches(/[\W_]/, "Password must include at least one special character")
-            .required("Password is required"),
+            .min(8)
+            .max(128)
+            .matches(/[\W_]/, "validator_password")
+            .required(),
         language: languageValidator()
             .notRequired()
     })

@@ -33,7 +33,6 @@ export default async function validateMiddleware(
 
                 const payloads: IFormInvalid[] = []
                 for (const error of validationError.inner) {
-                    console.log(error)
                     const key = (error.path?.replace(/((body)|(query))\./gi, '')) ?? ""
 
                     let value: string = error.params.originalValue || error.value
@@ -71,8 +70,6 @@ export default async function validateMiddleware(
 
                     payloads.push({ key, value, message })
                 }
-
-                console.log(payloads)
 
                 response.status(400)
                 response.sendProto("FormsInvalid", { payloads })
