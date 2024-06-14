@@ -4,7 +4,7 @@
 import type { Request, Response } from "@/types"
 
 // Express
-import express from "express"
+import express, { response } from "express"
 import helmet from "helmet"
 
 // Core middleware
@@ -22,8 +22,9 @@ import { protobufMiddleware } from "@/lib/protobuf"
 import { routes } from "./src/functions"
 import { v4 as uuid } from "uuid"
 
-// Application
-import { version } from "./src/version"
+// Node.js
+import path from "path"
+import fs from "fs"
 
 // Initialization
 import { initDatabase, closeDatabase } from "./src/lib/database"
@@ -31,6 +32,7 @@ import { initRedis, closeRedis, redisStore } from "@/lib/redis"
 
 // Environment Variables
 import { API_PORT, NODE_ENV, SESSION_SECRET } from "src/env"
+import { version } from "./src/version" // TODO <-- This should be a ENV variable
 
 console.log("Starting up")
 const initialization = Promise.all([
@@ -137,11 +139,16 @@ routes.forEach((func) => {
 })
 
 // 404 - Attempt to serve static public folder first for all GET requests
-// const publicDist = path.join(rootDirectory, 'public')
-// app.use(express.static(publicDist))
-// app.get("*", (req, res) =>
-//   res.sendFile(path.join(publicDist, "index.html"))
-// )
+// Only works in development, to serve auto-generated documentation
+if (NODE_ENV === "development") {
+  const publicDist = path.join(__dirname, 'public')
+  app.use(
+    express.static(publicDist)
+  )
+  // Proxy the documentation
+  app.get("/docs", (request, response) => response.sendFile(path.join(publicDist, 'documentation.html')))
+  app.get("*",     (request, response) => response.status(404).send("Page not found"))
+}
 
 // 404 - Return a 404 for everything else
 app.all("*", (req: any, res: any) =>

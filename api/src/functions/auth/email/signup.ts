@@ -4,9 +4,7 @@
 import type { users } from "@prisma/client"
 import type { Route } from "@/types"
 
-// Preferences
-import { languageValidator } from "@/lib/validators"
-import { defaultLanguage } from "@/lib/language"
+// Constants
 
 // Utility
 import * as yup from 'yup'
@@ -19,7 +17,6 @@ type Body = {
     last_name: string
     email: string
     password: string
-    language?: string
 }
 
 const validator = yup.object().shape({
@@ -55,8 +52,6 @@ const validator = yup.object().shape({
             .max(128)
             .matches(/[\W_]/, "validator_password")
             .required(),
-        language: languageValidator()
-            .notRequired()
     })
 })
 
@@ -71,13 +66,14 @@ const route: Route = {
             last_name,
             email,
             password,
-            language = defaultLanguage
         } = request.body as Body
 
         email = email.trim().toLowerCase()
         password = password.trim()
         first_name = first_name.trim()
         last_name = last_name.trim()
+
+        const { language } = request
 
         let user: users;
         try {

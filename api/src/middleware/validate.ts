@@ -4,7 +4,11 @@
 import { IFormInvalid } from "@/lib/generated/schema"
 import type { Request, Response } from "@/types"
 
+// Constants
+import { defaultLanguage, type SupportedLanguages } from "@/lib/language"
+
 // Utility
+import { languageValidator } from "@/lib/validators"
 import { AnyObjectSchema, ValidationError } from "yup"
 import { startCase } from "lodash"
 
@@ -12,6 +16,8 @@ type SuccessObject = {
     body: Record<string, any>
     query: Record<string, any>
 }
+
+const languageSchema = languageValidator()
 
 type ValidationErrorTypes = "max" | "min" | "typeError" | "optionality"
 
@@ -86,5 +92,16 @@ export default async function validateMiddleware(
             return null
         }
     }
+
+    let language = request.headers['accept-language'] || defaultLanguage
+    try {
+        languageSchema.validateSync(language)
+    } catch (error) {
+        console.error(error)
+        language = defaultLanguage
+    }
+
+    request.language = language as SupportedLanguages
+
     return validatedBody as SuccessObject
 }

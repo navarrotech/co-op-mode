@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>API Documentation</title>
+
+    <meta content="utf-8" http-equiv="encoding" />
+    <meta name="viewport" content="initial-scale=1" />
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+
+    <!-- Icon -->
+    <link rel="shortcut icon" href="{{ it.img }}" type="image/x-icon" />
+    <link rel="icon" href="{{ it.img }}" type="image/x-icon" />
+
+    <!-- CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.4/css/bulma.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+
+    <!-- JS -->
+    <script
+      src="https://livejs.com/live.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+  </head>
+  <body>
+    <section class="section">
+      <div class="container is-max-fullhd">
+        <div class="columns">
+          <div class="column is-one-third">
+            <div class="block box">
+              <aside class="menu">
+                <p class="menu-label">Routes</p>
+                <ul class="menu-list">
+                  {{@each(it.routes) => route, index}}
+                  <li><a data-link="{{ route.id }}">{{ route.path }}</a></li>
+                  {{/each}}
+                </ul>
+              </aside>
+            </div>
+          </div>
+          <div class="column">
+            <div class="content">
+              {{@each(it.routes) => route, index}}
+                <!-- Title -->
+                <h3 id="{{ route.id }}">
+                  <span class="tag is-medium is-primary mr-2">{{ route.method }}</span>
+                  <span class="">{{ route.path }}</span>
+                </h3>
+                <!-- Description -->
+                {{@if(route.description)}}
+                  <p>{{ route.description }}</p>
+                {{/if}}
+                <!-- Status Codes -->
+                {{@if(route.responses.length)}}
+                  <label class="label">Status codes:</label>
+                  {{@each(route.responses) => staticCodeAnalysis, index}}
+                    <div class="field level-left">
+                      <span class="tag is-{{staticCodeAnalysis.color}} mr-2">{{ staticCodeAnalysis.code }}</span>
+                      <p data-protobuf="{{staticCodeAnalysis.protobuf}}">{{ staticCodeAnalysis.protobuf }} Protobuf</p>
+                    </div>
+                  {{/each}}
+                {{/if}}
+                <!-- {{@if(route.statusCodes)}}
+                  <label class="label">Status codes:</label>
+                  {{@each(route.statusCodes) => statusCode, index}}
+                    <div class="field level-left">
+                      <span class="tag is-{{statusCode.color}} mr-2">{{ statusCode.code }}</span>
+                      <p>{{ statusCode.description }}</p>
+                    </div>
+                  {{/each}}
+                  {{@if(route.jsonSchema !== '{}')}}
+                    <div class="field level-left">
+                      <span class="tag is-danger mr-2">400</span>
+                      <p>Invalid body parameters</p>
+                    </div>
+                  {{/if}}
+                {{/if}} -->
+                <!-- Body Parameters -->
+                {{@if(route.jsonSchema !== '{}')}}
+                  <label class="label">Body parameters:</label>
+                  <pre>{{ route.jsonSchema }}</pre>
+                {{/if}}
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Protobuf documentation (incomplete) -->
+    <!-- <div>
+      {{@each(Object.values(it.protobufs)) => proto, index}}
+        <div id="{{ proto.name }}">
+          <h3>{{ proto.name }}</h3>
+        </div>
+      {{/each}}
+    </div> -->
+    <script>
+      $(document).ready(function () {
+        $('a[data-link]').click(function (e) {
+          e.preventDefault();
+          const link = $(this).attr('data-link');
+          const offset = $('#' + link).offset();
+          $('html, body').animate({ scrollTop: offset.top }, 500);
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -9,6 +9,8 @@ export const supportedLanguages = [
     "sq", "mn", "ur", "fa", "ta", "te", "ml", "kn", "mr", "gu", "pa", "bn", "my", "km", "lo", "si"
 ] as const
 
+export type SupportedLanguages = typeof supportedLanguages[number]
+
 export const languageRecord: Record<string, string> = {
     en: "English",
     zh: "Chinese",

@@ -9,10 +9,9 @@ import type {
 import type { ProtoBufTables, ProtoBufs } from "./lib/protobuf"
 import type { Session } from "express-session"
 import type i18nAPI from "i18n"
-import type { __, Replacements, TranslateOptions } from "i18n"
+import type { SupportedLanguages } from "./lib/language"
 import type { users } from "@prisma/client"
-import type { AnyObjectSchema } from "yup"
-import type locales from "@/locales/en.json"
+import type { AnyObjectSchema } from "yup"=
 
 //////////////////////////////////////////////////////
 // Utilities
@@ -29,6 +28,7 @@ type NonFunction<T> = Pick<T, NonFunctionProperties<T>>
 
 export type Request = ExpressRequest & {
     body: Record<string, any>
+    language: SupportedLanguages // Language code, from accept-language header and validated by middleware
     __:   typeof i18nAPI.__   // i18n :: For singular translations
     __n:  typeof i18nAPI.__n  // i18n :: For plural translations
     __mf: typeof i18nAPI.__mf // i18n :: For message format library translations
