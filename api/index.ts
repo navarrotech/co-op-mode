@@ -151,8 +151,8 @@ if (NODE_ENV === "development") {
 }
 
 // 404 - Return a 404 for everything else
-app.all("*", (req: any, res: any) =>
-  res.status(404).send({
+app.all("*", (request: any, response: any) =>
+  response.status(404).send({
     code: 404,
     message: "Route not found",
   })

@@ -18,6 +18,14 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <style>
+      #scrollToTop {
+        position: fixed;
+        bottom: 1em;
+        left: 1em;
+        width: fit-content;
+      }
+    </style>
 
     <!-- JS -->
     <script
@@ -65,7 +73,13 @@
                   {{@each(route.responses) => staticCodeAnalysis, index}}
                     <div class="field level-left">
                       <span class="tag is-{{staticCodeAnalysis.color}} mr-2">{{ staticCodeAnalysis.code }}</span>
-                      <p data-protobuf="{{staticCodeAnalysis.protobuf}}">{{ staticCodeAnalysis.protobuf }} Protobuf</p>
+                      <p data-protobuf="{{staticCodeAnalysis.protobuf}}">
+                        {{@if(!staticCodeAnalysis.protobuf.startsWith("--"))}}
+                          <span>{{ staticCodeAnalysis.protobuf }} Protobuf</span>
+                        {{#else}}
+                          <strong>{{ staticCodeAnalysis.protobuf }}</strong>
+                        {{/if}}
+                      </p>
                     </div>
                   {{/each}}
                 {{/if}}
@@ -95,6 +109,11 @@
         </div>
       </div>
     </section>
+    <div id="scrollToTop">
+      <button class="button is-light is-rounded" type="button">
+        <span>Back to top</span>
+      </button>
+    </div>
     <!-- Protobuf documentation (incomplete) -->
     <!-- <div>
       {{@each(Object.values(it.protobufs)) => proto, index}}

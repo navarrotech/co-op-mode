@@ -161,31 +161,25 @@ function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
 
   let results: Analyzed[] = []
 
+  const hasStatusRegexp = new RegExp(/(response|res)\.(status|sendStatus)\(\d+\)/gmi)
+
   const lines = stringified.split('\n')
   for (let index = 0; index < lines.length; index++) {
-    const line = lines[index]
+    const line = lines[index] || ""
 
     if (index + 1 >= lines.length) {
       break
     }
 
-    const hasStatus = line?.includes('response.status') || line?.includes('res.status')
-    const nextLineIsSend = lines[index + 1]?.includes('response.sendProto')
-    if (!hasStatus || !nextLineIsSend) {
+    const hasStatus = hasStatusRegexp.test(line)
+    if (!hasStatus) {
       continue
     }
 
-    const status = line.match(/response\.status\((\d+)\)/)?.[1]
+    const status = line.match(/(?:response|res)\.(?:status|sendStatus)\((\d+)\)/)?.[1]
 
     if (status === undefined) {
       console.warn("Found no status code in static code analysis of line for route: ", url, line)
-      continue
-    }
-
-    const proto = lines[index + 1].match(/response\.sendProto\("(\w+)",/)?.[1]
-
-    if (proto === undefined) {
-      console.warn("Found no proto in static code analysis of line for route: ", url, lines[index + 1])
       continue
     }
 
@@ -197,7 +191,22 @@ function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
     } else if (status.startsWith("5")) {
       color = "link"
     }
+  
+    const nextLineIsSend = lines[index + 1]?.includes('response.sendProto')
+    if (!nextLineIsSend) {
+      results.push({
+        code: parseInt(status),
+        protobuf: "-- No Payload Response --",
+        color
+      })
+    }
 
+    const proto = lines[index + 1].match(/response\.sendProto\("(\w+)",/)?.[1]
+
+    if (proto === undefined) {
+      console.warn("Found no proto in static code analysis of line for route: ", url, lines[index + 1])
+      continue
+    }
     results.push({
       code: parseInt(status),
       protobuf: proto,
