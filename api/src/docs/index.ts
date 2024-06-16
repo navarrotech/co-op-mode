@@ -10,7 +10,7 @@
 import type { Schema, SchemaObjectDescription } from 'yup'
 
 // Routes
-import { routes } from '@/functions'
+import routes from '@/functions'
 import { ProtoBufs } from '@/lib/protobuf'
 
 // Utility

@@ -73,7 +73,7 @@ const route: Route = {
             // TODO: implement "total" count:
             total: messages.length,
             conversation_id,
-            messages: sanitize(messages),
+            messages: sanitize(messages) as any,
             has_more,
         })
     }

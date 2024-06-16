@@ -63,7 +63,7 @@ const route: Route = {
 
         if (newContent !== message.message) {
             response.status(200)
-            response.sendProto("Messages", sanitize(message))
+            response.sendProto("Messages", sanitize(message) as any)
             return
         }
 
@@ -88,7 +88,7 @@ const route: Route = {
         })
 
         response.status(200)
-        response.sendProto("Messages", sanitize(updatedMessage))
+        response.sendProto("Messages", sanitize(updatedMessage) as any)
     }
 
 }

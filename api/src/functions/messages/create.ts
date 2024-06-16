@@ -77,7 +77,7 @@ const route: Route = {
         ])
 
         response.status(201)
-        response.sendProto("Messages", sanitize(newMessage))
+        response.sendProto("Messages", sanitize(newMessage) as any)
     }
 
 }

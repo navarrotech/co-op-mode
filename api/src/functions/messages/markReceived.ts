@@ -64,7 +64,7 @@ const route: Route = {
         })
 
         response.status(201)
-        response.sendProto("Messages", sanitize(updatedMessage))
+        response.sendProto("Messages", sanitize(updatedMessage) as any)
     }
 
 }

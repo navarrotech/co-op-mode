@@ -1,0 +1,454 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id              String @id @default(uuid())
+
+  first_name      String @db.VarChar(32)
+  last_name       String @db.VarChar(32)
+  email           String @unique @db.VarChar(128)
+
+  passwords       passwords[]
+  preferences     preferences?
+  dating_profile  dating_profile?
+  limits          permanent_limits?
+  daily_limits    daily_limits?
+  monthly_limits  monthly_limits?
+  status          status?
+
+  media           media[]
+  likes           likes[]
+  dislikes        dislikes[]
+  linked_accounts linked_accounts[]
+
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt @default(now())
+}
+
+model linked_accounts {
+  id           String @id @default(uuid())
+  owner_id     String
+  user         users  @relation(fields: [owner_id], references: [id])
+
+  provider     Provider // Discord, Steam, Epic Games, Xbox, Play Station, etc
+  version      String @default("v1") // The version of the provider's API we're using
+
+  // The following fields are given by the provider
+  account_id   String // Ex: Discord profile ID
+  username     String // Ex: Discord username
+  token        String // Ex: Discord auth token
+
+  metadata     Json     @default("{}") // Any extra data the provider gives us, that we need to save
+
+  created_at   DateTime @default(now())
+  last_used_at DateTime @default(now())
+  updated_at   DateTime @updatedAt @default(now())
+}
+
+model passwords {
+  id           String   @id @default(uuid())
+  owner_id     String
+  user         users    @relation(fields: [owner_id], references: [id])
+
+  value        String
+  created_at   DateTime @default(now())
+}
+
+model preferences {
+  id           String @id @default(uuid())
+  owner_id     String @unique
+  user         users  @relation(fields: [owner_id], references: [id])
+
+  language     String @default("en")
+}
+
+model status {
+  id           String   @id @default(uuid())
+  owner_id     String   @unique
+  user         users    @relation(fields: [owner_id], references: [id])
+
+  online       Boolean  @default(true)
+  time_active  Int      @default(0) // In seconds
+  last_seen    DateTime @default(now())
+}
+
+model dating_profile {
+  id           String @id @default(uuid())
+  owner_id     String @unique
+  user         users @relation(fields: [owner_id], references : [id])
+
+  // Required
+  age          Int
+  gender       Gender       // M/F/Non-binary/Other
+  relationship Relationship // Monogomy, Polyamory, etc
+
+  // Video game values
+  fav_vgames     String[]    @default([])
+  fav_vgenres    String[]    @default([])
+  fav_vplatforms Platforms[] @default([])
+  fav_vcharacter String      @default("")
+
+  likes_dnd      Boolean  @default(false)
+  likes_anime    Boolean  @default(false)
+  likes_bgames   Boolean  @default(false) // Board games
+  fav_bgames     String[] @default([]) // Board game genres
+
+  // Optional enums
+  height       Int      @default(-1)
+  bio          String   @default("") @db.VarChar(512)
+  prompts      String[] @default([])
+
+  known_langs  String[] @default([]) @db.VarChar(2) // Short codes for languages
+  location     String   @default("") @db.VarChar(32) // City or zip code only
+  location2    String   @default("") @db.VarChar(32) // State if needed
+  school       String   @default("") @db.VarChar(64) // School name
+  job_title    String   @default("") @db.VarChar(64) // Job title
+  company      String   @default("") @db.VarChar(64) // Company name
+  top_song     String   @default("") @db.VarChar(32) // Favorite song
+  top_artist   String   @default("") @db.VarChar(32) // Favorite artist
+  pronouns     String?  @default("") @db.VarChar(16) // He/Him, She/Her, They/Them, etc
+
+  height_unit  UnitPreference  @default(Imperial) // imperial vs metric
+  sexuality    Sexuality?      @default(Unknown)  // Straight vs gay vs bi vs pan vs etc
+  education    Education?      @default(Unknown)  // High school, college, in college, etc
+  looking_for  Seeking[]       @default([])       // Friends, Long term, short term, etc
+  family_plans Family?         @default(Unknown)  // Wants kids, doesn't want kids, etc
+  workout      Workout?        @default(Unknown)  // How often they workout
+  personality  Personality?    @default(Unknown)  // INFJ, ENTP, etc
+  smokes       Smokes?         @default(Unknown)
+  drinks       Drinks?         @default(Unknown)
+  cannabis     Stoner?         @default(Unknown)
+
+  // Flags
+  banned           Boolean @default(false)
+
+  // Settings
+  use_smart_photos Boolean @default(true)
+  hide_distance    Boolean @default(false)
+  hide_age         Boolean @default(false)
+  dnd_mode         Boolean @default(false)
+  show_sexuality   Boolean @default(false)
+  show_gender      Boolean @default(false)
+  show_pronouns    Boolean @default(false)
+
+  analytics    profile_analytics?
+
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt @default(now())
+}
+
+model profile_analytics {
+  id           String @id @default(uuid())
+  profile_id   String @unique
+
+  profile      dating_profile @relation(fields: [profile_id], references: [id])
+
+  views        Int @default(0)
+  likes        Int @default(0)
+  matches      Int @default(0)
+  dislikes     Int @default(0)
+  superlikes   Int @default(0)
+
+  reports_from Int @default(0) // How many times this profile has reported others
+  reports_to   Int @default(0) // How many times this profile has been reported
+  blocks_from  Int @default(0) // How many times this profile has blocked others
+  blocks_to    Int @default(0) // How many times this profile has been blocked
+
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt @default(now())
+}
+
+model likes {
+  id           String @id @default(uuid())
+  owner_id     String
+  user         users @relation(fields: [owner_id], references: [id])
+
+  is_super     Boolean @default(false)
+  target_id    String // Who they liked
+
+  created_at   DateTime @default(now())
+}
+
+model dislikes {
+  id           String @id @default(uuid())
+  owner_id     String
+  user         users @relation(fields: [owner_id], references: [id])
+
+  target_id    String // Who they disliked
+
+  created_at   DateTime @default(now())
+}
+
+model media {
+  id           String @id @default(uuid())
+  owner_id     String
+  user         users @relation(fields: [owner_id], references: [id])
+
+  likes        Int @default(0)
+  superlikes   Int @default(0)
+  dislikes     Int @default(0)
+  time_spent   Int @default(0)
+
+  url          String
+  mime_type    String
+  file_size    Int
+
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt @default(now())
+}
+
+model permanent_limits {
+  id           String @id @default(uuid())
+  owner_id     String @unique
+  user         users @relation(fields: [owner_id], references: [id])
+
+  images       Int @default(9)
+  video        Int @default(3)
+}
+
+model daily_limits {
+  id           String @id @default(uuid())
+  owner_id     String @unique
+  user         users @relation(fields: [owner_id], references: [id])
+
+  likes        Int @default(256)
+  dislikes     Int @default(512)
+  messages     Int @default(512)
+
+  renews_at    DateTime @default(dbgenerated("now() + interval '1 day'"))
+}
+
+model monthly_limits {
+  id           String @id @default(uuid())
+  owner_id     String @unique
+  user         users @relation(fields: [owner_id], references: [id])
+
+  superlikes   Int @default(3)
+  boosts       Int @default(1)
+
+  renews_at    DateTime @default(dbgenerated("now() + interval '1 month'"))
+}
+
+model conversations {
+  id           String @id @default(uuid())
+
+  user1_id     String
+  user2_id     String
+  messages     messages[]
+
+  blocked      Boolean @default(false)
+  who_blocked  String?
+  who_reported String?
+
+  created_at   DateTime @default(now())
+  last_message DateTime @default(now())
+}
+
+model messages {
+  id           String @id @default(uuid())
+  owner_id     String
+
+  conversation conversations @relation(fields: [conversation_id], references: [id])
+  conversation_id String
+
+  message       String @db.VarChar(512)
+
+  is_read       Boolean @default(false)
+  time_read     DateTime?
+
+  is_received   Boolean @default(false)
+  time_received DateTime?
+
+  is_deleted    Boolean @default(false)
+  time_deleted  DateTime?
+
+  is_edited     Boolean @default(false)
+  time_edited   DateTime?
+  edit_history  Json    @default("[]")
+
+  created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt @default(now())
+}
+
+// An internal, searchable directory of video games created by the company
+model video_games {
+  id          String @id @default(uuid())
+  name        String
+  image_url   String
+  publisher   String
+  release     DateTime
+  platforms   Platforms[] // PC, PS4, PS5, Xbox, etc
+  genres      String[] // Action, Adventure, etc
+  tags        String[] // Multiplayer, Singleplayer, etc
+  description String
+}
+
+// Global system settings can go here
+model core {
+  id    String @id @default(uuid())
+  key   String @unique
+  value String
+}
+
+// Global system analytics can go here
+model analytics {
+  id    String @id @default(uuid())
+  key   String @unique
+  value Int
+}
+
+enum Platforms {
+  Unknown
+  PC
+  PlayStation
+  Xbox
+  Switch
+  Mobile
+  Other
+}
+
+enum Provider {
+  Unknown
+  Discord
+  Steam
+  EpicGames
+  Xbox
+  PlayStation
+}
+
+enum UnitPreference {
+  Unknown
+  Imperial
+  Metric
+}
+
+enum Sexuality {
+  Unknown
+  Straight
+  Gay
+  Lesbian
+  Bisexual
+  Asexual
+  Demisexual
+  Pansexual
+  Queer
+  Questioning
+}
+
+enum Gender {
+  NonBinary
+  Male
+  Female
+  Other
+}
+
+enum Seeking { 
+  Unknown
+  LongTermRelationship
+  ShortTermRelationship
+  LongTermOpenToShort
+  ShortTermOpenToLong
+  NewFriends
+  Unsure
+}
+
+enum Relationship { 
+  Unknown
+  Monogomy
+  EthicalNonMonogomy
+  OpenRelationship
+  Polyamory
+  OpenToExploring
+}
+
+enum Family { 
+  Unknown
+  WantsChildren
+  DoesntWantChildren
+  HaveChildrenWantMore
+  HaveChildrenDontWantMore
+  Unsure
+}
+
+enum Workout { 
+  Unknown
+  Everyday
+  Often
+  Sometimes
+  Never
+}
+
+enum Personality { 
+  Unknown
+  INTJ
+  INTP
+  ENTJ
+  ENTP
+  INFJ
+  INFP
+  ENFJ
+  ISTJ
+  ISFJ
+  ESTJ
+  ESFJ
+  ISTP
+  ISFP
+  ESTP
+  ESFP
+}
+
+enum Education {
+  Unknown
+  Bachelors
+  InCollege
+  HighSchool
+  PhD
+  InGradSchool
+  Masters
+  TradeSchool
+}
+
+enum Smokes {
+  Unknown
+  YesSmokes
+  OccassionallySmokes
+  SociallySmokes
+  OkayWithSmokes
+  NeverSmokes
+}
+
+enum Drinks {
+  Unknown
+  NotForMe
+  Sober
+  OnSpecialOccasions
+  Socially
+  Regularly
+}
+
+enum Stoner {
+  Unknown
+  YesSmokes
+  OccassionallySmokes
+  SociallySmokes
+  OkayWithSmokes
+  NeverSmokes
+}
+
+enum Pets {
+  Unknown
+  HasPets
+  WantsPets
+  LikesPets
+  DislikesPets
+  NoPets
+}

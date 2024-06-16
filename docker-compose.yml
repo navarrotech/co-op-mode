@@ -24,12 +24,31 @@ services:
       - type: bind
         source: "./api"
         target: "/app"
-      - type: bind
-        source: "./schema.proto"
-        target: "/schema.proto"
     command: yarn run dev
     ports:
       - 3000:80
+    networks:
+      - default
+
+  routines:
+    build:
+      context: .
+      dockerfile: ./routines/Dockerfile
+    container_name: co-op-mode-routines
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://postgres:postgres@co-op-mode-postgres:5432/postgres
+      REDIS_URL: redis://co-op-mode-redis:6379
+    depends_on:
+      - api
+      - database
+      - redis
+    volumes:
+      - type: bind
+        source: "./routines"
+        target: "/app"
+    command: yarn run dev
     networks:
       - default
 

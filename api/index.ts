@@ -29,7 +29,6 @@ import path from "path"
 // Initialization
 import { initDatabase, closeDatabase } from "./src/lib/database"
 import { initRedis, closeRedis, redisStore } from "@/lib/redis"
-import initRoutes from "@/routines"
 
 // Environment Variables
 import { API_PORT, NODE_ENV, SESSION_SECRET, VERSION } from "src/env"
@@ -38,7 +37,6 @@ console.log("Starting up")
 const initialization = Promise.all([
   initDatabase(),
   initRedis(),
-  initRoutes(),
 ])
 
 const app = express()
