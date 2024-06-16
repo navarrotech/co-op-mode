@@ -11,7 +11,7 @@ import type { Session } from "express-session"
 import type i18nAPI from "i18n"
 import type { SupportedLanguages } from "./lib/language"
 import type { users } from "@prisma/client"
-import type { AnyObjectSchema } from "yup"=
+import type { AnyObjectSchema } from "yup"
 
 //////////////////////////////////////////////////////
 // Utilities
@@ -27,7 +27,7 @@ type NonFunction<T> = Pick<T, NonFunctionProperties<T>>
 // Routes
 
 export type Request = ExpressRequest & {
-    body: Record<string, any>
+    body: Record<string, any>,
     language: SupportedLanguages // Language code, from accept-language header and validated by middleware
     __:   typeof i18nAPI.__   // i18n :: For singular translations
     __n:  typeof i18nAPI.__n  // i18n :: For plural translations
@@ -52,7 +52,7 @@ export type RouteHandler = (request: Request, response: Response, next: NextFunc
 
 export type Route = {
     path: string
-    method?: "all" | "get" | "post" | "put" | "delete"
+    method?: "all" | "get" | "post" | "put" | "delete" | "patch"
     validator?: AnyObjectSchema
     middlewares?: any[]
     handler: RouteHandler
@@ -62,3 +62,8 @@ export { NextFunction } from 'express'
 
 //////////////////////////////////////////////////////
 // Other
+
+export type MessageHistory = {
+    message: string
+    time_edited: string
+}

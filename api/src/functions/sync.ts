@@ -10,7 +10,7 @@ import database from "@/lib/database"
 
 const route: Route = {
     method: "post",
-    path: "/sync",
+    path: "/api/v1/sync",
     middlewares: [ requireAuth ],
     handler: async function loginHandler(request, response) {
         const userid = request.session.user.id

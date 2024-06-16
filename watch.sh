@@ -2,7 +2,7 @@
 
 # Define the commands to run
 cmd1="nodemon --watch schema.proto -e proto --exec './gen.sh'"
-cmd2="nodemon --watch api/src/docs -e ts,squirrelly --exec './doc.sh'"
+cmd2="nodemon --watch api/src/docs,src/**.ts -e ts,squirrelly --exec './doc.sh'"
 
 # Function to handle termination
 terminate() {

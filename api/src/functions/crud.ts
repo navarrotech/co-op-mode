@@ -1,7 +1,7 @@
 // Copyright © 2023 Navarrotech
 
 import type { Request, Response, Route } from 'src/apiTypes'
-import prisma, { type PrismaTableNames } from 'src/lib/database'
+import database, { type PrismaTableNames } from 'src/lib/database'
 
 import * as yup from 'yup'
 
@@ -19,7 +19,7 @@ export default function MakeRoutes(props: Props): Route[] {
             try {
                 const { limit, offset } = req.query
                 const { id:ownerid } = req.session.user
-                const list = await prisma[props.prismaTable].findMany({ 
+                const list = await database[props.prismaTable].findMany({ 
                     where: {
                         ownerid
                     },
@@ -56,7 +56,7 @@ export default function MakeRoutes(props: Props): Route[] {
         handler: async function DynamicCreateRoute(req: Request, res: Response){
             try {
                 const { id:ownerid } = req.session.user
-                const created = await prisma[props.prismaTable].create({
+                const created = await database[props.prismaTable].create({
                     data: {
                         ...req.body,
                         ownerid
@@ -82,7 +82,7 @@ export default function MakeRoutes(props: Props): Route[] {
             try {
                 const { id: ownerid } = req.session.user
                 const { id } = req.params
-                const updated = await prisma[props.prismaTable].update({
+                const updated = await database[props.prismaTable].update({
                     where: {
                         id
                     },
@@ -112,7 +112,7 @@ export default function MakeRoutes(props: Props): Route[] {
             try {
                 const { id: ownerid } = req.session.user
                 const { id } = req.params
-                const removed = await prisma[props.prismaTable].deleteMany({
+                const removed = await database[props.prismaTable].deleteMany({
                     where: {
                         id,
                         ownerid

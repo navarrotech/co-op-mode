@@ -7,7 +7,7 @@ message FormInvalid {
 }
 
 message FormsInvalid {
-    repeated FormInvalid payloads = 1;
+    repeated FormInvalid invalid = 1;
 }
 
 // User-Related Messages
@@ -80,6 +80,160 @@ message DatingProfile {
     string updated_at = 45;
 }
 
+message Status {
+    string id = 1;
+    string owner_id = 2;
+    bool   online = 3;
+    int32  time_active = 4;
+    string last_seen = 5;
+}
+
+message Limits {
+    PermanentLimits permanent = 1;
+    DailyLimits daily = 2;
+    MonthlyLimits monthly = 3;
+}
+
+message PermanentLimits {
+    string id = 1;
+    string owner_id = 2;
+    int32 images = 3;
+    int32 video = 4;
+}
+
+message DailyLimits {
+    string id = 1;
+    string owner_id = 2;
+    int32 likes = 3;
+    int32 dislikes = 4;
+    int32 messages = 5;
+    string renews_at = 6;
+}
+
+message MonthlyLimits {
+    string id = 1;
+    string owner_id = 2;
+    int32 superlikes = 3;
+    int32 boosts = 4;
+    string renews_at = 5;
+}
+
+message Media {
+    string id = 1;
+    string owner_id = 2;
+    int32  likes = 3;
+    int32  superlikes = 4;
+    int32  dislikes = 5;
+    int32  time_spent = 6;
+    string url = 7;
+    string mime_type = 8;
+    string file_size = 9;
+    string created_at = 10;
+    string updated_at = 11;
+}
+
+message Likes {
+    string id = 1;
+    string owner_id = 2;
+    string target_id = 3;
+    string created_at = 4;
+    bool is_super = 5;
+}
+
+message Dislikes {
+    string id = 1;
+    string owner_id = 2;
+    string target_id = 3;
+    string created_at = 4;
+}
+
+message Conversations {
+    string id = 1;
+    string user1_id = 2;
+    string user2_id = 3;
+    bool blocked = 4;
+    string who_blocked = 5;
+    string who_reported = 6;
+    string created_at = 7;
+    string last_message = 8;
+}
+
+message ConversationList {
+    int32 take = 1;
+    int32 skip = 2;
+    int32 total = 3;
+    repeated Conversations conversations = 4;
+    bool has_more = 5;
+}
+
+message Messages {
+    string id = 1;
+    string owner_id = 2;
+    string conversation_id = 3;
+    string content = 4;
+    bool is_read = 5;
+    string time_read = 6;
+    bool is_sent = 7;
+    string time_sent = 8;
+    bool is_received = 9;
+    string time_received = 10;
+    bool is_deleted = 11;
+    string created_at = 12;
+}
+
+message Messagelist {
+    int32 take = 1;
+    int32 skip = 2;
+    int32 total = 3;
+    string conversation_id = 4;
+    repeated Messages messages = 5;
+    bool has_more = 6;
+}
+
+message VideoGames {
+    string id = 1;
+    string name = 2;
+    string image_url = 3;
+    string publisher = 4;
+    string release = 5;
+    repeated string platforms = 6;
+    repeated string genres = 7;
+    repeated string tags = 8;
+    string description = 9;
+}
+
+// Authentication Messages
+message LoginRequest {
+    string provider = 1;
+    string token = 2;
+    string secret = 3;
+    bool is_signup = 4;
+    string first_name = 5;
+    string last_name = 6;
+}
+
+message AuthResponse {
+    bool authorized = 1;
+    string message = 2;
+    User user = 3;
+}
+
+message SyncResponse {
+    User user = 1;
+    repeated Conversations conversations = 2;
+    string message = 3;
+}
+
+// General Messages
+message ServerError {
+    string message = 1;
+}
+
+message ClientError {
+    string message = 1;
+    string stack_trace = 2;
+}
+
 // Enum Definitions
 enum Platforms {
     UNKNOWN = 0;
@@ -92,7 +246,7 @@ enum Platforms {
 }
 
 enum Gender {
-    UNKNOWN = 0;
+    NONBINARY = 0;
     MALE = 1;
     FEMALE = 2;
     OTHER = 3;
@@ -206,133 +360,4 @@ enum Cannabis {
     OCCASIONALLY = 2;
     SOCIALLY = 3;
     NEVER = 4;
-}
-
-message Limits {
-    PermanentLimits permanent = 1;
-    DailyLimits daily = 2;
-    MonthlyLimits monthly = 3;
-}
-
-message PermanentLimits {
-    string id = 1;
-    string owner_id = 2;
-    int32 images = 3;
-    int32 video = 4;
-}
-
-message DailyLimits {
-    string id = 1;
-    string owner_id = 2;
-    int32 likes = 3;
-    int32 dislikes = 4;
-    int32 messages = 5;
-    string renews_at = 6;
-}
-
-message MonthlyLimits {
-    string id = 1;
-    string owner_id = 2;
-    int32 superlikes = 3;
-    int32 boosts = 4;
-    string renews_at = 5;
-}
-
-message Media {
-    string id = 1;
-    string owner_id = 2;
-    int32  likes = 3;
-    int32  superlikes = 4;
-    int32  dislikes = 5;
-    int32  time_spent = 6;
-    string url = 7;
-    string mime_type = 8;
-    string file_size = 9;
-    string created_at = 10;
-    string updated_at = 11;
-}
-
-message Likes {
-    string id = 1;
-    string owner_id = 2;
-    string target_id = 3;
-    string created_at = 4;
-    bool is_super = 5;
-}
-
-message Dislikes {
-    string id = 1;
-    string owner_id = 2;
-    string target_id = 3;
-    string created_at = 4;
-}
-
-message Conversations {
-    string id = 1;
-    string user1_id = 2;
-    string user2_id = 3;
-    bool blocked = 4;
-    string who_blocked = 5;
-    string who_reported = 6;
-    string created_at = 7;
-    string last_message = 8;
-}
-
-message Messages {
-    string id = 1;
-    string owner_id = 2;
-    string conversation_id = 3;
-    string content = 4;
-    bool is_read = 5;
-    string time_read = 6;
-    bool is_sent = 7;
-    string time_sent = 8;
-    bool is_received = 9;
-    string time_received = 10;
-    bool is_deleted = 11;
-    string created_at = 12;
-}
-
-message VideoGames {
-    string id = 1;
-    string name = 2;
-    string image_url = 3;
-    string publisher = 4;
-    string release = 5;
-    repeated string platforms = 6;
-    repeated string genres = 7;
-    repeated string tags = 8;
-    string description = 9;
-}
-
-// Authentication Messages
-message LoginRequest {
-    string provider = 1;
-    string token = 2;
-    string secret = 3;
-    bool is_signup = 4;
-    string first_name = 5;
-    string last_name = 6;
-}
-
-message AuthResponse {
-    bool authorized = 1;
-    string message = 2;
-    User user = 3;
-}
-
-message SyncResponse {
-    User user = 1;
-    repeated Conversations conversations = 2;
-    string message = 3;
-}
-
-// General Messages
-message ServerError {
-    string message = 1;
-}
-
-message ClientError {
-    string message = 1;
-    string stack_trace = 2;
 }

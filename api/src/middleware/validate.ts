@@ -41,7 +41,7 @@ export default async function validateMiddleware(
                 for (const error of validationError.inner) {
                     const key = (error.path?.replace(/((body)|(query))\./gi, '')) ?? ""
 
-                    let value: string = error.params.originalValue || error.value
+                    let value: string = error.params.originalValue || error.value || null
                     let message = error.message // <-- Default to unlocalized message
 
                     const type = error.type as ValidationErrorTypes
@@ -50,7 +50,7 @@ export default async function validateMiddleware(
                     // If the reason for the error is a bad password
                     if (key.includes('password')) {
                         // You can never be too secure!
-                        value = ""
+                        value = undefined
                         message = request.__("validator_password")
                     }
                     // If the error is because it was too long
@@ -78,7 +78,7 @@ export default async function validateMiddleware(
                 }
 
                 response.status(400)
-                response.sendProto("FormsInvalid", { payloads })
+                response.sendProto("FormsInvalid", { invalid: payloads })
                 
                 return null
             }

@@ -10,159 +10,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Platforms {
-  Unknown
-  PC
-  PlayStation
-  Xbox
-  Switch
-  Mobile
-  Other
-}
-
-enum Provider {
-  Unknown
-  Discord
-  Steam
-  EpicGames
-  Xbox
-  PlayStation
-}
-
-enum UnitPreference {
-  Unknown
-  Imperial
-  Metric
-}
-
-enum Sexuality {
-  Unknown
-  Straight
-  Gay
-  Lesbian
-  Bisexual
-  Asexual
-  Demisexual
-  Pansexual
-  Queer
-  Questioning
-}
-
-enum Gender {
-  Unknown
-  Male
-  Female
-  Other
-}
-
-enum Seeking { 
-  Unknown
-  LongTermRelationship
-  ShortTermRelationship
-  LongTermOpenToShort
-  ShortTermOpenToLong
-  NewFriends
-  Unsure
-}
-
-enum Relationship { 
-  Unknown
-  Monogomy
-  EthicalNonMonogomy
-  OpenRelationship
-  Polyamory
-  OpenToExploring
-}
-
-enum Family { 
-  Unknown
-  WantsChildren
-  DoesntWantChildren
-  HaveChildrenWantMore
-  HaveChildrenDontWantMore
-  Unsure
-}
-
-enum Workout { 
-  Unknown
-  Everyday
-  Often
-  Sometimes
-  Never
-}
-
-enum Personality { 
-  Unknown
-  INTJ
-  INTP
-  ENTJ
-  ENTP
-  INFJ
-  INFP
-  ENFJ
-  ISTJ
-  ISFJ
-  ESTJ
-  ESFJ
-  ISTP
-  ISFP
-  ESTP
-  ESFP
-}
-
-enum Education {
-  Unknown
-  Bachelors
-  InCollege
-  HighSchool
-  PhD
-  InGradSchool
-  Masters
-  TradeSchool
-}
-
-enum Smokes {
-  Unknown
-  YesSmokes
-  OccassionallySmokes
-  SociallySmokes
-  OkayWithSmokes
-  NeverSmokes
-}
-
-enum Drinks {
-  Unknown
-  NotForMe
-  Sober
-  OnSpecialOccasions
-  Socially
-  Regularly
-}
-
-enum Stoner {
-  Unknown
-  YesSmokes
-  OccassionallySmokes
-  SociallySmokes
-  OkayWithSmokes
-  NeverSmokes
-}
-
-enum Pets {
-  Unknown
-  HasPets
-  WantsPets
-  LikesPets
-  DislikesPets
-  NoPets
-}
-
 model users {
   id              String @id @default(uuid())
 
-  email           String @unique @db.VarChar(128)
   first_name      String @db.VarChar(32)
   last_name       String @db.VarChar(32)
+  email           String @unique @db.VarChar(128)
 
   passwords       passwords[]
   preferences     preferences?
@@ -235,7 +88,8 @@ model dating_profile {
 
   // Required
   age          Int
-  gender       String // M/F/Non-binary/Other
+  gender       Gender       // M/F/Non-binary/Other
+  relationship Relationship // Monogomy, Polyamory, etc
 
   // Video game values
   fav_vgames     String[]    @default([])
@@ -250,7 +104,7 @@ model dating_profile {
 
   // Optional enums
   height       Int      @default(-1)
-  bio          String   @default("") @db.VarChar(256)
+  bio          String   @default("") @db.VarChar(512)
   prompts      String[] @default([])
 
   known_langs  String[] @default([]) @db.VarChar(2) // Short codes for languages
@@ -261,13 +115,12 @@ model dating_profile {
   company      String   @default("") @db.VarChar(64) // Company name
   top_song     String   @default("") @db.VarChar(32) // Favorite song
   top_artist   String   @default("") @db.VarChar(32) // Favorite artist
-  pronouns     String?  @default("") @db.VarChar(12) // He/Him, She/Her, They/Them, etc
+  pronouns     String?  @default("") @db.VarChar(16) // He/Him, She/Her, They/Them, etc
 
   height_unit  UnitPreference  @default(Imperial) // imperial vs metric
-  sexuality    Gender?         @default(Unknown)  // Straight vs gay vs bi vs pan vs etc
+  sexuality    Sexuality?      @default(Unknown)  // Straight vs gay vs bi vs pan vs etc
   education    Education?      @default(Unknown)  // High school, college, in college, etc
   looking_for  Seeking[]       @default([])       // Friends, Long term, short term, etc
-  relationship Relationship                       // Monogomy, Polyamory, etc
   family_plans Family?         @default(Unknown)  // Wants kids, doesn't want kids, etc
   workout      Workout?        @default(Unknown)  // How often they workout
   personality  Personality?    @default(Unknown)  // INFJ, ENTP, etc
@@ -279,7 +132,7 @@ model dating_profile {
   banned           Boolean @default(false)
 
   // Settings
-  use_smart_photos Boolean @default(false)
+  use_smart_photos Boolean @default(true)
   hide_distance    Boolean @default(false)
   hide_age         Boolean @default(false)
   dnd_mode         Boolean @default(false)
@@ -301,6 +154,7 @@ model profile_analytics {
 
   views        Int @default(0)
   likes        Int @default(0)
+  matches      Int @default(0)
   dislikes     Int @default(0)
   superlikes   Int @default(0)
 
@@ -406,17 +260,23 @@ model messages {
   conversation conversations @relation(fields: [conversation_id], references: [id])
   conversation_id String
 
-  content       String @db.VarChar(512)
+  message       String @db.VarChar(512)
 
   is_read       Boolean @default(false)
   time_read     DateTime?
-  is_sent       Boolean @default(false)
-  time_sent     DateTime?
+
   is_received   Boolean @default(false)
   time_received DateTime?
+
   is_deleted    Boolean @default(false)
+  time_deleted  DateTime?
+
+  is_edited     Boolean @default(false)
+  time_edited   DateTime?
+  edit_history  Json    @default("[]")
 
   created_at   DateTime @default(now())
+  updated_at   DateTime @updatedAt @default(now())
 }
 
 // An internal, searchable directory of video games created by the company
@@ -444,4 +304,151 @@ model analytics {
   id    String @id @default(uuid())
   key   String @unique
   value Int
+}
+
+enum Platforms {
+  Unknown
+  PC
+  PlayStation
+  Xbox
+  Switch
+  Mobile
+  Other
+}
+
+enum Provider {
+  Unknown
+  Discord
+  Steam
+  EpicGames
+  Xbox
+  PlayStation
+}
+
+enum UnitPreference {
+  Unknown
+  Imperial
+  Metric
+}
+
+enum Sexuality {
+  Unknown
+  Straight
+  Gay
+  Lesbian
+  Bisexual
+  Asexual
+  Demisexual
+  Pansexual
+  Queer
+  Questioning
+}
+
+enum Gender {
+  NonBinary
+  Male
+  Female
+  Other
+}
+
+enum Seeking { 
+  Unknown
+  LongTermRelationship
+  ShortTermRelationship
+  LongTermOpenToShort
+  ShortTermOpenToLong
+  NewFriends
+  Unsure
+}
+
+enum Relationship { 
+  Unknown
+  Monogomy
+  EthicalNonMonogomy
+  OpenRelationship
+  Polyamory
+  OpenToExploring
+}
+
+enum Family { 
+  Unknown
+  WantsChildren
+  DoesntWantChildren
+  HaveChildrenWantMore
+  HaveChildrenDontWantMore
+  Unsure
+}
+
+enum Workout { 
+  Unknown
+  Everyday
+  Often
+  Sometimes
+  Never
+}
+
+enum Personality { 
+  Unknown
+  INTJ
+  INTP
+  ENTJ
+  ENTP
+  INFJ
+  INFP
+  ENFJ
+  ISTJ
+  ISFJ
+  ESTJ
+  ESFJ
+  ISTP
+  ISFP
+  ESTP
+  ESFP
+}
+
+enum Education {
+  Unknown
+  Bachelors
+  InCollege
+  HighSchool
+  PhD
+  InGradSchool
+  Masters
+  TradeSchool
+}
+
+enum Smokes {
+  Unknown
+  YesSmokes
+  OccassionallySmokes
+  SociallySmokes
+  OkayWithSmokes
+  NeverSmokes
+}
+
+enum Drinks {
+  Unknown
+  NotForMe
+  Sober
+  OnSpecialOccasions
+  Socially
+  Regularly
+}
+
+enum Stoner {
+  Unknown
+  YesSmokes
+  OccassionallySmokes
+  SociallySmokes
+  OkayWithSmokes
+  NeverSmokes
+}
+
+enum Pets {
+  Unknown
+  HasPets
+  WantsPets
+  LikesPets
+  DislikesPets
+  NoPets
 }

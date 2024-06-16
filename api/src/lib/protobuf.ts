@@ -1,27 +1,28 @@
 // Copyright © 2024 Navarrotech
 
 import * as ProtoBufLibrary from "./generated/schema"
+import { NODE_ENV } from "@/env"
 
-export const ProtoBufs = {
-    ServerError: ProtoBufLibrary.ServerError,
-    ClientError: ProtoBufLibrary.ClientError,
-    User: ProtoBufLibrary.User,
-    Preferences: ProtoBufLibrary.Preferences,
-    DatingProfile: ProtoBufLibrary.DatingProfile,
-    Likes: ProtoBufLibrary.Likes,
-    Dislikes: ProtoBufLibrary.Dislikes,
-    Media: ProtoBufLibrary.Media,
-    PermanentLimits: ProtoBufLibrary.PermanentLimits,
-    DailyLimits: ProtoBufLibrary.DailyLimits,
-    MonthlyLimits: ProtoBufLibrary.MonthlyLimits,
-    Conversations: ProtoBufLibrary.Conversations,
-    Messages: ProtoBufLibrary.Messages,
-    VideoGames: ProtoBufLibrary.VideoGames,
-    LoginRequest: ProtoBufLibrary.LoginRequest,
-    AuthResponse: ProtoBufLibrary.AuthResponse,
-    SyncResponse: ProtoBufLibrary.SyncResponse,
-    FormInvalid: ProtoBufLibrary.FormInvalid,
-    FormsInvalid: ProtoBufLibrary.FormsInvalid,
+const {
+    // Pull out enums manually for typescript
+    Cannabis,
+    Drinks,
+    Education,
+    FamilyPlans,
+    Gender,
+    HeightUnit,
+    Personality,
+    Platforms,
+    Relationship,
+    Seeking,
+    Smokes,
+    Sexuality,
+    Workout,
+    ...ProtoBufs
+} = ProtoBufLibrary
+
+export {
+    ProtoBufs
 }
 
 export type ProtoBufTables = keyof typeof ProtoBufs
@@ -45,17 +46,29 @@ export function protobufMiddleware(request: Request, response: Response, next: N
             response.setHeader("Content-Type", "application/x-protobuf")
             response.setHeader("Access-Control-Expose-Headers", "X-Protobuf-Struct")
             response.setHeader("X-Protobuf-Struct", struct)
-    
+
+            // We only support JSON payloads in development for testing with postman/thunderclient
+            if (NODE_ENV === "development" && request.headers["content-type"] === "application/json") {
+                response.setHeader("Content-Type", "application/json")
+                response.send(JSON.stringify(Message))
+                return
+            }
+
             response.send(
+                // @ts-ignore
                 Construct.encode(Message).finish()
             )
+
         } catch (error: any) {
             console.error("[Protobuf SendProto Error] :: ", error.message, struct, data)
         }
     }
 
+    const contentType = request.headers["content-type"]?.toLowerCase()
+    const accept = request.headers["accept"]?.toLowerCase()
+
     // For handling incoming protobuf payloads
-    if (request.headers["content-type"] === "Application/X-Protobuf") {
+    if (contentType === "Application/X-Protobuf") {
 
         const struct = request.headers["x-protobuf-struct"] as string | undefined
 
@@ -86,10 +99,55 @@ export function protobufMiddleware(request: Request, response: Response, next: N
                 }
             }
             return
+        } else {
+            response.status(400)
+            response.send("Unknown protobuf struct")
+            return
         }
     }
+    // We only allow JSON payloads in dev for testing with postman/thunderclient
+    else if (contentType === "application/json" && NODE_ENV === "development") {
+        request.on('data', (chunk) => {
+            try {
+                request.body = JSON.parse(
+                    chunk.toString()
+                )
+            } catch (error) {
+                console.error("[JSON Parsing Error] :: ", error)
+                response.status(400)
+                response.send("Invalid JSON payload given!")
+                return
+            }
+        })
 
-    next()
+        request.on('end', () => {
+            next()
+        })
+
+        return
+    }
+    // Could be an HTML request (like /docs or public folder)
+    else if (
+        (
+            request.method === "GET"
+            || request.method === "HEAD"
+            || request.method === "OPTIONS"
+        )
+        && (
+            accept.includes("text/html") 
+            || accept.includes("*/*")
+        )
+    ) {
+        next()
+        return
+    }
+
+    response.status(400)
+    response.send("Invalid content-type, allowed: "
+        + NODE_ENV === "development"
+            ? `['Application/X-Protobuf', 'application/json']`
+            : `['Application/X-Protobuf']`
+    )
 }
 
 export type Sanitized<T> = {
@@ -102,6 +160,10 @@ export function sanitize<T>(object: T): Sanitized<T> {
     delete object.passwords
     // @ts-ignore
     delete object.password
+
+    if (Array.isArray(object)) {
+        return object.map(sanitize) as any
+    }
 
     const keys = Object.keys(object) as Array<keyof T>
 

@@ -17,6 +17,9 @@
 
     "validator_email": "Please provide a valid email address",
     "validator_password": "Password must include at least one special character",
+    "password_weak": "Password is too weak. Must be at least orange level strength.",
 
-    "generic_error":  "Something went wrong. Please try again."
+    "generic_error":  "Something went wrong. Please try again.",
+
+    "conversation_not_found": "Conversation not found."
 }

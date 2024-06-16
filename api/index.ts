@@ -4,7 +4,7 @@
 import type { Request, Response } from "@/types"
 
 // Express
-import express, { response } from "express"
+import express from "express"
 import helmet from "helmet"
 
 // Core middleware
@@ -16,28 +16,29 @@ import cors from "cors"
 // Custom Middleware
 import i18n from "@/lib/i18n"
 import validateMiddleware from "@/middleware/validate"
+import requireAuth from "@/middleware/requireAuth"
 import { protobufMiddleware } from "@/lib/protobuf"
 
 // Routing
-import { routes } from "./src/functions"
+import routes from "./src/functions"
 import { v4 as uuid } from "uuid"
 
 // Node.js
 import path from "path"
-import fs from "fs"
 
 // Initialization
 import { initDatabase, closeDatabase } from "./src/lib/database"
 import { initRedis, closeRedis, redisStore } from "@/lib/redis"
+import initRoutes from "@/routines"
 
 // Environment Variables
-import { API_PORT, NODE_ENV, SESSION_SECRET } from "src/env"
-import { version } from "./src/version" // TODO <-- This should be a ENV variable
+import { API_PORT, NODE_ENV, SESSION_SECRET, VERSION } from "src/env"
 
 console.log("Starting up")
 const initialization = Promise.all([
   initDatabase(),
   initRedis(),
+  initRoutes(),
 ])
 
 const app = express()
@@ -107,6 +108,12 @@ app.use('*',
     }
     next()
   },
+)
+
+app.use('/api', requireAuth)
+
+// After confirming if authorization is necessary
+app.use('*',
   // Custom middlware
   i18n.init, // Internationalization
   protobufMiddleware, // Automated proto buffers
@@ -180,7 +187,7 @@ initialization
     app.listen(API_PORT, () => console.log(`
       API Startup Complete
         > Port: ${API_PORT}
-        > Version: ${version}
+        > Version: ${VERSION}
         > Environment: ${NODE_ENV}
         > Created by Navarrotech 2023
     `.trim().replaceAll(/^\s*\>/gmi, '  >')))

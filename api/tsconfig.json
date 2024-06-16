@@ -25,6 +25,6 @@
          ],
        }
     },
-    "include": ["src/**/*.ts", "index.ts"],
+    "include": ["src/**/*.ts", "index.ts", "src/functions/preferences"],
     "exclude": ["node_modules", "**/*.spec.ts"]
  }

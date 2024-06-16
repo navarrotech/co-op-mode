@@ -1,58 +1,53 @@
 // Copyright © 2024 Navarrotech
 
 // Typescript
-import type { users } from "@prisma/client"
+import type { users, Relationship, Gender } from "@prisma/client"
 import type { Route } from "@/types"
 
-// Constants
-
 // Utility
-import * as yup from 'yup'
+import yup, {
+    ageValidator,
+    emailValidator,
+    firstNameValidator,
+    genderValidator,
+    lastNameValidator,
+    passwordValidator,
+    relationshipValidator
+} from '@/lib/validators'
 import database from "@/lib/database"
 import { sanitize } from "@/lib/protobuf"
+
+// Password
 import passwordHash from "password-hash"
+import checkStrength from "zxcvbn"
 
 type Body = {
     first_name: string
     last_name: string
     email: string
     password: string
+    age: number
+    gender: Gender
+    relationship: Relationship
 }
 
 const validator = yup.object().shape({
     body: yup.object().shape({
-        first_name: yup
-            .string()
-            .typeError("")
-            .trim()
-            .max(32)
-            .min(3)
+        first_name: firstNameValidator()
             .required(),
-        last_name: yup
-            .string()
-            .typeError("")
-            .trim()
-            .max(32)
-            .min(3)
+        last_name: lastNameValidator()
             .required(),
-        email: yup
-            .string()
-            .typeError("")
-            .email()
-            .trim()
-            .lowercase()
-            .max(128)
-            .min(3)
+        email: emailValidator()
             .required(),
-        password: yup
-            .string()
-            .typeError("")
-            .trim()
-            .min(8)
-            .max(128)
-            .matches(/[\W_]/, "validator_password")
+        password: passwordValidator()
             .required(),
-    })
+        age: ageValidator()
+            .required(),
+        gender: genderValidator()
+            .required(),
+        relationship: relationshipValidator()
+            .required(),
+    }).noUnknown()
 })
 
 const route: Route = {
@@ -60,18 +55,34 @@ const route: Route = {
     path: "/auth/signup",
     validator,
     handler: async function signupHandler(request, response) {
-
         let {
             first_name,
             last_name,
             email,
             password,
+            age,
+            gender,
+            relationship,
         } = request.body as Body
 
         email = email.trim().toLowerCase()
         password = password.trim()
         first_name = first_name.trim()
         last_name = last_name.trim()
+
+        // Password strength check!
+        const passwordStrength = checkStrength(password)
+
+        // Must be at least a 2 out of 4
+        if (passwordStrength.score < 2) {
+            console.log(`Rejecting signup password with score of ${passwordStrength.score}/4`)
+            response.sendProto("AuthResponse", {
+                message: request.__("password_weak"),
+                authorized: false,
+                user: null,
+            })
+            return
+        }
 
         const { language } = request
 
@@ -83,7 +94,7 @@ const route: Route = {
                         first_name,
                         last_name,
                         email,
-                    },
+                    }
                 })
             } catch (error) {
                 if (error?.code === "P2002") {
@@ -105,14 +116,14 @@ const route: Route = {
                 }
             }
 
-            const startTime = Date.now()
+            // const startTime = Date.now()
             const generatedPassword = passwordHash.generate(password, {
                 algorithm: "sha256",
                 saltLength: 32,
                 iterations: 10_000
             })
-            const stopTime = Date.now()
-            console.info(`New password hash generated in ${stopTime - startTime}ms`)
+            // const stopTime = Date.now()
+            // console.info(`New password hash generated in ${stopTime - startTime}ms`)
 
             await Promise.all([
                 database.passwords.create({
@@ -125,6 +136,14 @@ const route: Route = {
                     data: {
                         owner_id: user.id,
                         language
+                    }
+                }),
+                database.dating_profile.create({
+                    data: {
+                        owner_id: user.id,
+                        age,
+                        gender,
+                        relationship
                     }
                 }),
                 database.permanent_limits.create({
@@ -150,6 +169,7 @@ const route: Route = {
             ])
 
         } catch (error) {
+            console.error("[Signup Error] :: ", error)
             response.status(500)
             response.sendProto("AuthResponse", {
                 message: request.__("generic_error"),
