@@ -179,6 +179,15 @@ message Messages {
     string time_received = 10;
     bool is_deleted = 11;
     string created_at = 12;
+    string updated_at = 13;
+    bool is_edited = 14;
+    string time_edited = 15;
+    repeated EditHistory edit_history = 16;
+}
+
+message EditHistory {
+    string message = 1;
+    string time_edited = 2;
 }
 
 message Messagelist {
