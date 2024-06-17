@@ -25,6 +25,7 @@ const route: Route = {
     method: "patch",
     path: "/api/v1/account",
     validator,
+    inboundStruct: "User",
     handler: async function updateAccountHandler(request, response) {
         try {
             const { id: owner_id } = request.session.user

@@ -2,4 +2,5 @@ swap age for birthday
 verify email
 verify face/account
 preference: incoming profanity filter
+auto generate frontend types/api-functions from backend data
 eula

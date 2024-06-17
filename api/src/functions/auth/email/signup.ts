@@ -54,6 +54,7 @@ const route: Route = {
     method: "post",
     path: "/auth/signup",
     validator,
+    inboundStruct: "SignupRequest",
     handler: async function signupHandler(request, response) {
         let {
             first_name,

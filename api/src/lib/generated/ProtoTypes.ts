@@ -1,4 +1,4 @@
-/* eslint no-unused-vars: 0 */
+/* eslint-disable no-unused-vars */
 // @ts-nocheck Copyright © 2024 Navarrotech
 
 // THIS FILE IS AUTO COPIED FROM THE ROOT

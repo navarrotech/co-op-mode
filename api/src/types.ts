@@ -53,6 +53,7 @@ export type RouteHandler = (request: Request, response: Response, next: NextFunc
 export type Route = {
     path: string
     method?: "all" | "get" | "post" | "put" | "delete" | "patch"
+    inboundStruct: ProtoBufTables | null,
     validator?: AnyObjectSchema
     middlewares?: any[]
     handler: RouteHandler

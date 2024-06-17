@@ -88,6 +88,10 @@ message Status {
     string last_seen = 5;
 }
 
+message EmitStatus {
+    int32 time_active = 1;
+}
+
 message Limits {
     PermanentLimits permanent = 1;
     DailyLimits daily = 2;
@@ -163,7 +167,7 @@ message ConversationList {
     int32 skip = 2;
     int32 total = 3;
     repeated Conversations conversations = 4;
-    bool has_more = 5;
+    optional bool has_more = 5;
 }
 
 message Messages {
@@ -185,6 +189,11 @@ message Messages {
     repeated EditHistory edit_history = 16;
 }
 
+message EditMessage {
+    string id = 1;
+    string content = 2;
+}
+
 message EditHistory {
     string message = 1;
     string time_edited = 2;
@@ -196,7 +205,7 @@ message Messagelist {
     int32 total = 3;
     string conversation_id = 4;
     repeated Messages messages = 5;
-    bool has_more = 6;
+    optional bool has_more = 6;
 }
 
 message VideoGames {
@@ -213,12 +222,24 @@ message VideoGames {
 
 // Authentication Messages
 message LoginRequest {
-    string provider = 1;
-    string token = 2;
-    string secret = 3;
-    bool is_signup = 4;
-    string first_name = 5;
-    string last_name = 6;
+    // string provider = 1;
+    // string token = 2;
+    // string secret = 3;
+    // bool is_signup = 4;
+    // string first_name = 5;
+    // string last_name = 6;
+    string email = 1;
+    string password = 2;
+}
+
+message SignupRequest {
+    string first_name = 1;
+    string last_name = 2;
+    string email = 3;
+    string password = 4;
+    int32 age = 5;
+    Gender gender = 6;
+    Relationship relationship = 7;
 }
 
 message AuthResponse {
@@ -241,6 +262,14 @@ message ServerError {
 message ClientError {
     string message = 1;
     string stack_trace = 2;
+}
+
+message SpecifyRequest {
+    string id = 1;
+}
+
+message Blank {
+    int32 i = 1;
 }
 
 // Bus Messages

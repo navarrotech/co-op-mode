@@ -29,6 +29,7 @@ const route: Route = {
     method: "post",
     path: "/api/v1/messages/list",
     validator,
+    inboundStruct: "Messagelist",
     handler: async function listMessagesHandler(request, response) {
         const { id: owner_id } = request.session.user
 

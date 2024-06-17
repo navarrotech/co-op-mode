@@ -15,8 +15,8 @@ const validator = yup.object().shape({
         //     .max(32)
         //     .required(),
         id: yup
-            .number()
-            .typeError("validator_type::ID::number")
+            .string()
+            .typeError("validator_type::ID::string")
             .min(1)
             .max(32)
             .required(),
@@ -33,6 +33,7 @@ const route: Route = {
     method: "post",
     path: "/test",
     validator,
+    inboundStruct: "Preferences",
     handler: async function testHandler(request, response) {
         console.log(request.body)
 

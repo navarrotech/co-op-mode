@@ -27,6 +27,7 @@ const route: Route = {
     method: "post",
     path: "/api/v1/matching/like",
     validator,
+    inboundStruct: "Dislikes",
     handler: async function matchDislikeHandler(request, response) {
         const { id: owner_id } = request.session.user
 

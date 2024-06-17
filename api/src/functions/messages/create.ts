@@ -35,6 +35,7 @@ const route: Route = {
     method: "post",
     path: "/api/v1/messages",
     validator,
+    inboundStruct: "Messages",
     handler: async function newMessageHandler(request, response) {
         const { id: owner_id } = request.session.user
 

@@ -7,6 +7,7 @@ import type { Route } from "@/types"
 const route: Route = {
     method: "delete",
     path: "/api/v1/account",
+    inboundStruct: null,
     handler: async function deleteAccountHandler(request, response) {
         try {
             const { id: owner_id } = request.session.user

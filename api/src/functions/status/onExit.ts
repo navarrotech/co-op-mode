@@ -17,6 +17,7 @@ export function clearExitTimeout(owner_id: string){
 const route: Route = {
     method: "put",
     path: "/api/v1/status/exit",
+    inboundStruct: null,
     handler: async function exitHandler(request, response) {
         const { id: owner_id } = request.session.user
 

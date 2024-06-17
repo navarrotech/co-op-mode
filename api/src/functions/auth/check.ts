@@ -10,6 +10,7 @@ import { users } from "@prisma/client"
 const route: Route = {
     method: "get",
     path: "/auth/check",
+    inboundStruct: null,
     handler: async function checkHandler(request, response) {
         if (request.session?.user && request.session.authorized) {
             response.status(200)

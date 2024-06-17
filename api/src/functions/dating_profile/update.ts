@@ -19,6 +19,7 @@ const route: Route = {
     method: "patch",
     path: "/api/v1/dating_profile",
     validator,
+    inboundStruct: "DatingProfile",
     handler: async function updateDatingProfileHandler(request, response) {
         const { id: owner_id } = request.session.user
         const datingProfile = request.body as Body

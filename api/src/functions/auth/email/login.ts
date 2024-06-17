@@ -39,6 +39,7 @@ const route: Route = {
     method: "post",
     path: "/auth/login",
     validator,
+    inboundStruct: "LoginRequest",
     handler: async function loginHandler(request, response) {
 
         let { email, password } = request.body as Body

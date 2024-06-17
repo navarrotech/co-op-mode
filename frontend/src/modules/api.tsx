@@ -33,14 +33,14 @@ type NonFunctionProperties<T> = {
 
 type NonFunction<T> = Pick<T, NonFunctionProperties<T>>;
 
-export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>): Promise<ProtoResponse<K> | undefined> {
+export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>, method = "POST"): Promise<ProtoResponse<K> | undefined> {
     const Construct = ProtoBufs[struct]
     const buffer = Construct.fromObject(data)
 
     const response = await fetch(
         "http://localhost:3000" + url,
         {
-            method: 'POST',
+            method,
             headers: {
                 'Content-Type': 'Application/X-Protobuf',
                 'X-Protobuf-Struct': struct,

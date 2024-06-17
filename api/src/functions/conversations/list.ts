@@ -21,6 +21,7 @@ const route: Route = {
     method: "post",
     path: "/api/v1/conversations/list",
     validator,
+    inboundStruct: "ConversationList",
     handler: async function listConversationsHandler(request, response) {
         const { id: owner_id } = request.session.user
 

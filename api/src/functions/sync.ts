@@ -12,7 +12,8 @@ const route: Route = {
     method: "post",
     path: "/api/v1/sync",
     middlewares: [ requireAuth ],
-    handler: async function loginHandler(request, response) {
+    inboundStruct: null,
+    handler: async function syncHandler(request, response) {
         const userid = request.session.user.id
 
         const [ user, conversations ] = await Promise.all([

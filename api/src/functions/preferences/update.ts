@@ -22,6 +22,7 @@ const route: Route = {
     method: "patch",
     path: "/api/v1/preferences",
     validator,
+    inboundStruct: "Preferences",
     handler: async function updatePreferencesHandler(request, response) {
         const { id: owner_id } = request.session.user
         const { language } = request.body as Body

@@ -33,6 +33,7 @@ const route: Route = {
     method: "post",
     path: "/api/v1/matching/like",
     validator,
+    inboundStruct: "Likes",
     handler: async function matchLikeHandler(request, response) {
         const { id: owner_id } = request.session.user
 

@@ -23,6 +23,7 @@ const route: Route = {
     method: "put",
     path: "/api/v1/status/active",
     validator,
+    inboundStruct: "EmitStatus",
     handler: async function statusActiveHandler(request, response) {
         const { id: owner_id } = request.session.user
         const { time_active } = request.body as Body

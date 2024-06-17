@@ -10,7 +10,7 @@ import { sanitize } from "@/lib/protobuf"
 
 const validator = yup.object().shape({
     body: yup.object().shape({
-        message_id: yup
+        id: yup
             .string()
             .typeError("")
             .trim()
@@ -20,21 +20,22 @@ const validator = yup.object().shape({
 })
 
 type Body = {
-    message_id: string
+    id: string
 }
 
 const route: Route = {
     method: "post",
     path: "/api/v1/messages/markAsReceived",
     validator,
+    inboundStruct: "SpecifyRequest",
     handler: async function markReceivedHandler(request, response) {
         const { id: owner_id } = request.session.user
 
-        const { message_id } = request.body as Body
+        const { id } = request.body as Body
 
         const message = await database.messages.findUnique({
             where: {
-                id: message_id
+                id
             }
         })
 
@@ -55,7 +56,7 @@ const route: Route = {
 
         const updatedMessage = await database.messages.update({
             where: {
-                id: message_id
+                id
             },
             data: {
                 is_received: true,

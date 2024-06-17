@@ -10,13 +10,13 @@ import { sanitize } from "@/lib/protobuf"
 
 const validator = yup.object().shape({
     body: yup.object().shape({
-        message_id: yup
+        id: yup
             .string()
             .typeError("")
             .trim()
             .uuid()
             .required(""),
-        message: yup
+        content: yup
             .string()
             .typeError("")
             .trim()
@@ -27,18 +27,19 @@ const validator = yup.object().shape({
 })
 
 type Body = {
-    message_id: string
-    message: string
+    id: string
+    content: string
 }
 
 const route: Route = {
     method: "patch",
     path: "/api/v1/messages",
     validator,
+    inboundStruct: "EditMessage",
     handler: async function updateMessageHandler(request, response) {
         const { id: owner_id } = request.session.user
 
-        const { message_id, message: newContent } = request.body as Body
+        const { id: message_id, content: newContent } = request.body as Body
 
         const message = await database.messages.findUnique({
             where: {

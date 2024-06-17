@@ -13,7 +13,9 @@
     "dev::migrate": "prisma generate && prisma db push",
     "dev": "yarn install && nodemon --legacy-watch --exec 'ts-node -r tsconfig-paths/register' ./index.ts",
     "proto": "pbjs -t static-module --keep-case -w commonjs -o ./src/lib/generated/schema.js ../schema.proto && pbts -o ./src/lib/generated/schema.d.ts ./src/lib/generated/schema.js",
-    "docs": "ts-node --project tsconfig.json -r tsconfig-paths/register src/docs/index.ts"
+    "docs": "ts-node --project tsconfig.json -r tsconfig-paths/register src/docs/index.ts",
+    "frontend_api": "ts-node --project tsconfig.json -r tsconfig-paths/register src/scripts/generate_api_routes.ts",
+    "frontend_api:dev": "nodemon --legacy-watch --exec 'ts-node --project tsconfig.json -r tsconfig-paths/register' src/scripts/generate_api_routes.ts"
   },
   "_moduleAliases": {
     "database": "./lib/database",
