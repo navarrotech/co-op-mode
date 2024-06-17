@@ -1,6 +1,6 @@
 // Copyright © 2024 Navarrotech
 
-import database from "@/lib/database"
+import database from "./lib/database"
 
 type Keys = "views"
     | "likes"
@@ -18,4 +18,5 @@ export async function incrementDatingProfileAnalytics(owner_id: string, key: Key
         set "${key}" = "${key}" + ${value}
         where owner_id = '${owner_id}'
     `
+    console.log(`  > Incremented dating profile '${key}' for ${owner_id} by ${value}`)
 }

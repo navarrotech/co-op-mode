@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the commands to run
-cmd1="nodemon --watch schema.proto -e proto --exec './scripts/gen.sh'"
+cmd1="nodemon --watch schema.proto -e proto --exec './scripts/protos.sh'"
 cmd2="nodemon --watch api/src/docs,src/**.ts -e ts,squirrelly --exec './scripts/doc.sh'"
 cmd3="nodemon --watch schema.prisma -e prisma --exec './scripts/prisma.sh'"
 

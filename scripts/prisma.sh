@@ -19,9 +19,15 @@ execute_command_in_container() {
 
 mkdir -p api/prisma
 mkdir -p routines/prisma
+mkdir -p analytics/prisma
+mkdir -p gateway/prisma
 
 cp schema.prisma api/prisma/schema.prisma
 cp schema.prisma routines/prisma/schema.prisma
+cp schema.prisma analytics/prisma/schema.prisma
+cp schema.prisma gateway/prisma/schema.prisma
 
 execute_command_in_container "co-op-mode-api" "cd /app && yarn prisma generate"
 execute_command_in_container "co-op-mode-routines" "cd /app && yarn prisma generate"
+execute_command_in_container "co-op-mode-analytics" "cd /app && yarn prisma generate"
+execute_command_in_container "co-op-mode-gateway" "cd /app && yarn prisma generate"

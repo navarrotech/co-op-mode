@@ -1,29 +1,7 @@
 // Copyright © 2024 Navarrotech
 
-import * as ProtoBufLibrary from "./generated/schema"
+import ProtoBufs from "./generated/ProtoTypes"
 import { NODE_ENV } from "@/env"
-
-const {
-    // Pull out enums manually for typescript
-    Cannabis,
-    Drinks,
-    Education,
-    FamilyPlans,
-    Gender,
-    HeightUnit,
-    Personality,
-    Platforms,
-    Relationship,
-    Seeking,
-    Smokes,
-    Sexuality,
-    Workout,
-    ...ProtoBufs
-} = ProtoBufLibrary
-
-export {
-    ProtoBufs
-}
 
 export type ProtoBufTables = keyof typeof ProtoBufs
 
@@ -178,4 +156,8 @@ export function sanitize<T>(object: T): Sanitized<T> {
     }
 
     return object as Sanitized<T>
+}
+
+export {
+    ProtoBufs
 }

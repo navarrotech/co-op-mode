@@ -6,7 +6,6 @@ import type { Route } from "@/types"
 // Utility
 import database from "@/lib/database"
 import { sanitize } from "@/lib/protobuf"
-import { incrementDatingProfileAnalytics } from "@/utility/analytics"
 import yup from "@/lib/validators"
 
 const validator = yup.object().shape({
@@ -56,23 +55,6 @@ const route: Route = {
             }),
         ])
 
-        let analyticsPromise: Promise<any>
-        if (superDeleteCheck.count) {
-            analyticsPromise = incrementDatingProfileAnalytics(
-                owner_id,
-                "superlikes",
-                -superDeleteCheck.count
-            )
-        }
-
-        if (regularDeleteCheck.count) {
-            analyticsPromise = incrementDatingProfileAnalytics(
-                owner_id,
-                "likes",
-                -regularDeleteCheck.count
-            )
-        }
-
         if (exists) {
             response.status(200)
             response.sendProto("Dislikes", sanitize(exists))
@@ -97,14 +79,8 @@ const route: Route = {
             })
         ])
 
-        let analytics2Promise: Promise<any>
         if (previousConversation.length) {
-            analytics2Promise = Promise.all([
-                incrementDatingProfileAnalytics(
-                    owner_id,
-                    "matches",
-                    -1
-                ),
+            Promise.all([
                 database.conversations.deleteMany({
                     where: {
                         id: {
@@ -117,14 +93,6 @@ const route: Route = {
 
         response.status(201)
         response.sendProto("Dislikes", sanitize(dislikeDoc))
-
-        await incrementDatingProfileAnalytics(
-            owner_id,
-            "dislikes",
-            1
-        )
-        await analyticsPromise
-        await analytics2Promise
     }
 
 }

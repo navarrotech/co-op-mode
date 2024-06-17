@@ -7,7 +7,6 @@ import type { Route } from "@/types"
 import database from "@/lib/database"
 import { sanitize } from "@/lib/protobuf"
 import yup from "@/lib/validators"
-import { incrementDatingProfileAnalytics } from "@/utility/analytics"
 
 const validator = yup.object().shape({
     body: yup.object().shape({
@@ -39,7 +38,7 @@ const route: Route = {
 
         const { target_id, is_super } = request.body as Body
 
-        const [ exists, deleteCheck ] = await Promise.all([
+        const [ exists ] = await Promise.all([
             database.likes.findFirst({
                 where: {
                     owner_id,
@@ -53,15 +52,6 @@ const route: Route = {
                 }
             })
         ])
-
-        let analyticsPromise: Promise<any>
-        if (deleteCheck.count) {
-             analyticsPromise = incrementDatingProfileAnalytics(
-                owner_id,
-                "dislikes",
-                -deleteCheck.count
-            )
-        }
 
         if (exists) {
             if (exists.is_super !== is_super) {
@@ -97,13 +87,7 @@ const route: Route = {
             })
         ])
 
-        let analytics2Promise: Promise<any>
         if (potentialMatch) {
-            analytics2Promise = incrementDatingProfileAnalytics(
-                owner_id,
-                "matches",
-                1
-            )
             await database.conversations.create({
                 data: {
                     user1_id: owner_id,
@@ -114,18 +98,7 @@ const route: Route = {
 
         response.status(201)
         response.sendProto("Likes", sanitize(likeDoc))
-
-        await incrementDatingProfileAnalytics( // TODO: move profile analytics to a analytics micro service
-            owner_id,
-            is_super
-                ? "superlikes"
-                : "likes",
-            1
-        )
-        await analyticsPromise
-        await analytics2Promise
     }
-
 }
 
 export default route

@@ -243,7 +243,30 @@ message ClientError {
     string stack_trace = 2;
 }
 
+// Bus Messages
+message ChangeEvent {
+    ChangeType type = 1;
+    string struct = 2;
+
+    optional User user = 3;
+    optional Preferences preferences = 4;
+    optional DatingProfile dating_profile = 5;
+    optional Limits limits = 6;
+    optional Media media = 7;
+    optional Likes likes = 8;
+    optional Dislikes dislikes = 9;
+    optional Status status = 10;
+    optional Conversations conversations = 11;
+    optional Messages messages = 12;
+}
+
 // Enum Definitions
+enum ChangeType {
+    CREATE = 0;
+    UPDATE = 1;
+    DELETE = 2;
+}
+
 enum Platforms {
     UNKNOWN = 0;
     PC = 1;

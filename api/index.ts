@@ -29,6 +29,7 @@ import path from "path"
 // Initialization
 import { initDatabase, closeDatabase } from "./src/lib/database"
 import { initRedis, closeRedis, redisStore } from "@/lib/redis"
+import { initMessageBus, closeMessageBus } from "@/lib/bus"
 
 // Environment Variables
 import { API_PORT, NODE_ENV, SESSION_SECRET, VERSION } from "src/env"
@@ -37,6 +38,7 @@ console.log("Starting up")
 const initialization = Promise.all([
   initDatabase(),
   initRedis(),
+  initMessageBus(),
 ])
 
 const app = express()
@@ -168,6 +170,7 @@ async function gracefulShutdown(){
   await Promise.all([
     closeDatabase(),
     closeRedis(),
+    closeMessageBus(),
   ])
   process.exit(0)
 }

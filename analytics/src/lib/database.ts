@@ -1,8 +1,7 @@
 // Copyright © 2023 Navarrotech
 
 // Core
-import { Prisma, PrismaClient } from "@prisma/client"
-import { PrismaMiddlewareHandlers } from "./bus"
+import { PrismaClient, type Prisma } from "@prisma/client"
 
 const database = new PrismaClient()
 
@@ -11,19 +10,6 @@ export const tables = Object.keys(database).filter((key) => !key.startsWith("$")
 
 export async function initDatabase() {
     await database.$connect()
-
-    // Replication middleware
-    database.$use(
-        async (params, next) => {
-            const { action, model, args } = params
-
-            const result = await next(params)
-            PrismaMiddlewareHandlers[action]?.(model, result)
-
-            return result
-        }
-    )
-
     console.log("[PASS] Database ready")
 }
 
