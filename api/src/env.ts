@@ -2,7 +2,6 @@
 const {
     DOMAIN = 'localhost',
     NODE_ENV = 'development',
-    SESSION_ENCRYPTION_KEY = '12345',
     DATABASE_URL = 'postgres://postgres:postgres@co-op-mode-postgres:5432/postgres',
     REDIS_URL = 'redis://co-op-mode-redis:6379',
     RABBITMQ_URL = 'amqp://co-op-mode-rabbitmq',
@@ -19,7 +18,6 @@ export {
     VERSION,
 
     SESSION_SECRET,
-    SESSION_ENCRYPTION_KEY,
 
     DATABASE_URL,
     REDIS_URL,

@@ -181,12 +181,8 @@ export function matchDislike(data: IMatchDislike) {
     return sendProto("/api/v1/matching/like", "Dislikes", data as any, "POST")
 }
 
-export type ITest = {
-	id: string
-	owner_id: string
-}
-export function test(data: ITest) {
-    return sendProto("/test", "Preferences", data as any, "POST")
+export function test() {
+    return sendProto("/test", "Blank", { i: 0 }, "GET")
 }
 
 export type Types = {
@@ -204,8 +200,7 @@ export type Types = {
 	IMarkReceived: IMarkReceived,
 	IListConversations: IListConversations,
 	IMatchLike: IMatchLike,
-	IMatchDislike: IMatchDislike,
-	ITest: ITest
+	IMatchDislike: IMatchDislike
 }
 
 export const Routes = {

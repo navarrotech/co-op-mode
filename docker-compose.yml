@@ -11,7 +11,6 @@ services:
     environment:
       DOMAIN: localhost
       NODE_ENV: development
-      SESSION_ENCRYPTION_KEY: 12345
       DATABASE_URL: postgres://postgres:postgres@co-op-mode-postgres:5432/postgres
       REDIS_URL: redis://co-op-mode-redis:6379
       API_PORT: 80
@@ -71,6 +70,31 @@ services:
     networks:
       - default
 
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: ./Dockerfile
+    container_name: co-op-mode-gateway
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgres://postgres:postgres@co-op-mode-postgres:5432/postgres
+      RABBITMQ_URL: amqp://co-op-mode-rabbitmq
+      PORT: 80
+    depends_on:
+      - api
+      - analytics
+      - database
+    volumes:
+      - type: bind
+        source: "./gateway"
+        target: "/app"
+    command: yarn run dev
+    ports:
+      - 4000:80 
+    networks:
+      - default
+
   database:
     image: postgres:16.1-bullseye
     container_name: co-op-mode-postgres
@@ -104,6 +128,7 @@ services:
     networks:
       - default
 
+  # Postgres web-based database tool, development only
   pgadmin:
     image: dpage/pgadmin4:latest
     container_name: co-op-mode-pgadmin
@@ -124,10 +149,25 @@ services:
       - ./pgadmin4/pgpassfile:/pgpassfile
       - pgadmin-data:/var/lib/pgadmin
 
+  # Redis web-based database tool, development only
+  insight:
+    image: redis/redisinsight:latest
+    container_name: co-op-mode-redis-insight
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: '[{"host": "co-op-mode-redis", "port": "6379"}]'
+    ports:
+      - 5540:5540
+    networks:
+      - default
+    volumes:
+      - insight-data:/data
+
 volumes:
   postgres-data:
-  pgadmin-data:
   redis-data:
+  pgadmin-data:
+  insight-data:
  
 networks:
   default:

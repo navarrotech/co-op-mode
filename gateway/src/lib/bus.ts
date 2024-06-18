@@ -12,7 +12,7 @@ import ProtoBufs from "./generated/ProtoTypes"
 import { structsToTableTypes } from "../constants"
 
 // Sub functions
-import Handlers, { applyGlobalAnalytics } from "../main"
+import Handlers from "../main"
 
 // Use RabbitMQ to send messages between services
 
@@ -49,10 +49,7 @@ export async function initMessageBus() {
 
             channel.ack(message)
 
-            await Promise.all([
-                Handlers[struct]?.(type, data),
-                applyGlobalAnalytics(struct, type, data)
-            ])
+            await Handlers[struct]?.(type, data, message.content)
         } catch (error: any) {
             console.error(error)
         }

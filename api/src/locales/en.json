@@ -14,6 +14,7 @@
     "validator_short": "{{what}} must be at least {{length}} characters long.",
     "validator_long": "{{what}} must be less than {{length}} characters long.",
     "validator_type": "{{what}} must be a {{type}}.",
+    "validator_oneof": "{{what}} must be one of the following: {{values}}.",
 
     "validator_email": "Please provide a valid email address",
     "validator_password": "Password must include at least one special character",

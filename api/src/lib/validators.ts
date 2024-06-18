@@ -1,6 +1,6 @@
 // Copyright © 2023 Navarrotech
 
-import { supportedLanguages } from "./language"
+import { defaultLanguage, supportedLanguages } from "./language"
 
 import * as yup from "yup"
 
@@ -20,6 +20,7 @@ export const languageValidator = () => yup
   .string()
   .typeError("")
   .trim()
+  .default(defaultLanguage)
   .oneOf(supportedLanguages)
 
 export const preferencesValidator = () => yup.object({

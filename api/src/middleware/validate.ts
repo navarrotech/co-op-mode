@@ -70,6 +70,9 @@ export default async function validateMiddleware(
                     else if (type === "optionality") {
                         message = request.__("validator_required", { what })
                     }
+                    else if (type === "oneOf"){
+                        message = request.__("validator_oneof", { what, values: error.params.values as string })
+                    }
                     else {
                         console.error("!!!! Unhandled error type, sending unlocalized error message", validationError)
                     }
@@ -94,10 +97,23 @@ export default async function validateMiddleware(
     }
 
     let language = request.headers['accept-language'] || defaultLanguage
+
+    // A wee bit hacky, because direct GET requests from Chrome, has headers like "en-US,en;q=0.9" :/ But our app gives those requests as "en" or "fr"
+    // TODO: Should come back and fix this sometime ;)
+    if (language.length > 2) {
+        language = language.slice(0, 2)
+    }
+
     try {
         languageSchema.validateSync(language)
     } catch (error) {
-        console.error(error)
+        if (error instanceof ValidationError) {
+            if (error.type === "oneOf" && error) {
+            }
+        }
+        else {
+            console.error("Unknown language validation error", error)
+        }
         language = defaultLanguage
     }
 
