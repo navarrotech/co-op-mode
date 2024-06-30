@@ -28,7 +28,7 @@ export default function Dropdown({ children, trigger, className = '', ...props }
     }, [])
 
     return (
-        <div className={`dropdown ${className} ${isOpen ? "is-active" : ""}`} ref={dropdownRef}>
+        <div className={`dropdown ${className} ${isOpen ? "is-active" : ""}`} ref={dropdownRef} { ...props }>
             <div className="dropdown-trigger" onClick={() => setIsOpen(!isOpen)}>
                 { trigger }
             </div>

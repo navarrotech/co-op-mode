@@ -19,7 +19,7 @@ export async function initRedis() {
     })
 
     await redisClient.connect().catch(console.error)
-    
+
     redisClient.on("error", (err) => {
         console.error("[Redis Error] :: " + err)
     })

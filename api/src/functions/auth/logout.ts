@@ -5,7 +5,7 @@ import type { Route } from "@/types"
 
 const route: Route = {
     method: "post",
-    path: "/auth/logout",
+    path: "/auth/v1/logout",
     inboundStruct: null,
     handler: async function logoutHandler(request, response) {
         try {

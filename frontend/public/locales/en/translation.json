@@ -1,3 +1,29 @@
 {
-  "hello": "hello world!"
+  "brand_name": "Co-Op Mode",
+  "brand_subtitle": "Dating For Gamers",
+  "brand_slogan": "Find your player 2",
+  "brand_slogan_2": "A new way to find a partner to play games with",
+  
+  "terms_agreement": "By signing in, you are agreeing to our <0>Terms</0> and <1>Privacy Policy</1>.",
+  "terms_of_service": "Terms",
+  "privacy_policy": "Privacy Policy",
+  
+  "sign_in_with_phone": "Sign in with a phone number",
+  "sign_in_with_discord": "Sign in with Discord",
+  "sign_in_with_google": "Sign in with Google",
+
+  "enter_phone": "Enter your phone number",
+  "phone_help": "A code will be sent to verify that it's really you. Message and data rates may apply.",
+  "phone_changed": "Click here if you changed your phone number.",
+  "enter_code": "Enter the code sent to your phone",
+  "resend_code_wait": "You can resend the code in {{seconds}} seconds",
+  "resend_code": "Didn't receive it? Click here to resend the code",
+
+  "generic_error":  "Something went wrong. Please try again.",
+  "next_button": "Next",
+  "continue_button": "Continue",
+  "submit_button": "Submit",
+  "back_button": "Back",
+
+  "choose_language": "Select your language"
 }

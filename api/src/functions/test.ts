@@ -47,9 +47,10 @@ const route: Route = {
 
         request.session.user = {
             id: "-1",
-            email: "test@coopmode.com",
+            phone: "+1234567890",
             first_name: "Test",
             last_name: "User",
+            email: "Foopy?",
             created_at: new Date(),
             updated_at: new Date(),
         }

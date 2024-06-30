@@ -49,4 +49,4 @@ export const {
   logout,
 } = slice.actions
 
-export default slice;
+export default slice

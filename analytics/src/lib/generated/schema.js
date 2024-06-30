@@ -490,7 +490,7 @@ $root.User = (function() {
      * @exports IUser
      * @interface IUser
      * @property {string|null} [id] User id
-     * @property {string|null} [email] User email
+     * @property {string|null} [phone] User phone
      * @property {string|null} [first_name] User first_name
      * @property {string|null} [last_name] User last_name
      * @property {string|null} [created_at] User created_at
@@ -530,12 +530,12 @@ $root.User = (function() {
     User.prototype.id = "";
 
     /**
-     * User email.
-     * @member {string} email
+     * User phone.
+     * @member {string} phone
      * @memberof User
      * @instance
      */
-    User.prototype.email = "";
+    User.prototype.phone = "";
 
     /**
      * User first_name.
@@ -643,8 +643,8 @@ $root.User = (function() {
             writer = $Writer.create();
         if (message.id != null && Object.hasOwnProperty.call(message, "id"))
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
-        if (message.email != null && Object.hasOwnProperty.call(message, "email"))
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.email);
+        if (message.phone != null && Object.hasOwnProperty.call(message, "phone"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.phone);
         if (message.first_name != null && Object.hasOwnProperty.call(message, "first_name"))
             writer.uint32(/* id 3, wireType 2 =*/26).string(message.first_name);
         if (message.last_name != null && Object.hasOwnProperty.call(message, "last_name"))
@@ -707,7 +707,7 @@ $root.User = (function() {
                     break;
                 }
             case 2: {
-                    message.email = reader.string();
+                    message.phone = reader.string();
                     break;
                 }
             case 3: {
@@ -794,9 +794,9 @@ $root.User = (function() {
         if (message.id != null && message.hasOwnProperty("id"))
             if (!$util.isString(message.id))
                 return "id: string expected";
-        if (message.email != null && message.hasOwnProperty("email"))
-            if (!$util.isString(message.email))
-                return "email: string expected";
+        if (message.phone != null && message.hasOwnProperty("phone"))
+            if (!$util.isString(message.phone))
+                return "phone: string expected";
         if (message.first_name != null && message.hasOwnProperty("first_name"))
             if (!$util.isString(message.first_name))
                 return "first_name: string expected";
@@ -868,8 +868,8 @@ $root.User = (function() {
         var message = new $root.User();
         if (object.id != null)
             message.id = String(object.id);
-        if (object.email != null)
-            message.email = String(object.email);
+        if (object.phone != null)
+            message.phone = String(object.phone);
         if (object.first_name != null)
             message.first_name = String(object.first_name);
         if (object.last_name != null)
@@ -946,7 +946,7 @@ $root.User = (function() {
         }
         if (options.defaults) {
             object.id = "";
-            object.email = "";
+            object.phone = "";
             object.first_name = "";
             object.last_name = "";
             object.created_at = "";
@@ -957,8 +957,8 @@ $root.User = (function() {
         }
         if (message.id != null && message.hasOwnProperty("id"))
             object.id = message.id;
-        if (message.email != null && message.hasOwnProperty("email"))
-            object.email = message.email;
+        if (message.phone != null && message.hasOwnProperty("phone"))
+            object.phone = message.phone;
         if (message.first_name != null && message.hasOwnProperty("first_name"))
             object.first_name = message.first_name;
         if (message.last_name != null && message.hasOwnProperty("last_name"))
@@ -8329,25 +8329,25 @@ $root.VideoGames = (function() {
     return VideoGames;
 })();
 
-$root.LoginRequest = (function() {
+$root.AuthorizeByPhoneRequest = (function() {
 
     /**
-     * Properties of a LoginRequest.
-     * @exports ILoginRequest
-     * @interface ILoginRequest
-     * @property {string|null} [email] LoginRequest email
-     * @property {string|null} [password] LoginRequest password
+     * Properties of an AuthorizeByPhoneRequest.
+     * @exports IAuthorizeByPhoneRequest
+     * @interface IAuthorizeByPhoneRequest
+     * @property {string|null} [phone] AuthorizeByPhoneRequest phone
+     * @property {string|null} [OTP] AuthorizeByPhoneRequest OTP
      */
 
     /**
-     * Constructs a new LoginRequest.
-     * @exports LoginRequest
-     * @classdesc Represents a LoginRequest.
-     * @implements ILoginRequest
+     * Constructs a new AuthorizeByPhoneRequest.
+     * @exports AuthorizeByPhoneRequest
+     * @classdesc Represents an AuthorizeByPhoneRequest.
+     * @implements IAuthorizeByPhoneRequest
      * @constructor
-     * @param {ILoginRequest=} [properties] Properties to set
+     * @param {IAuthorizeByPhoneRequest=} [properties] Properties to set
      */
-    function LoginRequest(properties) {
+    function AuthorizeByPhoneRequest(properties) {
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
@@ -8355,89 +8355,103 @@ $root.LoginRequest = (function() {
     }
 
     /**
-     * LoginRequest email.
-     * @member {string} email
-     * @memberof LoginRequest
+     * AuthorizeByPhoneRequest phone.
+     * @member {string} phone
+     * @memberof AuthorizeByPhoneRequest
      * @instance
      */
-    LoginRequest.prototype.email = "";
+    AuthorizeByPhoneRequest.prototype.phone = "";
 
     /**
-     * LoginRequest password.
-     * @member {string} password
-     * @memberof LoginRequest
+     * AuthorizeByPhoneRequest OTP.
+     * @member {string|null|undefined} OTP
+     * @memberof AuthorizeByPhoneRequest
      * @instance
      */
-    LoginRequest.prototype.password = "";
+    AuthorizeByPhoneRequest.prototype.OTP = null;
+
+    // OneOf field names bound to virtual getters and setters
+    var $oneOfFields;
 
     /**
-     * Creates a new LoginRequest instance using the specified properties.
+     * AuthorizeByPhoneRequest _OTP.
+     * @member {"OTP"|undefined} _OTP
+     * @memberof AuthorizeByPhoneRequest
+     * @instance
+     */
+    Object.defineProperty(AuthorizeByPhoneRequest.prototype, "_OTP", {
+        get: $util.oneOfGetter($oneOfFields = ["OTP"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * Creates a new AuthorizeByPhoneRequest instance using the specified properties.
      * @function create
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
-     * @param {ILoginRequest=} [properties] Properties to set
-     * @returns {LoginRequest} LoginRequest instance
+     * @param {IAuthorizeByPhoneRequest=} [properties] Properties to set
+     * @returns {AuthorizeByPhoneRequest} AuthorizeByPhoneRequest instance
      */
-    LoginRequest.create = function create(properties) {
-        return new LoginRequest(properties);
+    AuthorizeByPhoneRequest.create = function create(properties) {
+        return new AuthorizeByPhoneRequest(properties);
     };
 
     /**
-     * Encodes the specified LoginRequest message. Does not implicitly {@link LoginRequest.verify|verify} messages.
+     * Encodes the specified AuthorizeByPhoneRequest message. Does not implicitly {@link AuthorizeByPhoneRequest.verify|verify} messages.
      * @function encode
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
-     * @param {ILoginRequest} message LoginRequest message or plain object to encode
+     * @param {IAuthorizeByPhoneRequest} message AuthorizeByPhoneRequest message or plain object to encode
      * @param {$protobuf.Writer} [writer] Writer to encode to
      * @returns {$protobuf.Writer} Writer
      */
-    LoginRequest.encode = function encode(message, writer) {
+    AuthorizeByPhoneRequest.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.email != null && Object.hasOwnProperty.call(message, "email"))
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.email);
-        if (message.password != null && Object.hasOwnProperty.call(message, "password"))
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.password);
+        if (message.phone != null && Object.hasOwnProperty.call(message, "phone"))
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.phone);
+        if (message.OTP != null && Object.hasOwnProperty.call(message, "OTP"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.OTP);
         return writer;
     };
 
     /**
-     * Encodes the specified LoginRequest message, length delimited. Does not implicitly {@link LoginRequest.verify|verify} messages.
+     * Encodes the specified AuthorizeByPhoneRequest message, length delimited. Does not implicitly {@link AuthorizeByPhoneRequest.verify|verify} messages.
      * @function encodeDelimited
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
-     * @param {ILoginRequest} message LoginRequest message or plain object to encode
+     * @param {IAuthorizeByPhoneRequest} message AuthorizeByPhoneRequest message or plain object to encode
      * @param {$protobuf.Writer} [writer] Writer to encode to
      * @returns {$protobuf.Writer} Writer
      */
-    LoginRequest.encodeDelimited = function encodeDelimited(message, writer) {
+    AuthorizeByPhoneRequest.encodeDelimited = function encodeDelimited(message, writer) {
         return this.encode(message, writer).ldelim();
     };
 
     /**
-     * Decodes a LoginRequest message from the specified reader or buffer.
+     * Decodes an AuthorizeByPhoneRequest message from the specified reader or buffer.
      * @function decode
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
      * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
      * @param {number} [length] Message length if known beforehand
-     * @returns {LoginRequest} LoginRequest
+     * @returns {AuthorizeByPhoneRequest} AuthorizeByPhoneRequest
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    LoginRequest.decode = function decode(reader, length) {
+    AuthorizeByPhoneRequest.decode = function decode(reader, length) {
         if (!(reader instanceof $Reader))
             reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.LoginRequest();
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.AuthorizeByPhoneRequest();
         while (reader.pos < end) {
             var tag = reader.uint32();
             switch (tag >>> 3) {
             case 1: {
-                    message.email = reader.string();
+                    message.phone = reader.string();
                     break;
                 }
             case 2: {
-                    message.password = reader.string();
+                    message.OTP = reader.string();
                     break;
                 }
             default:
@@ -8449,521 +8463,115 @@ $root.LoginRequest = (function() {
     };
 
     /**
-     * Decodes a LoginRequest message from the specified reader or buffer, length delimited.
+     * Decodes an AuthorizeByPhoneRequest message from the specified reader or buffer, length delimited.
      * @function decodeDelimited
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
      * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @returns {LoginRequest} LoginRequest
+     * @returns {AuthorizeByPhoneRequest} AuthorizeByPhoneRequest
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    LoginRequest.decodeDelimited = function decodeDelimited(reader) {
+    AuthorizeByPhoneRequest.decodeDelimited = function decodeDelimited(reader) {
         if (!(reader instanceof $Reader))
             reader = new $Reader(reader);
         return this.decode(reader, reader.uint32());
     };
 
     /**
-     * Verifies a LoginRequest message.
+     * Verifies an AuthorizeByPhoneRequest message.
      * @function verify
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
      * @param {Object.<string,*>} message Plain object to verify
      * @returns {string|null} `null` if valid, otherwise the reason why it is not
      */
-    LoginRequest.verify = function verify(message) {
+    AuthorizeByPhoneRequest.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
-        if (message.email != null && message.hasOwnProperty("email"))
-            if (!$util.isString(message.email))
-                return "email: string expected";
-        if (message.password != null && message.hasOwnProperty("password"))
-            if (!$util.isString(message.password))
-                return "password: string expected";
+        var properties = {};
+        if (message.phone != null && message.hasOwnProperty("phone"))
+            if (!$util.isString(message.phone))
+                return "phone: string expected";
+        if (message.OTP != null && message.hasOwnProperty("OTP")) {
+            properties._OTP = 1;
+            if (!$util.isString(message.OTP))
+                return "OTP: string expected";
+        }
         return null;
     };
 
     /**
-     * Creates a LoginRequest message from a plain object. Also converts values to their respective internal types.
+     * Creates an AuthorizeByPhoneRequest message from a plain object. Also converts values to their respective internal types.
      * @function fromObject
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
      * @param {Object.<string,*>} object Plain object
-     * @returns {LoginRequest} LoginRequest
+     * @returns {AuthorizeByPhoneRequest} AuthorizeByPhoneRequest
      */
-    LoginRequest.fromObject = function fromObject(object) {
-        if (object instanceof $root.LoginRequest)
+    AuthorizeByPhoneRequest.fromObject = function fromObject(object) {
+        if (object instanceof $root.AuthorizeByPhoneRequest)
             return object;
-        var message = new $root.LoginRequest();
-        if (object.email != null)
-            message.email = String(object.email);
-        if (object.password != null)
-            message.password = String(object.password);
+        var message = new $root.AuthorizeByPhoneRequest();
+        if (object.phone != null)
+            message.phone = String(object.phone);
+        if (object.OTP != null)
+            message.OTP = String(object.OTP);
         return message;
     };
 
     /**
-     * Creates a plain object from a LoginRequest message. Also converts values to other types if specified.
+     * Creates a plain object from an AuthorizeByPhoneRequest message. Also converts values to other types if specified.
      * @function toObject
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
-     * @param {LoginRequest} message LoginRequest
+     * @param {AuthorizeByPhoneRequest} message AuthorizeByPhoneRequest
      * @param {$protobuf.IConversionOptions} [options] Conversion options
      * @returns {Object.<string,*>} Plain object
      */
-    LoginRequest.toObject = function toObject(message, options) {
+    AuthorizeByPhoneRequest.toObject = function toObject(message, options) {
         if (!options)
             options = {};
         var object = {};
-        if (options.defaults) {
-            object.email = "";
-            object.password = "";
+        if (options.defaults)
+            object.phone = "";
+        if (message.phone != null && message.hasOwnProperty("phone"))
+            object.phone = message.phone;
+        if (message.OTP != null && message.hasOwnProperty("OTP")) {
+            object.OTP = message.OTP;
+            if (options.oneofs)
+                object._OTP = "OTP";
         }
-        if (message.email != null && message.hasOwnProperty("email"))
-            object.email = message.email;
-        if (message.password != null && message.hasOwnProperty("password"))
-            object.password = message.password;
         return object;
     };
 
     /**
-     * Converts this LoginRequest to JSON.
+     * Converts this AuthorizeByPhoneRequest to JSON.
      * @function toJSON
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @instance
      * @returns {Object.<string,*>} JSON object
      */
-    LoginRequest.prototype.toJSON = function toJSON() {
+    AuthorizeByPhoneRequest.prototype.toJSON = function toJSON() {
         return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
     };
 
     /**
-     * Gets the default type url for LoginRequest
+     * Gets the default type url for AuthorizeByPhoneRequest
      * @function getTypeUrl
-     * @memberof LoginRequest
+     * @memberof AuthorizeByPhoneRequest
      * @static
      * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
      * @returns {string} The default type url
      */
-    LoginRequest.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+    AuthorizeByPhoneRequest.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
         if (typeUrlPrefix === undefined) {
             typeUrlPrefix = "type.googleapis.com";
         }
-        return typeUrlPrefix + "/LoginRequest";
+        return typeUrlPrefix + "/AuthorizeByPhoneRequest";
     };
 
-    return LoginRequest;
-})();
-
-$root.SignupRequest = (function() {
-
-    /**
-     * Properties of a SignupRequest.
-     * @exports ISignupRequest
-     * @interface ISignupRequest
-     * @property {string|null} [first_name] SignupRequest first_name
-     * @property {string|null} [last_name] SignupRequest last_name
-     * @property {string|null} [email] SignupRequest email
-     * @property {string|null} [password] SignupRequest password
-     * @property {number|null} [age] SignupRequest age
-     * @property {Gender|null} [gender] SignupRequest gender
-     * @property {Relationship|null} [relationship] SignupRequest relationship
-     */
-
-    /**
-     * Constructs a new SignupRequest.
-     * @exports SignupRequest
-     * @classdesc Represents a SignupRequest.
-     * @implements ISignupRequest
-     * @constructor
-     * @param {ISignupRequest=} [properties] Properties to set
-     */
-    function SignupRequest(properties) {
-        if (properties)
-            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
-                if (properties[keys[i]] != null)
-                    this[keys[i]] = properties[keys[i]];
-    }
-
-    /**
-     * SignupRequest first_name.
-     * @member {string} first_name
-     * @memberof SignupRequest
-     * @instance
-     */
-    SignupRequest.prototype.first_name = "";
-
-    /**
-     * SignupRequest last_name.
-     * @member {string} last_name
-     * @memberof SignupRequest
-     * @instance
-     */
-    SignupRequest.prototype.last_name = "";
-
-    /**
-     * SignupRequest email.
-     * @member {string} email
-     * @memberof SignupRequest
-     * @instance
-     */
-    SignupRequest.prototype.email = "";
-
-    /**
-     * SignupRequest password.
-     * @member {string} password
-     * @memberof SignupRequest
-     * @instance
-     */
-    SignupRequest.prototype.password = "";
-
-    /**
-     * SignupRequest age.
-     * @member {number} age
-     * @memberof SignupRequest
-     * @instance
-     */
-    SignupRequest.prototype.age = 0;
-
-    /**
-     * SignupRequest gender.
-     * @member {Gender} gender
-     * @memberof SignupRequest
-     * @instance
-     */
-    SignupRequest.prototype.gender = 0;
-
-    /**
-     * SignupRequest relationship.
-     * @member {Relationship} relationship
-     * @memberof SignupRequest
-     * @instance
-     */
-    SignupRequest.prototype.relationship = 0;
-
-    /**
-     * Creates a new SignupRequest instance using the specified properties.
-     * @function create
-     * @memberof SignupRequest
-     * @static
-     * @param {ISignupRequest=} [properties] Properties to set
-     * @returns {SignupRequest} SignupRequest instance
-     */
-    SignupRequest.create = function create(properties) {
-        return new SignupRequest(properties);
-    };
-
-    /**
-     * Encodes the specified SignupRequest message. Does not implicitly {@link SignupRequest.verify|verify} messages.
-     * @function encode
-     * @memberof SignupRequest
-     * @static
-     * @param {ISignupRequest} message SignupRequest message or plain object to encode
-     * @param {$protobuf.Writer} [writer] Writer to encode to
-     * @returns {$protobuf.Writer} Writer
-     */
-    SignupRequest.encode = function encode(message, writer) {
-        if (!writer)
-            writer = $Writer.create();
-        if (message.first_name != null && Object.hasOwnProperty.call(message, "first_name"))
-            writer.uint32(/* id 1, wireType 2 =*/10).string(message.first_name);
-        if (message.last_name != null && Object.hasOwnProperty.call(message, "last_name"))
-            writer.uint32(/* id 2, wireType 2 =*/18).string(message.last_name);
-        if (message.email != null && Object.hasOwnProperty.call(message, "email"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.email);
-        if (message.password != null && Object.hasOwnProperty.call(message, "password"))
-            writer.uint32(/* id 4, wireType 2 =*/34).string(message.password);
-        if (message.age != null && Object.hasOwnProperty.call(message, "age"))
-            writer.uint32(/* id 5, wireType 0 =*/40).int32(message.age);
-        if (message.gender != null && Object.hasOwnProperty.call(message, "gender"))
-            writer.uint32(/* id 6, wireType 0 =*/48).int32(message.gender);
-        if (message.relationship != null && Object.hasOwnProperty.call(message, "relationship"))
-            writer.uint32(/* id 7, wireType 0 =*/56).int32(message.relationship);
-        return writer;
-    };
-
-    /**
-     * Encodes the specified SignupRequest message, length delimited. Does not implicitly {@link SignupRequest.verify|verify} messages.
-     * @function encodeDelimited
-     * @memberof SignupRequest
-     * @static
-     * @param {ISignupRequest} message SignupRequest message or plain object to encode
-     * @param {$protobuf.Writer} [writer] Writer to encode to
-     * @returns {$protobuf.Writer} Writer
-     */
-    SignupRequest.encodeDelimited = function encodeDelimited(message, writer) {
-        return this.encode(message, writer).ldelim();
-    };
-
-    /**
-     * Decodes a SignupRequest message from the specified reader or buffer.
-     * @function decode
-     * @memberof SignupRequest
-     * @static
-     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @param {number} [length] Message length if known beforehand
-     * @returns {SignupRequest} SignupRequest
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    SignupRequest.decode = function decode(reader, length) {
-        if (!(reader instanceof $Reader))
-            reader = $Reader.create(reader);
-        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.SignupRequest();
-        while (reader.pos < end) {
-            var tag = reader.uint32();
-            switch (tag >>> 3) {
-            case 1: {
-                    message.first_name = reader.string();
-                    break;
-                }
-            case 2: {
-                    message.last_name = reader.string();
-                    break;
-                }
-            case 3: {
-                    message.email = reader.string();
-                    break;
-                }
-            case 4: {
-                    message.password = reader.string();
-                    break;
-                }
-            case 5: {
-                    message.age = reader.int32();
-                    break;
-                }
-            case 6: {
-                    message.gender = reader.int32();
-                    break;
-                }
-            case 7: {
-                    message.relationship = reader.int32();
-                    break;
-                }
-            default:
-                reader.skipType(tag & 7);
-                break;
-            }
-        }
-        return message;
-    };
-
-    /**
-     * Decodes a SignupRequest message from the specified reader or buffer, length delimited.
-     * @function decodeDelimited
-     * @memberof SignupRequest
-     * @static
-     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
-     * @returns {SignupRequest} SignupRequest
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    SignupRequest.decodeDelimited = function decodeDelimited(reader) {
-        if (!(reader instanceof $Reader))
-            reader = new $Reader(reader);
-        return this.decode(reader, reader.uint32());
-    };
-
-    /**
-     * Verifies a SignupRequest message.
-     * @function verify
-     * @memberof SignupRequest
-     * @static
-     * @param {Object.<string,*>} message Plain object to verify
-     * @returns {string|null} `null` if valid, otherwise the reason why it is not
-     */
-    SignupRequest.verify = function verify(message) {
-        if (typeof message !== "object" || message === null)
-            return "object expected";
-        if (message.first_name != null && message.hasOwnProperty("first_name"))
-            if (!$util.isString(message.first_name))
-                return "first_name: string expected";
-        if (message.last_name != null && message.hasOwnProperty("last_name"))
-            if (!$util.isString(message.last_name))
-                return "last_name: string expected";
-        if (message.email != null && message.hasOwnProperty("email"))
-            if (!$util.isString(message.email))
-                return "email: string expected";
-        if (message.password != null && message.hasOwnProperty("password"))
-            if (!$util.isString(message.password))
-                return "password: string expected";
-        if (message.age != null && message.hasOwnProperty("age"))
-            if (!$util.isInteger(message.age))
-                return "age: integer expected";
-        if (message.gender != null && message.hasOwnProperty("gender"))
-            switch (message.gender) {
-            default:
-                return "gender: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                break;
-            }
-        if (message.relationship != null && message.hasOwnProperty("relationship"))
-            switch (message.relationship) {
-            default:
-                return "relationship: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                break;
-            }
-        return null;
-    };
-
-    /**
-     * Creates a SignupRequest message from a plain object. Also converts values to their respective internal types.
-     * @function fromObject
-     * @memberof SignupRequest
-     * @static
-     * @param {Object.<string,*>} object Plain object
-     * @returns {SignupRequest} SignupRequest
-     */
-    SignupRequest.fromObject = function fromObject(object) {
-        if (object instanceof $root.SignupRequest)
-            return object;
-        var message = new $root.SignupRequest();
-        if (object.first_name != null)
-            message.first_name = String(object.first_name);
-        if (object.last_name != null)
-            message.last_name = String(object.last_name);
-        if (object.email != null)
-            message.email = String(object.email);
-        if (object.password != null)
-            message.password = String(object.password);
-        if (object.age != null)
-            message.age = object.age | 0;
-        switch (object.gender) {
-        default:
-            if (typeof object.gender === "number") {
-                message.gender = object.gender;
-                break;
-            }
-            break;
-        case "NONBINARY":
-        case 0:
-            message.gender = 0;
-            break;
-        case "MALE":
-        case 1:
-            message.gender = 1;
-            break;
-        case "FEMALE":
-        case 2:
-            message.gender = 2;
-            break;
-        case "OTHER":
-        case 3:
-            message.gender = 3;
-            break;
-        }
-        switch (object.relationship) {
-        default:
-            if (typeof object.relationship === "number") {
-                message.relationship = object.relationship;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.relationship = 0;
-            break;
-        case "MONOGAMY":
-        case 1:
-            message.relationship = 1;
-            break;
-        case "ETHICAL_NON_MONOGAMY":
-        case 2:
-            message.relationship = 2;
-            break;
-        case "OPEN_RELATIONSHIP":
-        case 3:
-            message.relationship = 3;
-            break;
-        case "POLYAMORY":
-        case 4:
-            message.relationship = 4;
-            break;
-        case "OPEN_TO_EXPLORING":
-        case 5:
-            message.relationship = 5;
-            break;
-        }
-        return message;
-    };
-
-    /**
-     * Creates a plain object from a SignupRequest message. Also converts values to other types if specified.
-     * @function toObject
-     * @memberof SignupRequest
-     * @static
-     * @param {SignupRequest} message SignupRequest
-     * @param {$protobuf.IConversionOptions} [options] Conversion options
-     * @returns {Object.<string,*>} Plain object
-     */
-    SignupRequest.toObject = function toObject(message, options) {
-        if (!options)
-            options = {};
-        var object = {};
-        if (options.defaults) {
-            object.first_name = "";
-            object.last_name = "";
-            object.email = "";
-            object.password = "";
-            object.age = 0;
-            object.gender = options.enums === String ? "NONBINARY" : 0;
-            object.relationship = options.enums === String ? "UNKNOWN" : 0;
-        }
-        if (message.first_name != null && message.hasOwnProperty("first_name"))
-            object.first_name = message.first_name;
-        if (message.last_name != null && message.hasOwnProperty("last_name"))
-            object.last_name = message.last_name;
-        if (message.email != null && message.hasOwnProperty("email"))
-            object.email = message.email;
-        if (message.password != null && message.hasOwnProperty("password"))
-            object.password = message.password;
-        if (message.age != null && message.hasOwnProperty("age"))
-            object.age = message.age;
-        if (message.gender != null && message.hasOwnProperty("gender"))
-            object.gender = options.enums === String ? $root.Gender[message.gender] === undefined ? message.gender : $root.Gender[message.gender] : message.gender;
-        if (message.relationship != null && message.hasOwnProperty("relationship"))
-            object.relationship = options.enums === String ? $root.Relationship[message.relationship] === undefined ? message.relationship : $root.Relationship[message.relationship] : message.relationship;
-        return object;
-    };
-
-    /**
-     * Converts this SignupRequest to JSON.
-     * @function toJSON
-     * @memberof SignupRequest
-     * @instance
-     * @returns {Object.<string,*>} JSON object
-     */
-    SignupRequest.prototype.toJSON = function toJSON() {
-        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
-    };
-
-    /**
-     * Gets the default type url for SignupRequest
-     * @function getTypeUrl
-     * @memberof SignupRequest
-     * @static
-     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns {string} The default type url
-     */
-    SignupRequest.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
-        if (typeUrlPrefix === undefined) {
-            typeUrlPrefix = "type.googleapis.com";
-        }
-        return typeUrlPrefix + "/SignupRequest";
-    };
-
-    return SignupRequest;
+    return AuthorizeByPhoneRequest;
 })();
 
 $root.AuthResponse = (function() {

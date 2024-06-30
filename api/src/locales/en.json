@@ -1,26 +1,24 @@
 {
-    "login_invalid":  "Invalid email/password combination.",
-	"login_success":  "You have successfully logged in.",
-    
-    "signup_exists":  "An account with this email already exists.",
-    "signup_success": "You have successfully signed up.",
-    
-    "authorized":     "You are authorized.",
-    "unauthorized":   "You are not authorized.",
-    "unauthorized_action": "You are not authorized to perform this action.",
-    "unauthorized_access": "You are not authorized to access this resource.",
-
-    "validator_required": "{{what}} is required.",
-    "validator_short": "{{what}} must be at least {{length}} characters long.",
-    "validator_long": "{{what}} must be less than {{length}} characters long.",
-    "validator_type": "{{what}} must be a {{type}}.",
-    "validator_oneof": "{{what}} must be one of the following: {{values}}.",
-
-    "validator_email": "Please provide a valid email address",
-    "validator_password": "Password must include at least one special character",
-    "password_weak": "Password is too weak. Must be at least orange level strength.",
-
-    "generic_error":  "Something went wrong. Please try again.",
-
-    "conversation_not_found": "Conversation not found."
+	"login_not_found": "An account with this phone number doesn't exist.",
+	"login_success": "You have successfully logged in.",
+	"signup_exists": "An account with this phone number already exists.",
+	"signup_success": "You have successfully signed up.",
+	"authorized": "You are authorized.",
+	"unauthorized": "You are not authorized.",
+	"unauthorized_action": "You are not authorized to perform this action.",
+	"unauthorized_access": "You are not authorized to access this resource.",
+	"validator_required": "{{what}} is required.",
+	"validator_short": "{{what}} must be at least {{length}} characters long.",
+	"validator_long": "{{what}} must be less than {{length}} characters long.",
+	"validator_type": "{{what}} must be a {{type}}.",
+	"validator_oneof": "{{what}} must be one of the following: {{values}}.",
+	"validator_phone": "Please provide a valid phone number.",
+	"otp_message": "{{code}} is your Co-Op Mode OTP. Do not share it with anyone.",
+	"otp_sent": "A code has been sent to that number.",
+	"otp_already_sent": "A code has already been sent to {{phone}}.",
+	"otp_invalid": "Please provide a valid code.",
+	"otp_incorrect": "Incorrect code. Please try again.",
+	"otp_expired": "Code has expired. We're sending a new one now...",
+	"conversation_not_found": "Conversation not found.",
+	"generic_error": "generic_error"
 }

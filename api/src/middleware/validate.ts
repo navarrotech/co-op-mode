@@ -5,7 +5,7 @@ import { IFormInvalid } from "@/lib/generated/schema"
 import type { Request, Response } from "@/types"
 
 // Constants
-import { defaultLanguage, type SupportedLanguages } from "@/lib/language"
+import { defaultLanguage, defaultLanguageJson, type SupportedLanguages } from "@/lib/language"
 
 // Utility
 import { languageValidator } from "@/lib/validators"
@@ -73,6 +73,9 @@ export default async function validateMiddleware(
                     else if (type === "oneOf"){
                         message = request.__("validator_oneof", { what, values: error.params.values as string })
                     }
+                    else if (type === "matches" && defaultLanguageJson[error.params.message as string]) {
+                        message = request.__(error.params.message as string, { what, type, values: error.params.values as string })
+                    }
                     else {
                         console.error("!!!! Unhandled error type, sending unlocalized error message", validationError)
                     }
@@ -82,7 +85,7 @@ export default async function validateMiddleware(
 
                 response.status(400)
                 response.sendProto("FormsInvalid", { invalid: payloads })
-                
+
                 return null
             }
 
@@ -109,6 +112,7 @@ export default async function validateMiddleware(
     } catch (error) {
         if (error instanceof ValidationError) {
             if (error.type === "oneOf" && error) {
+                // Do nothing
             }
         }
         else {

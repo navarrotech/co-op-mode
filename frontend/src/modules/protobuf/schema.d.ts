@@ -212,8 +212,8 @@ export interface IUser {
     /** User id */
     id?: (string|null);
 
-    /** User email */
-    email?: (string|null);
+    /** User phone */
+    phone?: (string|null);
 
     /** User first_name */
     first_name?: (string|null);
@@ -258,8 +258,8 @@ export class User implements IUser {
     /** User id. */
     public id: string;
 
-    /** User email. */
-    public email: string;
+    /** User phone. */
+    public phone: string;
 
     /** User first_name. */
     public first_name: string;
@@ -2853,236 +2853,106 @@ export class VideoGames implements IVideoGames {
     public static getTypeUrl(typeUrlPrefix?: string): string;
 }
 
-/** Properties of a LoginRequest. */
-export interface ILoginRequest {
+/** Properties of an AuthorizeByPhoneRequest. */
+export interface IAuthorizeByPhoneRequest {
 
-    /** LoginRequest email */
-    email?: (string|null);
+    /** AuthorizeByPhoneRequest phone */
+    phone?: (string|null);
 
-    /** LoginRequest password */
-    password?: (string|null);
+    /** AuthorizeByPhoneRequest OTP */
+    OTP?: (string|null);
 }
 
-/** Represents a LoginRequest. */
-export class LoginRequest implements ILoginRequest {
+/** Represents an AuthorizeByPhoneRequest. */
+export class AuthorizeByPhoneRequest implements IAuthorizeByPhoneRequest {
 
     /**
-     * Constructs a new LoginRequest.
+     * Constructs a new AuthorizeByPhoneRequest.
      * @param [properties] Properties to set
      */
-    constructor(properties?: ILoginRequest);
+    constructor(properties?: IAuthorizeByPhoneRequest);
 
-    /** LoginRequest email. */
-    public email: string;
+    /** AuthorizeByPhoneRequest phone. */
+    public phone: string;
 
-    /** LoginRequest password. */
-    public password: string;
+    /** AuthorizeByPhoneRequest OTP. */
+    public OTP?: (string|null);
+
+    /** AuthorizeByPhoneRequest _OTP. */
+    public _OTP?: "OTP";
 
     /**
-     * Creates a new LoginRequest instance using the specified properties.
+     * Creates a new AuthorizeByPhoneRequest instance using the specified properties.
      * @param [properties] Properties to set
-     * @returns LoginRequest instance
+     * @returns AuthorizeByPhoneRequest instance
      */
-    public static create(properties?: ILoginRequest): LoginRequest;
+    public static create(properties?: IAuthorizeByPhoneRequest): AuthorizeByPhoneRequest;
 
     /**
-     * Encodes the specified LoginRequest message. Does not implicitly {@link LoginRequest.verify|verify} messages.
-     * @param message LoginRequest message or plain object to encode
+     * Encodes the specified AuthorizeByPhoneRequest message. Does not implicitly {@link AuthorizeByPhoneRequest.verify|verify} messages.
+     * @param message AuthorizeByPhoneRequest message or plain object to encode
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encode(message: ILoginRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+    public static encode(message: IAuthorizeByPhoneRequest, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Encodes the specified LoginRequest message, length delimited. Does not implicitly {@link LoginRequest.verify|verify} messages.
-     * @param message LoginRequest message or plain object to encode
+     * Encodes the specified AuthorizeByPhoneRequest message, length delimited. Does not implicitly {@link AuthorizeByPhoneRequest.verify|verify} messages.
+     * @param message AuthorizeByPhoneRequest message or plain object to encode
      * @param [writer] Writer to encode to
      * @returns Writer
      */
-    public static encodeDelimited(message: ILoginRequest, writer?: $protobuf.Writer): $protobuf.Writer;
+    public static encodeDelimited(message: IAuthorizeByPhoneRequest, writer?: $protobuf.Writer): $protobuf.Writer;
 
     /**
-     * Decodes a LoginRequest message from the specified reader or buffer.
+     * Decodes an AuthorizeByPhoneRequest message from the specified reader or buffer.
      * @param reader Reader or buffer to decode from
      * @param [length] Message length if known beforehand
-     * @returns LoginRequest
+     * @returns AuthorizeByPhoneRequest
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): LoginRequest;
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): AuthorizeByPhoneRequest;
 
     /**
-     * Decodes a LoginRequest message from the specified reader or buffer, length delimited.
+     * Decodes an AuthorizeByPhoneRequest message from the specified reader or buffer, length delimited.
      * @param reader Reader or buffer to decode from
-     * @returns LoginRequest
+     * @returns AuthorizeByPhoneRequest
      * @throws {Error} If the payload is not a reader or valid buffer
      * @throws {$protobuf.util.ProtocolError} If required fields are missing
      */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): LoginRequest;
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): AuthorizeByPhoneRequest;
 
     /**
-     * Verifies a LoginRequest message.
+     * Verifies an AuthorizeByPhoneRequest message.
      * @param message Plain object to verify
      * @returns `null` if valid, otherwise the reason why it is not
      */
     public static verify(message: { [k: string]: any }): (string|null);
 
     /**
-     * Creates a LoginRequest message from a plain object. Also converts values to their respective internal types.
+     * Creates an AuthorizeByPhoneRequest message from a plain object. Also converts values to their respective internal types.
      * @param object Plain object
-     * @returns LoginRequest
+     * @returns AuthorizeByPhoneRequest
      */
-    public static fromObject(object: { [k: string]: any }): LoginRequest;
+    public static fromObject(object: { [k: string]: any }): AuthorizeByPhoneRequest;
 
     /**
-     * Creates a plain object from a LoginRequest message. Also converts values to other types if specified.
-     * @param message LoginRequest
+     * Creates a plain object from an AuthorizeByPhoneRequest message. Also converts values to other types if specified.
+     * @param message AuthorizeByPhoneRequest
      * @param [options] Conversion options
      * @returns Plain object
      */
-    public static toObject(message: LoginRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
+    public static toObject(message: AuthorizeByPhoneRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
 
     /**
-     * Converts this LoginRequest to JSON.
+     * Converts this AuthorizeByPhoneRequest to JSON.
      * @returns JSON object
      */
     public toJSON(): { [k: string]: any };
 
     /**
-     * Gets the default type url for LoginRequest
-     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
-     * @returns The default type url
-     */
-    public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** Properties of a SignupRequest. */
-export interface ISignupRequest {
-
-    /** SignupRequest first_name */
-    first_name?: (string|null);
-
-    /** SignupRequest last_name */
-    last_name?: (string|null);
-
-    /** SignupRequest email */
-    email?: (string|null);
-
-    /** SignupRequest password */
-    password?: (string|null);
-
-    /** SignupRequest age */
-    age?: (number|null);
-
-    /** SignupRequest gender */
-    gender?: (Gender|null);
-
-    /** SignupRequest relationship */
-    relationship?: (Relationship|null);
-}
-
-/** Represents a SignupRequest. */
-export class SignupRequest implements ISignupRequest {
-
-    /**
-     * Constructs a new SignupRequest.
-     * @param [properties] Properties to set
-     */
-    constructor(properties?: ISignupRequest);
-
-    /** SignupRequest first_name. */
-    public first_name: string;
-
-    /** SignupRequest last_name. */
-    public last_name: string;
-
-    /** SignupRequest email. */
-    public email: string;
-
-    /** SignupRequest password. */
-    public password: string;
-
-    /** SignupRequest age. */
-    public age: number;
-
-    /** SignupRequest gender. */
-    public gender: Gender;
-
-    /** SignupRequest relationship. */
-    public relationship: Relationship;
-
-    /**
-     * Creates a new SignupRequest instance using the specified properties.
-     * @param [properties] Properties to set
-     * @returns SignupRequest instance
-     */
-    public static create(properties?: ISignupRequest): SignupRequest;
-
-    /**
-     * Encodes the specified SignupRequest message. Does not implicitly {@link SignupRequest.verify|verify} messages.
-     * @param message SignupRequest message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encode(message: ISignupRequest, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Encodes the specified SignupRequest message, length delimited. Does not implicitly {@link SignupRequest.verify|verify} messages.
-     * @param message SignupRequest message or plain object to encode
-     * @param [writer] Writer to encode to
-     * @returns Writer
-     */
-    public static encodeDelimited(message: ISignupRequest, writer?: $protobuf.Writer): $protobuf.Writer;
-
-    /**
-     * Decodes a SignupRequest message from the specified reader or buffer.
-     * @param reader Reader or buffer to decode from
-     * @param [length] Message length if known beforehand
-     * @returns SignupRequest
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): SignupRequest;
-
-    /**
-     * Decodes a SignupRequest message from the specified reader or buffer, length delimited.
-     * @param reader Reader or buffer to decode from
-     * @returns SignupRequest
-     * @throws {Error} If the payload is not a reader or valid buffer
-     * @throws {$protobuf.util.ProtocolError} If required fields are missing
-     */
-    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): SignupRequest;
-
-    /**
-     * Verifies a SignupRequest message.
-     * @param message Plain object to verify
-     * @returns `null` if valid, otherwise the reason why it is not
-     */
-    public static verify(message: { [k: string]: any }): (string|null);
-
-    /**
-     * Creates a SignupRequest message from a plain object. Also converts values to their respective internal types.
-     * @param object Plain object
-     * @returns SignupRequest
-     */
-    public static fromObject(object: { [k: string]: any }): SignupRequest;
-
-    /**
-     * Creates a plain object from a SignupRequest message. Also converts values to other types if specified.
-     * @param message SignupRequest
-     * @param [options] Conversion options
-     * @returns Plain object
-     */
-    public static toObject(message: SignupRequest, options?: $protobuf.IConversionOptions): { [k: string]: any };
-
-    /**
-     * Converts this SignupRequest to JSON.
-     * @returns JSON object
-     */
-    public toJSON(): { [k: string]: any };
-
-    /**
-     * Gets the default type url for SignupRequest
+     * Gets the default type url for AuthorizeByPhoneRequest
      * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
      * @returns The default type url
      */

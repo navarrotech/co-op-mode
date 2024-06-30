@@ -1,3 +1,4 @@
+// Copyright © 2024 Navarrotech
 
 // Store configuration
 import { type ThunkAction, configureStore, Action } from '@reduxjs/toolkit'
@@ -19,8 +20,8 @@ const store = configureStore({
   devTools: process.env.NODE_ENV === 'development'
 })
 
-export const dispatch = store.dispatch;
-export const getState = store.getState;
+export const dispatch = store.dispatch
+export const getState = store.getState
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>
@@ -29,4 +30,4 @@ export type AppDispatch = typeof store.dispatch
 
 export type Thunk = ThunkAction<void, RootState, unknown, Action>
 
-export default store;
+export default store

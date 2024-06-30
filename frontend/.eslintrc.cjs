@@ -21,5 +21,9 @@ module.exports = {
     '@typescript-eslint/ban-ts-comment': 'off',
     // Allow banned types
     '@typescript-eslint/ban-types': 'off',
+    // Enforce single quotes
+    'quotes': ['error', 'double'],
+    'indent': ['error', 2],
+    'comma-dangle': ['error', 'allow'],
   },
 }

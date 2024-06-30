@@ -1,20 +1,15 @@
 // Copyright © 2024 Navarrotech
 @use "./theme.sass" as *;
+@use "sass:color";
 
-$family-titles: "Righteous", sans-serif;
-$family-primary: "Chocolate Classical Sans", sans-serif;
+$family-titles: "Archivo Black", Roboto, sans-serif;
+$family-primary: "Montserrat", Arial, sans-serif;
 
 @use "bulma/sass" with (
   $family-primary: $family-primary,
   $primary: $primary,
-//   $link: $link,
+  $link: $link,
   $title-family: $family-titles,
-//   $text: white,
-//   $box-color: white,
-//   $body-color: white,
-//   $label-color: white,
-//   $strong-color: white,
-//   $title-color: white,
   $input-shadow: none
 );
 
@@ -27,43 +22,174 @@ $family-primary: "Chocolate Classical Sans", sans-serif;
 // Bulma extensions
 @import "bulma-divider";
 
+.theme-light {
+  p {
+    color: #504f51;
+  }
+
+  strong {
+    color: black;
+  }
+}
+
 .button {
   &.is-primary {
     color: white;
   }
-  &.is-google {
-    background: $google;
-    color: white;
+
+  &.is-logo {
+    height: 42px;
     font-weight: 500;
     border: none;
-    margin-top: 1em;
-    min-height: 3.4rem;
     position: relative;
 
     .icon {
       position: absolute;
-      top: 0.22em;
-      left: 0.7em;
-      height: 3rem;
-      width: 3rem;
-      background: white;
-      border-radius: 5px;
+      left: 1.2em;
+    }
+  }
+  &.is-google {
+    background: $google;
+    color: white !important;
+  }
+  &.is-discord {
+    background: $discord;
+    color: white !important;
+  }
+  &.is-select-prompt {
+    background: transparent !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-left: none !important;
+    border-bottom-width: 2px !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
 
-      img {
-        width: 2rem !important;
-      }
+.useTitleFont {
+    font-family: $family-titles;
+}
+
+.block:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+.field:not(:last-child) {
+    margin-bottom: 0.75rem;
+}
+
+.has-text-pretty {
+  text-wrap: pretty;
+}
+
+.is-fullwidth {
+  width: 100% !important;
+}
+
+input:focus,
+textarea:focus {
+  outline: none !important;
+}
+
+input,
+textarea {
+  border-top: none !important;
+  border-right: none !important;
+  border-left: none !important;
+  border-bottom-width: 2px !important;
+  border-radius: 0 !important;
+}
+
+.input:focus,
+.input:active,
+.textarea:focus,
+.textarea:active {
+  border-color: $primary;
+}
+
+.theme-light {
+  .dropdown-item {
+    &.is-highlighted {
+      background: rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+}
+.theme-dark {
+  .dropdown-item {
+    &.is-highlighted {
+      background: rgba(255, 255, 255, 0.1) !important;
     }
   }
 }
 
-.useTitleFont{
-    font-family: $family-titles;
-}
 
-.block:not(:last-child){
-    margin-bottom: 1.5rem;
-}
+@media only screen and (max-width: $tablet) {
+  .section {
+    padding: 1.5rem 1rem 1rem !important;
+  }
 
-.field:not(:last-child){
-    margin-bottom: 0.75rem;
+  .dropdown-menu {
+    display: block !important;
+    position: fixed;
+    top: 101vh;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    height: 50vh;
+    transition: top 200ms ease-in-out;
+    z-index: 1000;
+
+    .dropdown-content {
+      max-height: calc(50vh - var(--bulma-dropdown-content-padding-top));
+      height: calc(50vh - var(--bulma-dropdown-content-padding-top));
+
+      .dropdown-wrapper {
+        max-height: 100%;
+        overflow-y: auto;
+      }
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.5em;
+        width: 100%;
+
+        > .field:not(.has-addons) {
+          width: 100%;
+        }
+
+        .dropdown-search,
+        .dropdown-search + .icon {
+          font-size: 1rem !important;
+        }
+      }
+    }
+  }
+  .dropdown {
+    &.is-active {
+      &::before {
+        content: " ";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(255, 255, 255, 0.05);
+        backdrop-filter: blur(7px);
+        z-index: 999;
+        pointer-events: none;
+      }
+
+      .dropdown-menu {
+        top: 50vh !important
+      }
+    }
+  }
+  .theme-light {
+    .dropdown.is-active::before {
+      background: rgba(0, 0, 0, 0.5) !important;
+    }
+  }
 }

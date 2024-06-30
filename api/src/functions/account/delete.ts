@@ -40,7 +40,6 @@ const route: Route = {
                 database.daily_limits.delete({ where }),
                 database.monthly_limits.delete({ where }),
                 database.status.delete({ where }),
-                database.passwords.deleteMany({ where }),
                 database.likes.deleteMany({
                     where: {
                         OR: [

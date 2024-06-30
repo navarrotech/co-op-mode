@@ -9,33 +9,20 @@
 
 import { sendProto } from "@/modules/api"
 
-export type ILogin = {
-	email: string
-	password: string
+export type IAuthorizeByPhone = {
+	phone: string
+	OTP?: string
 }
-export function login(data: ILogin) {
-    return sendProto("/auth/login", "LoginRequest", data as any, "POST")
-}
-
-export type ISignup = {
-	first_name: string
-	last_name: string
-	email: string
-	password: string
-	age: number
-	gender: string
-	relationship: string
-}
-export function signup(data: ISignup) {
-    return sendProto("/auth/signup", "SignupRequest", data as any, "POST")
+export function authorizeByPhone(data: IAuthorizeByPhone) {
+    return sendProto("/auth/v1/authorizeByPhone", "AuthorizeByPhoneRequest", data as any, "POST")
 }
 
 export function logout() {
-    return sendProto("/auth/logout", "Blank", { i: 0 }, "POST")
+    return sendProto("/auth/v1/logout", "Blank", { i: 0 }, "POST")
 }
 
 export function check() {
-    return sendProto("/auth/check", "Blank", { i: 0 }, "GET")
+    return sendProto("/auth/v1/check", "Blank", { i: 0 }, "GET")
 }
 
 export function sync() {
@@ -186,8 +173,7 @@ export function test() {
 }
 
 export type Types = {
-    ILogin: ILogin,
-	ISignup: ISignup,
+    IAuthorizeByPhone: IAuthorizeByPhone,
 	IUpdatePreferences: IUpdatePreferences,
 	IStatusActive: IStatusActive,
 	IUpdateAccount: IUpdateAccount,
@@ -204,8 +190,7 @@ export type Types = {
 }
 
 export const Routes = {
-    login,
-	signup,
+    authorizeByPhone,
 	logout,
 	check,
 	sync,

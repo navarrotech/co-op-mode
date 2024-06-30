@@ -4,205 +4,36 @@
 @import "@/sass/bulma.scss"
 @import "@/sass/fonts.sass"
 
-// html
-//     background: #0A0A0A
+body
+    height: 100vh !important
 
-// .button svg
-//     color: white
+    &.theme-dark
+      background: #0A0A0A
+    &.theme-light
+      background: #f0f5fa
 
-// .input:not(.is-primary),
-// .textarea:not(.is-primary),
-// .select:not(.is-primary) select
-//     transition: border-color 0.2s
-//     border-color: rgba(255, 255, 255, 0.6)
+.section
+  height: 100vh
 
-//     &:focus
-//         border-color: $primary
+  > .container
+    height: 100%
 
-// .delete
-//     background-color: $black
+.container,
+.section
+  &.is-stacked
+    display: flex
+    flex-direction: column
 
-//     &::before, &::after
-//         background-color: white
+.v-spacer
+  flex-grow: 1
 
-// .tag
-//     &.link
-//         text-decoration: none !important
-//         &:hover
-//             background: $primary !important
-//             color: white !important
+.centered
+  display: block
+  margin-left: auto
+  margin-right: auto
 
-// .navbar
-//     a.navbar-item
-//         &:hover
-//             background: color.adjust($primary, $lightness: 10%)
-//             color: white
+.dropdown-wrapper
+  padding: 0.5em 0
 
-//         &.is-selected
-//             background: $primary
-//             color: white
-
-// .column
-//     &.is-disabled
-//         opacity: 0.5
-
-// .react-numeric-input
-//     width: 100%
-
-//     b
-//         display: none !important
-
-//     input
-//         width: 100%
-//         padding-left: calc(0.75em - 1px) !important
-
-// .field.fancy-label
-//     position: relative
-
-//     &:not(:last-child)
-//         margin-bottom: 1em
-
-//     .label
-//         position: absolute
-//         left: 1em
-//         top: -0.8em
-//         font-size: 0.8em
-//         font-weight: 400
-//         z-index: 1
-//         background: $dark
-//         padding-left: 0.4em
-//         padding-right: 0.4em
-
-// .level > .tabs
-//         width: 100%
-
-// // Navarrotech should fix:
-// .switch
-//     width: 3.6em
-//     height: 1.8em
-
-//     &.is-rounded
-//         border-radius: 3em !important
-
-//     &.is-small
-//         font-size: 0.7rem !important
-    
-//     .slider::before
-//         width: 1.6em
-//         height: 1.6em
-//         left: 0.15em
-//         bottom: 0.1em
-    
-//     input:checked + .slider:before
-//         transform: translateX(1.7em) !important
-
-// .modal
-//     .modal-card
-//         border: 1px solid rgba(255, 255, 255, 0.3)
-//         border-radius: $modal-card-head-radius - 2px
-
-//     .modal-card-head
-//         border-bottom: 1px solid rgba(255, 255, 255, 0.3)
-
-//     .modal-card-foot
-//         border-top: 1px solid rgba(255, 255, 255, 0.3)
-
-//     &.is-large
-//         .modal-card
-//             width: 1000px
-
-// .sidebar
-//     .modal-card
-//         margin-right: unset
-//         height: 100vh
-//         max-height: 100vh
-//         width: 425px
-
-//     .modal-card-head
-//         background: $primary
-//         min-height: 6em
-//         border-radius: 0 !important
-//         border-bottom: none !important
-
-//         .modal-card-title
-//             color: white
-//             font-weight: 800
-
-//     .modal-card-foot
-//         background: #fff
-//         border-top: none !important
-//         border-radius: 0 !important
-
-// // Adjusting for login page
-// .is-divider::after
-//     transform: translateY(-0.95rem) !important
-//     -webkit-transform: translateY(-0.95rem) !important
-
-// @media screen and (max-width: $tablet)
-//     .button
-//         font-size: 0.8rem !important
-
-//     .title
-//         &.is-size-1
-//             font-size: 2rem !important
-//         &.is-size-2
-//             font-size: 1.75rem !important
-//         &.is-size-3
-//             font-size: 1.5rem !important
-//         &.is-size-4
-//             font-size: 1.25rem !important
-//         &.is-size-5
-//             font-size: 1.1rem !important
-//         &.is-size-6
-//             font-size: 0.9rem !important
-//         &.is-size-7
-//             font-size: 0.8rem !important
-
-//     .section
-//         padding-top: 1.5em !important
-//         padding-left: 0.8em !important
-//         padding-right: 0.8em !important
-
-//     .sidebar
-//         .modal-card
-//             width: 100vw
-
-//     .level:not(.not-mobile)
-//         display: flex !important
-//         align-items: center !important
-//         justify-content: space-between !important
-
-//     .modal
-//         .modal-card-title
-//             font-size: 1rem !important
-
-//         .modal-card-head
-//             .delete.is-large
-//                 font-size: 1rem !important
-//                 height: 24px
-//                 max-height: 24px
-//                 max-width: 24px
-//                 min-height: 24px
-//                 min-width: 24px
-//                 width: 24px
-
-//     .navbar
-//         .navbar-divider
-//             display: block
-//             background-color: rgba(255, 255, 255, 0.3)
-
-//         .navbar-menu
-//             position: absolute
-//             left: 0
-//             right: 0
-
-//             &.is-active::before
-//                 content: ''
-//                 position: absolute
-//                 top: 0
-//                 left: 0
-//                 right: 0
-//                 bottom: 0
-//                 height: 100vh
-//                 background: $dark
-                
+  .dropdown-item:not(:last-child)
+    border-bottom: 1px solid rgba(238, 238, 238, 0.2)

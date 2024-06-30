@@ -1,10 +1,11 @@
 // Copyright © 2024 Navarrotech
 
 import ProtoBufs, { type ProtoBufMessages } from '@/modules/protobuf'
+import { defaultLanguage } from './language'
 
 // This should be synced with the user's preferences eventually!
 const defaults: Record<string, string> = {
-    language: 'en'
+    language: localStorage.getItem('language') || defaultLanguage
 }
 
 Object.keys(defaults).forEach(key => {
@@ -33,9 +34,13 @@ type NonFunctionProperties<T> = {
 
 type NonFunction<T> = Pick<T, NonFunctionProperties<T>>;
 
-export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>, method = "POST"): Promise<ProtoResponse<K> | undefined> {
+export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>, method = "POST"): Promise<ProtoResponse<K>> {
     const Construct = ProtoBufs[struct]
     const buffer = Construct.fromObject(data)
+
+    if (!Construct) {
+        console.error("Invalid struct: ", struct, !!Construct, ProtoBufs)
+    }
 
     const response = await fetch(
         "http://localhost:3000" + url,
@@ -46,23 +51,40 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
                 'X-Protobuf-Struct': struct,
                 'Accept-Language': defaults.language,
             },
-            body: Construct.encode(buffer).finish(),
+            // @ts-ignore
+            body: method === "GET" ? undefined : Construct.encode(buffer).finish(),
+            credentials: 'include',
         }
     )
 
     const rawResponse = await response.text()
     const headers = response.headers
     if (headers.get('content-type') !== 'application/x-protobuf') {
-        return
+        console.log("Invalid content type, returning undefined: ", headers.get('content-type'))
+        return {
+            status: response.status,
+            headers: response.headers,
+            // @ts-ignore
+            data: undefined,
+        }
     }
+
+    // Next we'll try to decode the response
+    // From a protobuf back to a JSON object
 
     const returnStruct = headers.get('x-protobuf-struct')
 
     // @ts-ignore
     const returnConstruct = ProtoBufs[returnStruct]
 
-    if (!returnConstruct){
-        return
+    if (!returnConstruct) {
+        console.error("Invalid return struct: ", returnStruct, !!returnConstruct, ProtoBufs)
+        return {
+            status: response.status,
+            headers: response.headers,
+            // @ts-ignore
+            data: undefined,
+        }
     }
     
     try {
@@ -77,10 +99,13 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
         } as ProtoResponse<K>
     } catch (error: any){
         console.log(error)
-        return
+        return {
+            status: response.status,
+            headers: response.headers,
+            // @ts-ignore
+            data: undefined,
+        }
     }
-
-    return
 }
 
 // Why was axios a PART of the problem?

@@ -14,7 +14,7 @@ export function protobufMiddleware(request: Request, response: Response, next: N
         const Construct = ProtoBufs[struct]
 
         if (!Construct) {
-            response.status(400).send('Invalid protobuf struct')
+            response.status(400).json('Invalid protobuf struct')
             return
         }
 
@@ -46,7 +46,7 @@ export function protobufMiddleware(request: Request, response: Response, next: N
     const accept = request.headers["accept"]?.toLowerCase()
 
     // For handling incoming protobuf payloads
-    if (contentType === "Application/X-Protobuf") {
+    if (contentType === "application/x-protobuf") {
 
         const struct = request.headers["x-protobuf-struct"] as string | undefined
 
@@ -122,9 +122,9 @@ export function protobufMiddleware(request: Request, response: Response, next: N
 
     response.status(400)
     response.send("Invalid content-type, allowed: "
-        + NODE_ENV === "development"
+        + (NODE_ENV === "development"
             ? `['Application/X-Protobuf', 'application/json']`
-            : `['Application/X-Protobuf']`
+            : `['Application/X-Protobuf']`)
     )
 }
 

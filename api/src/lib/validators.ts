@@ -48,7 +48,6 @@ export const relationshipValidator = () => yup
     "OpenRelationship", "Polyamory", "OpenToExploring",
   ])
 
-
 export const firstNameValidator = () => yup
   .string()
   .typeError("")
@@ -71,6 +70,22 @@ export const emailValidator = () => yup
   .lowercase()
   .max(128)
   .min(3)
+
+export const phoneValidator = () => yup
+  .string()
+  .typeError("")
+  .trim()
+  .matches(/^\+[1-9]\d{1,14}$/, "validator_phone")
+  .max(16)
+  .min(10)
+
+export const OTPValidator = () => yup
+  .string()
+  .typeError("")
+  .trim()
+  .matches(/^\d{6}$/, "validator_otp")
+  .max(6)
+  .min(6)
 
 export const passwordValidator = () => yup
   .string()

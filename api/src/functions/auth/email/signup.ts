@@ -1,88 +1,108 @@
 // Copyright © 2024 Navarrotech
 
 // Typescript
-import type { users, Relationship, Gender } from "@prisma/client"
+import type { users } from "@prisma/client"
 import type { Route } from "@/types"
 
 // Utility
 import yup, {
-    ageValidator,
-    emailValidator,
-    firstNameValidator,
-    genderValidator,
-    lastNameValidator,
-    passwordValidator,
-    relationshipValidator
+    phoneValidator,
+    OTPValidator
 } from '@/lib/validators'
-import database from "@/lib/database"
+import formatNumber from "@/utility/formatNumber"
 import { sanitize } from "@/lib/protobuf"
 
-// Password
-import passwordHash from "password-hash"
-import checkStrength from "zxcvbn"
+// Core
+import Plivo from "@/lib/plivo"
+import redisClient from "@/lib/redis"
+import database from "@/lib/database"
 
 type Body = {
-    first_name: string
-    last_name: string
-    email: string
-    password: string
-    age: number
-    gender: Gender
-    relationship: Relationship
+    phone: string
+    OTP?: string
 }
 
 const validator = yup.object().shape({
     body: yup.object().shape({
-        first_name: firstNameValidator()
-            .required(),
-        last_name: lastNameValidator()
-            .required(),
-        email: emailValidator()
-            .required(),
-        password: passwordValidator()
-            .required(),
-        age: ageValidator()
-            .required(),
-        gender: genderValidator()
-            .required(),
-        relationship: relationshipValidator()
-            .required(),
+        phone: phoneValidator()
+        .required(),
+        OTP: OTPValidator()
+            .optional(),
     }).noUnknown()
 })
 
 const route: Route = {
     method: "post",
-    path: "/auth/signup",
+    path: "/auth/v1/phone/signup",
     validator,
     inboundStruct: "SignupRequest",
     handler: async function signupHandler(request, response) {
-        let {
-            first_name,
-            last_name,
-            email,
-            password,
-            age,
-            gender,
-            relationship,
-        } = request.body as Body
+        const { phone, OTP } = request.body as Body
 
-        email = email.trim().toLowerCase()
-        password = password.trim()
-        first_name = first_name.trim()
-        last_name = last_name.trim()
+        const userExists = await database.users.findUnique({
+            where: {
+                phone
+            }
+        })
 
-        // Password strength check!
-        const passwordStrength = checkStrength(password)
-
-        // Must be at least a 2 out of 4
-        if (passwordStrength.score < 2) {
-            console.log(`Rejecting signup password with score of ${passwordStrength.score}/4`)
+        if (userExists) {
+            response.status(409)
             response.sendProto("AuthResponse", {
-                message: request.__("password_weak"),
+                message: request.__("signup_exists"),
                 authorized: false,
                 user: null,
             })
             return
+        }
+
+        let isVerified = false
+
+        // Verify the phone number with an OTP
+        if (!OTP) {
+            try {
+                // Send the OTP to the phone number
+                const result = await Plivo.verify.initiate(phone)
+                await Promise.all([
+                    // Save the verification uuid to redis
+                    redisClient.set(`OTP:${phone}`, result.verificationUuid),
+                    // Set it to expire in 10 minutes
+                    redisClient.expire(`OTP:${phone}`, 60 * 10),
+                ])
+
+                response.status(200)
+                response.sendProto("AuthResponse", {
+                    message: request.__("otp_sent", { phone: formatNumber(phone) }),
+                    authorized: false,
+                    user: null,
+                })
+                return
+            }
+            catch (error) {
+                // TODO: "Code already sent", "phone already verified", "code expired", etc
+                console.error(error)
+            }
+        }
+        
+        if (!isVerified) {
+            try {
+                const verificationUuid = await redisClient.get(`OTP:${phone}`)
+                if (!verificationUuid) {
+                    response.status(401)
+                    response.sendProto("AuthResponse", {
+                        message: request.__("otp_expired"),
+                        authorized: false,
+                        user: null,
+                    })
+                    return
+                }
+
+                // This will throw an error if it's not successful
+                const result = await Plivo.verify.verify(verificationUuid, OTP)
+                isVerified = true
+            }
+            catch (error) {
+                console.error(error)
+            }
         }
 
         const { language } = request
@@ -94,7 +114,7 @@ const route: Route = {
                     data: {
                         first_name,
                         last_name,
-                        email,
+                        phone,
                     }
                 })
             } catch (error) {
@@ -106,7 +126,8 @@ const route: Route = {
                         user: null,
                     })
                     return
-                } else {
+                }
+                else {
                     console.error("[Signup Error] :: ", error)
                     response.status(500)
                     response.sendProto("AuthResponse", {
@@ -117,22 +138,7 @@ const route: Route = {
                 }
             }
 
-            // const startTime = Date.now()
-            const generatedPassword = passwordHash.generate(password, {
-                algorithm: "sha256",
-                saltLength: 32,
-                iterations: 10_000
-            })
-            // const stopTime = Date.now()
-            // console.info(`New password hash generated in ${stopTime - startTime}ms`)
-
             await Promise.all([
-                database.passwords.create({
-                    data: {
-                        owner_id: user.id,
-                        value: generatedPassword
-                    }
-                }),
                 database.preferences.create({
                     data: {
                         owner_id: user.id,
@@ -179,7 +185,7 @@ const route: Route = {
             })
             return
         }
-        
+
         request.session.user = user
         request.session.authorized = true
 

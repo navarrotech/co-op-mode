@@ -1,0 +1,13 @@
+// Copyright © 2024 Navarrotech
+
+// TODO:
+// Show a modal with an iframe to the external support page
+
+type Props = {
+  url: string,
+  children: React.ReactNode
+}
+
+export default function Help({ url, children }: Props) {
+  return children
+}

@@ -13,11 +13,11 @@ datasource db {
 model users {
   id              String @id @default(uuid())
 
-  first_name      String @db.VarChar(32)
-  last_name       String @db.VarChar(32)
-  email           String @unique @db.VarChar(128)
+  first_name      String?  @db.VarChar(32)
+  last_name       String?  @db.VarChar(32)
+  email           String? @unique @db.VarChar(128)
+  phone           String  @unique @db.VarChar(16)
 
-  passwords       passwords[]
   preferences     preferences?
   dating_profile  dating_profile?
   limits          permanent_limits?
@@ -53,16 +53,6 @@ model linked_accounts {
   last_used_at DateTime @default(now())
   updated_at   DateTime @updatedAt @default(now())
 }
-
-model passwords {
-  id           String   @id @default(uuid())
-  owner_id     String
-  user         users    @relation(fields: [owner_id], references: [id])
-
-  value        String
-  created_at   DateTime @default(now())
-}
-
 model preferences {
   id           String @id @default(uuid())
   owner_id     String @unique

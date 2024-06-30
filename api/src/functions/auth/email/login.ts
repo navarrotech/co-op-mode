@@ -6,85 +6,58 @@ import type { Route } from "@/types"
 // Utility
 import * as yup from 'yup'
 import database from "@/lib/database"
+import redisClient from "@/lib/redis"
+
+// Utility
 import { sanitize } from "@/lib/protobuf"
-import passwordHash from "password-hash"
+import { phoneValidator } from "@/lib/validators"
 
 type Body = {
-    email: string
-    password: string
+    phone: string
 }
 
 const validator = yup.object().shape({
     body: yup.object().shape({
-        email: yup
-            .string()
-            .typeError("")
-            .email()
-            .trim()
-            .lowercase()
-            .max(128)
-            .min(3)
+        phone: phoneValidator()
             .required(),
-        password: yup
-            .string()
-            .typeError("")
-            .trim()
-            .min(8)
-            .max(128)
-            .required()
     })
 })
 
 const route: Route = {
     method: "post",
-    path: "/auth/login",
+    path: "/auth/v1/phone/login",
     validator,
     inboundStruct: "LoginRequest",
     handler: async function loginHandler(request, response) {
+        const { phone } = request.body as Body
 
-        let { email, password } = request.body as Body
-        email = email.trim().toLowerCase()
+        // const codeSent
 
         const user = await database.users.findUnique({
             where:{
-                email
-            },
-            include: {
-                passwords: true
+                phone
             }
         })
 
-        const latestPassword = user?.passwords?.sort((a, b) => a.created_at > b.created_at ? -1 : 1)[0]
-        if (!user || !latestPassword) {
-            response.status(401)
+        if (!user) {
+            response.status(409)
             response.sendProto("AuthResponse", {
+                message: request.__("login_not_found"),
                 authorized: false,
-                user: null,
-                message: request.__("login_invalid")
             })
             return
         }
 
-        const isValid = passwordHash.verify(password, latestPassword.value)
-        if (!isValid){
-            response.status(401)
-            response.sendProto("AuthResponse", {
-                authorized: false,
-                user: null,
-                message: request.__("login_invalid")
-            })
-            return
-        }
+        return
 
-        delete user.passwords
         request.session.user = user
         request.session.authorized = true
 
         response.status(200)
         response.sendProto("AuthResponse", {
-            authorized: true,
+            message: request.__("login_success"),
             user: sanitize(user),
-            message: request.__("login_success")
+            authorized: true,
         })
 
         await request.session.saveAsync()

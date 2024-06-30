@@ -52,12 +52,13 @@ export default function Button(props: Props){
     const statusClasses = [
         primary && 'is-primary',
         secondary && 'is-secondary',
-        ghost && 'is-ghost',
         warning && 'is-warning',
         error && 'is-error',
         success && 'is-success',
         info && 'is-info',
         link && 'is-link',
+        
+        ghost && 'is-ghost',
         disabled && 'is-disabled',
         loading && 'is-loading',
         dark && 'is-dark',

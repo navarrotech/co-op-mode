@@ -2,16 +2,13 @@
 
 import { useEffect, type ReactNode } from "react"
 
-// Framework
-import { auth } from "@/firebase"
-
 // Redux
 import { dispatch, useSelector } from "@/store"
 import { finishInit, setUser } from "@/modules/auth/reducer"
-import { initialize, reset } from "@/store/action"
 
 // Components
-import Loader from "@/elements/Loader"
+import { LoaderLayout } from "@/common/Loader"
+import { check } from "@/modules/generated/routes"
 
 type Props = {
     children: ReactNode
@@ -21,27 +18,24 @@ export default function Initialization({ children }: Props){
     const isLoading = useSelector(state => state.user.loading)
 
     useEffect(() => {
-        auth.onAuthStateChanged((user) => {
-            if(user){
-                dispatch(
-                    setUser(user)
-                )
-                dispatch(
-                    initialize()
-                )
-            } else {
+        check()
+            .then(({ data }) => {
+                if (data?.user) {
+                    dispatch(
+                        setUser(data.user)
+                    )
+                }
+            })
+            .catch(console.error)
+            .finally(() => {
                 dispatch(
                     finishInit()
                 )
-                dispatch(
-                    reset()
-                )
-            }
-        })
+            })
     }, [])
 
     if (isLoading){
-        return <Loader/>
+        return <LoaderLayout />
     }
 
     return children

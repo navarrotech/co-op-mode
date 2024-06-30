@@ -4,3 +4,5 @@ verify face/account
 preference: incoming profanity filter
 auto generate frontend types/api-functions from backend data
 eula
+services should be able to wait for postgres/redis to be ready
+services should reconnect to postgres/redis if connection is lost

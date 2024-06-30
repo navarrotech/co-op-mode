@@ -1,7 +1,6 @@
 // Copyright © 2024 Navarrotech
 
 import { BulmaColor } from '@/common/Colors'
-import styles from '@/elements/elements.module.sass'
 import { ReactNode } from 'react'
 
 type Props = {
@@ -17,7 +16,7 @@ type Props = {
 export default function ToggleSwitch(props: Props) {
     const { color = "primary", checked, onChange, rounded, label, disabled, className, ...rest } = props;
 
-    let classes = `${styles.switch} is-${color}`
+    let classes = `switch is-${color}`
 
     if (disabled){
         classes += ' is-disabled'

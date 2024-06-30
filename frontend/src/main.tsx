@@ -14,6 +14,9 @@ import './firebase'
 import { Provider as ReduxProvider } from 'react-redux'
 import store from './store/store'
 
+// i18n
+import '@/modules/i18n'
+
 // Core CSS packages
 import './index.sass'
 
