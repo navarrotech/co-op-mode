@@ -38,12 +38,6 @@ export default function ProfileBuilder() {
   const [ draft, setDraft ] = useState<string>("")
   const user = useSelector(state => state.user.current)!
 
-  console.log(user)
-  console.log({
-    firstNameMeme,
-    lastNameMeme
-  })
-
   if (!user.first_name) {
     if (firstNameMeme){
       setFirstNameMeme(false)
@@ -185,6 +179,8 @@ export default function ProfileBuilder() {
   if (!user.media) {
     return <UploadMedia />
   }
+
+  console.log("Profile building complete, redirecting to app")
 
   return <Navigate to={urls.app} />
 }

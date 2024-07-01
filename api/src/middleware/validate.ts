@@ -11,6 +11,7 @@ import { defaultLanguage, defaultLanguageJson, type SupportedLanguages } from "@
 import { languageValidator } from "@/lib/validators"
 import { AnyObjectSchema, ValidationError } from "yup"
 import { startCase } from "lodash"
+import { NODE_ENV } from "@/env"
 
 type SuccessObject = {
     body: Record<string, any>
@@ -81,6 +82,10 @@ export default async function validateMiddleware(
                     }
 
                     payloads.push({ key, value, message })
+                }
+
+                if (NODE_ENV === "development") {
+                    console.log("Validation error: ", payloads, request.body)
                 }
 
                 response.status(400)

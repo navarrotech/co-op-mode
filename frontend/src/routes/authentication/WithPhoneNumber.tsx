@@ -51,16 +51,19 @@ export default function WithPhoneNumber() {
     setError("")
     setIsLoading(true)
 
-    const { data, status } = await authorizeByPhone({
+    const { data, struct, status } = await authorizeByPhone({
       phone: fullNumber
     })
 
     setIsLoading(false)
 
     if (status === 204 || status === 200 || status === 409) {
+      const user = struct === "AuthResponse" ? data?.user : {}
       dispatch(
+        // @ts-ignore
         setUser({
-          phoneNumber: fullNumber
+          ...user,
+          phone: fullNumber
         })
       )
       navigate(urls.phoneVerify)

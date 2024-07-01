@@ -15,8 +15,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { authorizeByPhone } from '@/modules/generated/routes'
 import { useTranslation } from 'react-i18next'
-import { useSelector } from '@/store'
+import { dispatch, useSelector } from '@/store'
 import FormatNumber from '@/common/formatNumber'
+import { setUser } from '@/modules/auth/reducer'
 
 export default function VerifyPhoneNumber() {
   const phoneNumber = useSelector(state => state.user.current?.phone)
@@ -37,7 +38,7 @@ export default function VerifyPhoneNumber() {
     setError("")
     setIsLoading(true)
 
-    const { data, status } = await authorizeByPhone({
+    const { data, struct, status } = await authorizeByPhone({
       phone: phoneNumber,
       OTP: code,
     })
@@ -45,7 +46,11 @@ export default function VerifyPhoneNumber() {
     setIsLoading(false)
 
     // Handle success
-    if (status === 200) {
+    if (status === 200 && data?.authorized === true) {
+      const user = struct === "AuthResponse" ? data?.user : {}
+      dispatch(
+        setUser(user)
+      )
       navigate(urls.buildProfile)
       return
     }
