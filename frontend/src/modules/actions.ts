@@ -2,9 +2,12 @@
 
 import { dispatch } from "@/store";
 import { logout } from "./auth/reducer";
+import { stopGateway } from "./gateway";
 
-export async function reducerReset() {
+export async function shutdown() {
   await dispatch(
     logout()
   )
+
+  await stopGateway()
 }

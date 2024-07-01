@@ -95,13 +95,29 @@ export const passwordValidator = () => yup
   .max(128)
   .matches(/[\W_]/, "validator_password")
 
+export const birthdayValidator = () => yup
+  .date()
+  .typeError("")
+  .max(new Date())
+  .min(new Date(1900, 0, 1))
+
 export const datingProfileValidator = (setRequired: boolean = false) => yup.object({
   birthday: setRequired
-    ? ageValidator().required()
-    : ageValidator().optional(), 
+    ? birthdayValidator().required()
+    : birthdayValidator().optional(), 
   gender: setRequired
     ? genderValidator().required()
     : genderValidator().optional(),
+  wanting: yup
+    .array()
+    .typeError("")
+    .of(
+      yup.string().trim().oneOf([
+        "Male", "Female", "NonBinary",
+      ])
+    )
+    .max(3)
+    .optional(),
   height: yup
     .number()
     .typeError("")

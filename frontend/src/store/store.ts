@@ -4,20 +4,27 @@
 import { type ThunkAction, configureStore, Action } from '@reduxjs/toolkit'
 
 // Reducers
-import core from '@/modules/core/reducer'
 import user from '@/modules/auth/reducer'
+import core from '@/modules/core/reducer'
+import messages from '@/modules/messages/reducer'
+import dating from '@/modules/dating/reducer'
+
+// Environment
+import { NODE_ENV } from '@/env'
 
 const store = configureStore({
   reducer: {
     core: core.reducer,
-    user: user.reducer
+    dating: dating.reducer,
+    user: user.reducer,
+    messages: messages.reducer,
   },
   middleware: getDefaultMiddleware =>
-  getDefaultMiddleware({
-    thunk: true,
-    serializableCheck: false
-  }),
-  devTools: process.env.NODE_ENV === 'development'
+    getDefaultMiddleware({
+      thunk: true,
+      serializableCheck: false
+    }),
+  devTools: NODE_ENV === 'development'
 })
 
 export const dispatch = store.dispatch

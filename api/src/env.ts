@@ -18,7 +18,7 @@ const {
 } = process.env
 
 if (!PLIVO_AUTH_ID || !PLIVO_TOKEN || !PLIVO_APP_UUID || !PLIVO_APP_NUMBER) {
-    console.error('PLIVO_AUTH_ID, PLIVO_APP_UUID and PLIVO_TOKEN must be set')
+    console.error('PLIVO_AUTH_ID, PLIVO_APP_UUID, PLIVO_APP_NUMBER, and PLIVO_TOKEN must be set')
 }
 
 export {

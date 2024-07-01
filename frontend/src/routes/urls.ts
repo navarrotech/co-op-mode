@@ -18,6 +18,8 @@ const urls = {
 
   // Application
   app: "/app",
+  dashboard: "/app/dashboard",
+  matching: "/app/dashboard/matching",
 
   // Misc
   termsOfService: "/terms-of-service",

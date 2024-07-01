@@ -28,11 +28,12 @@ import path from "path"
 
 // Initialization
 import { initDatabase, closeDatabase } from "./src/lib/database"
-import { initRedis, closeRedis, redisStore } from "@/lib/redis"
+import redisClient, { initRedis, closeRedis, redisStore } from "@/lib/redis"
 import { initMessageBus, closeMessageBus } from "@/lib/bus"
 
 // Environment Variables
 import { API_PORT, NODE_ENV, SESSION_SECRET, VERSION } from "src/env"
+import { clientKey } from "plivo/dist/resources/token"
 
 console.log("Starting up")
 const initialization = Promise.all([
@@ -93,7 +94,7 @@ app.use('*',
   function sessionMiddleware(req, res, next){
     if(req.session){
       // @ts-ignore
-      req.session.saveAsync = () => new Promise(acc => req.session.save(() => acc(true)))
+      req.session.saveAsync = async () => new Promise(acc => req.session.save(() => acc(true)))
       // @ts-ignore
       req.session.destroyAsync = () => new Promise(acc => req.session.destroy(() => acc(true)))
       // @ts-ignore

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router'
 
 // Redux
-import { reducerReset } from '@/modules/actions'
+import { shutdown } from '@/modules/actions'
 import { logout as apiLogout } from '@/modules/generated/routes'
 
 // UI
@@ -20,7 +20,7 @@ export default function Logout() {
   useEffect(() => {
     Promise.all([
       apiLogout().catch(console.error),
-      reducerReset().catch(console.error),
+      shutdown().catch(console.error),
     ]).finally(() => {
       setFinished(true)
     })

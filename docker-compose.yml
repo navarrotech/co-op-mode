@@ -83,6 +83,7 @@ services:
       NODE_ENV: development
       DATABASE_URL: postgres://postgres:postgres@co-op-mode-postgres:5432/postgres
       RABBITMQ_URL: amqp://co-op-mode-rabbitmq
+      REDIS_URL: redis://co-op-mode-redis:6379
       PORT: 80
     depends_on:
       - api

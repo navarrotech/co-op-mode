@@ -56,11 +56,13 @@ function publish(
     buffer: any,
 ) {
     if (!sockets?.length) {
+        console.log(`Not publishing ${struct}:${type} because there are no sockets connected`)
         return
     }
     try {
         sockets.forEach((socket) => {
             socket.emit('change', buffer)
+            socket.emit(struct, buffer)
             socket.emit(`${struct}:${type}`, buffer)
         })
         console.log(`Published ${struct}:${type} to ${sockets.length} sockets`)
@@ -84,12 +86,12 @@ const Handlers: Handler = {
         publish("DatingProfile", sockets, type, data, buffer)
     },
     Likes: async function likesHandler(type, data, buffer) {
-        const sockets = connectionsByUserId[data.owner_id]
-        publish("Likes", sockets, type, data, buffer)
+        // const sockets = connectionsByUserId[data.owner_id]
+        // publish("Likes", sockets, type, data, buffer)
     },
     Dislikes: async function dislikesHandler(type, data, buffer) {
-        const sockets = connectionsByUserId[data.owner_id]
-        publish("Dislikes", sockets, type, data, buffer)
+        // const sockets = connectionsByUserId[data.owner_id]
+        // publish("Dislikes", sockets, type, data, buffer)
     },
     Media: async function mediaHandler(type, data, buffer) {
         const sockets = connectionsByUserId[data.owner_id]
@@ -175,21 +177,21 @@ io.use(
 )
 
 io.on('connection', (socket: SessionedSocket) => {
-    console.log('New connection')
-
     const user = socket.handshake.session?.user
     const authorized = socket.handshake.session?.authorized
     const userId = user?.id
 
+    // console.log(`New connection: ${user?.first_name} ${user?.last_name} (${userId})`)
+    
     if (!user || !userId || !authorized) {
-        console.log("Rejecting unauthorized connection")
+        console.log("  > Rejecting unauthorized connection")
         socket.send(unauthorizedProtoMessage)
         socket.disconnect()
         return
     }
 
     socket.on('message', (msg) => {
-        console.log('Message received:', msg)
+        console.log(`Message received (${userId}): ${msg}`)
     })
 
     socket.on('disconnect', () => {
@@ -197,12 +199,15 @@ io.on('connection', (socket: SessionedSocket) => {
         if (!connectionsByUserId[userId].length) {
             delete connectionsByUserId[userId]
         }
+        // console.log(`User ${userId} disconnected`)
     })
 
     if (!connectionsByUserId[userId]) {
         connectionsByUserId[userId] = []
     }
     connectionsByUserId[userId].push(socket)
+
+    socket.send("Hello")
 })
 
 export function initGateway() {

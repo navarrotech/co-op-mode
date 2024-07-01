@@ -487,11 +487,11 @@ export interface IDatingProfile {
     /** DatingProfile owner_id */
     owner_id?: (string|null);
 
-    /** DatingProfile age */
-    age?: (number|null);
+    /** DatingProfile birthday */
+    birthday?: (string|null);
 
     /** DatingProfile gender */
-    gender?: (Gender|null);
+    gender?: (string|null);
 
     /** DatingProfile fav_vgames */
     fav_vgames?: (string[]|null);
@@ -500,7 +500,7 @@ export interface IDatingProfile {
     fav_vgenres?: (string[]|null);
 
     /** DatingProfile fav_vplatforms */
-    fav_vplatforms?: (Platforms[]|null);
+    fav_vplatforms?: (string[]|null);
 
     /** DatingProfile fav_vcharacter */
     fav_vcharacter?: (string|null);
@@ -554,37 +554,37 @@ export interface IDatingProfile {
     pronouns?: (string|null);
 
     /** DatingProfile height_unit */
-    height_unit?: (HeightUnit|null);
+    height_unit?: (string|null);
 
     /** DatingProfile sexuality */
-    sexuality?: (Sexuality|null);
+    sexuality?: (string|null);
 
     /** DatingProfile education */
-    education?: (Education|null);
+    education?: (string|null);
 
     /** DatingProfile looking_for */
-    looking_for?: (Seeking|null);
+    looking_for?: (string|null);
 
     /** DatingProfile relationship */
-    relationship?: (Relationship|null);
+    relationship?: (string|null);
 
     /** DatingProfile family_plans */
-    family_plans?: (FamilyPlans|null);
+    family_plans?: (string|null);
 
     /** DatingProfile workout */
-    workout?: (Workout|null);
+    workout?: (string|null);
 
     /** DatingProfile personality */
-    personality?: (Personality|null);
+    personality?: (string|null);
 
     /** DatingProfile smokes */
-    smokes?: (Smokes|null);
+    smokes?: (string|null);
 
     /** DatingProfile drinks */
-    drinks?: (Drinks|null);
+    drinks?: (string|null);
 
     /** DatingProfile cannabis */
-    cannabis?: (Cannabis|null);
+    cannabis?: (string|null);
 
     /** DatingProfile banned */
     banned?: (boolean|null);
@@ -610,6 +610,9 @@ export interface IDatingProfile {
     /** DatingProfile show_pronouns */
     show_pronouns?: (boolean|null);
 
+    /** DatingProfile wanting */
+    wanting?: (string[]|null);
+
     /** DatingProfile created_at */
     created_at?: (string|null);
 
@@ -632,11 +635,11 @@ export class DatingProfile implements IDatingProfile {
     /** DatingProfile owner_id. */
     public owner_id: string;
 
-    /** DatingProfile age. */
-    public age: number;
+    /** DatingProfile birthday. */
+    public birthday: string;
 
     /** DatingProfile gender. */
-    public gender: Gender;
+    public gender: string;
 
     /** DatingProfile fav_vgames. */
     public fav_vgames: string[];
@@ -645,7 +648,7 @@ export class DatingProfile implements IDatingProfile {
     public fav_vgenres: string[];
 
     /** DatingProfile fav_vplatforms. */
-    public fav_vplatforms: Platforms[];
+    public fav_vplatforms: string[];
 
     /** DatingProfile fav_vcharacter. */
     public fav_vcharacter: string;
@@ -699,37 +702,37 @@ export class DatingProfile implements IDatingProfile {
     public pronouns: string;
 
     /** DatingProfile height_unit. */
-    public height_unit: HeightUnit;
+    public height_unit: string;
 
     /** DatingProfile sexuality. */
-    public sexuality: Sexuality;
+    public sexuality: string;
 
     /** DatingProfile education. */
-    public education: Education;
+    public education: string;
 
     /** DatingProfile looking_for. */
-    public looking_for: Seeking;
+    public looking_for: string;
 
     /** DatingProfile relationship. */
-    public relationship: Relationship;
+    public relationship: string;
 
     /** DatingProfile family_plans. */
-    public family_plans: FamilyPlans;
+    public family_plans: string;
 
     /** DatingProfile workout. */
-    public workout: Workout;
+    public workout: string;
 
     /** DatingProfile personality. */
-    public personality: Personality;
+    public personality: string;
 
     /** DatingProfile smokes. */
-    public smokes: Smokes;
+    public smokes: string;
 
     /** DatingProfile drinks. */
-    public drinks: Drinks;
+    public drinks: string;
 
     /** DatingProfile cannabis. */
-    public cannabis: Cannabis;
+    public cannabis: string;
 
     /** DatingProfile banned. */
     public banned: boolean;
@@ -754,6 +757,9 @@ export class DatingProfile implements IDatingProfile {
 
     /** DatingProfile show_pronouns. */
     public show_pronouns: boolean;
+
+    /** DatingProfile wanting. */
+    public wanting: string[];
 
     /** DatingProfile created_at. */
     public created_at: string;
@@ -1557,7 +1563,7 @@ export interface IMedia {
     mime_type?: (string|null);
 
     /** Media file_size */
-    file_size?: (string|null);
+    file_size?: (number|null);
 
     /** Media created_at */
     created_at?: (string|null);
@@ -1600,7 +1606,7 @@ export class Media implements IMedia {
     public mime_type: string;
 
     /** Media file_size. */
-    public file_size: string;
+    public file_size: number;
 
     /** Media created_at. */
     public created_at: string;
@@ -3071,14 +3077,23 @@ export class AuthResponse implements IAuthResponse {
 /** Properties of a SyncResponse. */
 export interface ISyncResponse {
 
-    /** SyncResponse user */
-    user?: (IUser|null);
-
     /** SyncResponse conversations */
     conversations?: (IConversations[]|null);
 
-    /** SyncResponse message */
-    message?: (string|null);
+    /** SyncResponse media */
+    media?: (IMedia[]|null);
+
+    /** SyncResponse preferences */
+    preferences?: (IPreferences|null);
+
+    /** SyncResponse limits */
+    limits?: (ILimits|null);
+
+    /** SyncResponse datingProfile */
+    datingProfile?: (IDatingProfile|null);
+
+    /** SyncResponse user */
+    user?: (IUser|null);
 }
 
 /** Represents a SyncResponse. */
@@ -3090,14 +3105,23 @@ export class SyncResponse implements ISyncResponse {
      */
     constructor(properties?: ISyncResponse);
 
-    /** SyncResponse user. */
-    public user?: (IUser|null);
-
     /** SyncResponse conversations. */
     public conversations: IConversations[];
 
-    /** SyncResponse message. */
-    public message: string;
+    /** SyncResponse media. */
+    public media: IMedia[];
+
+    /** SyncResponse preferences. */
+    public preferences?: (IPreferences|null);
+
+    /** SyncResponse limits. */
+    public limits?: (ILimits|null);
+
+    /** SyncResponse datingProfile. */
+    public datingProfile?: (IDatingProfile|null);
+
+    /** SyncResponse user. */
+    public user?: (IUser|null);
 
     /**
      * Creates a new SyncResponse instance using the specified properties.
@@ -3575,7 +3599,7 @@ export class Blank implements IBlank {
 export interface IChangeEvent {
 
     /** ChangeEvent type */
-    type?: (ChangeType|null);
+    type?: (string|null);
 
     /** ChangeEvent struct */
     struct?: (string|null);
@@ -3621,7 +3645,7 @@ export class ChangeEvent implements IChangeEvent {
     constructor(properties?: IChangeEvent);
 
     /** ChangeEvent type. */
-    public type: ChangeType;
+    public type: string;
 
     /** ChangeEvent struct. */
     public struct: string;
@@ -3762,151 +3786,4 @@ export class ChangeEvent implements IChangeEvent {
      * @returns The default type url
      */
     public static getTypeUrl(typeUrlPrefix?: string): string;
-}
-
-/** ChangeType enum. */
-export enum ChangeType {
-    CREATE = 0,
-    UPDATE = 1,
-    DELETE = 2
-}
-
-/** Platforms enum. */
-export enum Platforms {
-    UNKNOWN = 0,
-    PC = 1,
-    PLAYSTATION = 2,
-    XBOX = 3,
-    SWITCH = 4,
-    MOBILE = 5,
-    OTHER = 6
-}
-
-/** Gender enum. */
-export enum Gender {
-    NONBINARY = 0,
-    MALE = 1,
-    FEMALE = 2,
-    OTHER = 3
-}
-
-/** HeightUnit enum. */
-export enum HeightUnit {
-    UNKNOWN = 0,
-    IMPERIAL = 1,
-    METRIC = 2
-}
-
-/** Sexuality enum. */
-export enum Sexuality {
-    UNKNOWN = 0,
-    STRAIGHT = 1,
-    GAY = 2,
-    LESBIAN = 3,
-    BISEXUAL = 4,
-    ASEXUAL = 5,
-    DEMISEXUAL = 6,
-    PANSEXUAL = 7,
-    QUEER = 8,
-    QUESTIONING = 9
-}
-
-/** Education enum. */
-export enum Education {
-    UNKNOWN = 0,
-    BACHELORS = 1,
-    IN_COLLEGE = 2,
-    HIGH_SCHOOL = 3,
-    PHD = 4,
-    IN_GRAD_SCHOOL = 5,
-    MASTERS = 6,
-    TRADE_SCHOOL = 7
-}
-
-/** Seeking enum. */
-export enum Seeking {
-    UNKNOWN = 0,
-    LONG_TERM_RELATIONSHIP = 1,
-    SHORT_TERM_RELATIONSHIP = 2,
-    LONG_TERM_OPEN_TO_SHORT = 3,
-    SHORT_TERM_OPEN_TO_LONG = 4,
-    NEW_FRIENDS = 5,
-    UNSURE = 6
-}
-
-/** Relationship enum. */
-export enum Relationship {
-    UNKNOWN = 0,
-    MONOGAMY = 1,
-    ETHICAL_NON_MONOGAMY = 2,
-    OPEN_RELATIONSHIP = 3,
-    POLYAMORY = 4,
-    OPEN_TO_EXPLORING = 5
-}
-
-/** FamilyPlans enum. */
-export enum FamilyPlans {
-    UNKNOWN = 0,
-    WANTS_CHILDREN = 1,
-    DOESNT_WANT_CHILDREN = 2,
-    HAVE_CHILDREN_WANT_MORE = 3,
-    HAVE_CHILDREN_DONT_WANT_MORE = 4,
-    UNSURE = 5
-}
-
-/** Workout enum. */
-export enum Workout {
-    UNKNOWN = 0,
-    EVERYDAY = 1,
-    OFTEN = 2,
-    SOMETIMES = 3,
-    NEVER = 4
-}
-
-/** Personality enum. */
-export enum Personality {
-    UNKNOWN = 0,
-    INTJ = 1,
-    INTP = 2,
-    ENTJ = 3,
-    ENTP = 4,
-    INFJ = 5,
-    INFP = 6,
-    ENFJ = 7,
-    ISTJ = 8,
-    ISFJ = 9,
-    ESTJ = 10,
-    ESFJ = 11,
-    ISTP = 12,
-    ISFP = 13,
-    ESTP = 14,
-    ESFP = 15
-}
-
-/** Smokes enum. */
-export enum Smokes {
-    UNKNOWN = 0,
-    YES = 1,
-    OCCASIONALLY = 2,
-    SOCIALLY = 3,
-    NEVER = 4
-}
-
-/** Drinks enum. */
-export enum Drinks {
-    UNKNOWN = 0,
-    NOT_FOR_ME = 1,
-    SOBER = 2,
-    ON_SPECIAL_OCCASIONS = 3,
-    SOCIALLY = 4,
-    REGULARLY = 5
-}
-
-/** Cannabis enum. */
-export enum Cannabis {
-    UNKNOWN = 0,
-    YES = 1,
-    OCCASIONALLY = 2,
-    SOCIALLY = 3,
-    NEVER = 4
 }

@@ -6,6 +6,7 @@ import type { Route } from "@/types"
 // Utility
 import { sanitize } from "@/lib/protobuf"
 import { users } from "@prisma/client"
+import database from "@/lib/database"
 
 const route: Route = {
     method: "get",
@@ -13,10 +14,15 @@ const route: Route = {
     inboundStruct: null,
     handler: async function checkHandler(request, response) {
         if (request.session?.user && request.session.authorized) {
+            const user = await database.users.findFirst({
+                where: {
+                    id: request.session.user.id
+                }
+            })
             response.status(200)
             response.sendProto("AuthResponse", {
                 message: request.__("authorized"),
-                user: sanitize(request.session.user as users),
+                user: sanitize(user),
                 authorized: true
             })
             return

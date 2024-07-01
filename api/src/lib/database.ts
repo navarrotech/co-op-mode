@@ -17,6 +17,10 @@ export async function initDatabase() {
         async (params, next) => {
             const { action, model, args } = params
 
+            if (action !== "findMany" && action !== "findUnique" && action !== "count") {
+                console.log("Executing middleware on prisma action", action, "for model", model, "with args", args)
+            }
+
             const result = await next(params)
             PrismaMiddlewareHandlers[action]?.(model, result)
 

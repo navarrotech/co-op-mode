@@ -130,6 +130,11 @@ export default function WithPhoneNumber() {
             placeholder="Phone Number"
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value.replaceAll(/\D/g, ''))}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                submit()
+              }
+            }}
             max={15}
           />
         </div>

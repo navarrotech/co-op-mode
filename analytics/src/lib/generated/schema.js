@@ -1278,11 +1278,11 @@ $root.DatingProfile = (function() {
      * @interface IDatingProfile
      * @property {string|null} [id] DatingProfile id
      * @property {string|null} [owner_id] DatingProfile owner_id
-     * @property {number|null} [age] DatingProfile age
-     * @property {Gender|null} [gender] DatingProfile gender
+     * @property {string|null} [birthday] DatingProfile birthday
+     * @property {string|null} [gender] DatingProfile gender
      * @property {Array.<string>|null} [fav_vgames] DatingProfile fav_vgames
      * @property {Array.<string>|null} [fav_vgenres] DatingProfile fav_vgenres
-     * @property {Array.<Platforms>|null} [fav_vplatforms] DatingProfile fav_vplatforms
+     * @property {Array.<string>|null} [fav_vplatforms] DatingProfile fav_vplatforms
      * @property {string|null} [fav_vcharacter] DatingProfile fav_vcharacter
      * @property {boolean|null} [likes_dnd] DatingProfile likes_dnd
      * @property {boolean|null} [likes_anime] DatingProfile likes_anime
@@ -1300,17 +1300,17 @@ $root.DatingProfile = (function() {
      * @property {string|null} [top_song] DatingProfile top_song
      * @property {string|null} [top_artist] DatingProfile top_artist
      * @property {string|null} [pronouns] DatingProfile pronouns
-     * @property {HeightUnit|null} [height_unit] DatingProfile height_unit
-     * @property {Sexuality|null} [sexuality] DatingProfile sexuality
-     * @property {Education|null} [education] DatingProfile education
-     * @property {Seeking|null} [looking_for] DatingProfile looking_for
-     * @property {Relationship|null} [relationship] DatingProfile relationship
-     * @property {FamilyPlans|null} [family_plans] DatingProfile family_plans
-     * @property {Workout|null} [workout] DatingProfile workout
-     * @property {Personality|null} [personality] DatingProfile personality
-     * @property {Smokes|null} [smokes] DatingProfile smokes
-     * @property {Drinks|null} [drinks] DatingProfile drinks
-     * @property {Cannabis|null} [cannabis] DatingProfile cannabis
+     * @property {string|null} [height_unit] DatingProfile height_unit
+     * @property {string|null} [sexuality] DatingProfile sexuality
+     * @property {string|null} [education] DatingProfile education
+     * @property {string|null} [looking_for] DatingProfile looking_for
+     * @property {string|null} [relationship] DatingProfile relationship
+     * @property {string|null} [family_plans] DatingProfile family_plans
+     * @property {string|null} [workout] DatingProfile workout
+     * @property {string|null} [personality] DatingProfile personality
+     * @property {string|null} [smokes] DatingProfile smokes
+     * @property {string|null} [drinks] DatingProfile drinks
+     * @property {string|null} [cannabis] DatingProfile cannabis
      * @property {boolean|null} [banned] DatingProfile banned
      * @property {boolean|null} [use_smart_photos] DatingProfile use_smart_photos
      * @property {boolean|null} [hide_distance] DatingProfile hide_distance
@@ -1319,6 +1319,7 @@ $root.DatingProfile = (function() {
      * @property {boolean|null} [show_sexuality] DatingProfile show_sexuality
      * @property {boolean|null} [show_gender] DatingProfile show_gender
      * @property {boolean|null} [show_pronouns] DatingProfile show_pronouns
+     * @property {Array.<string>|null} [wanting] DatingProfile wanting
      * @property {string|null} [created_at] DatingProfile created_at
      * @property {string|null} [updated_at] DatingProfile updated_at
      */
@@ -1338,6 +1339,7 @@ $root.DatingProfile = (function() {
         this.fav_bgames = [];
         this.prompts = [];
         this.known_langs = [];
+        this.wanting = [];
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
@@ -1361,20 +1363,20 @@ $root.DatingProfile = (function() {
     DatingProfile.prototype.owner_id = "";
 
     /**
-     * DatingProfile age.
-     * @member {number} age
+     * DatingProfile birthday.
+     * @member {string} birthday
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.age = 0;
+    DatingProfile.prototype.birthday = "";
 
     /**
      * DatingProfile gender.
-     * @member {Gender} gender
+     * @member {string} gender
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.gender = 0;
+    DatingProfile.prototype.gender = "";
 
     /**
      * DatingProfile fav_vgames.
@@ -1394,7 +1396,7 @@ $root.DatingProfile = (function() {
 
     /**
      * DatingProfile fav_vplatforms.
-     * @member {Array.<Platforms>} fav_vplatforms
+     * @member {Array.<string>} fav_vplatforms
      * @memberof DatingProfile
      * @instance
      */
@@ -1538,91 +1540,91 @@ $root.DatingProfile = (function() {
 
     /**
      * DatingProfile height_unit.
-     * @member {HeightUnit} height_unit
+     * @member {string} height_unit
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.height_unit = 0;
+    DatingProfile.prototype.height_unit = "";
 
     /**
      * DatingProfile sexuality.
-     * @member {Sexuality} sexuality
+     * @member {string} sexuality
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.sexuality = 0;
+    DatingProfile.prototype.sexuality = "";
 
     /**
      * DatingProfile education.
-     * @member {Education} education
+     * @member {string} education
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.education = 0;
+    DatingProfile.prototype.education = "";
 
     /**
      * DatingProfile looking_for.
-     * @member {Seeking} looking_for
+     * @member {string} looking_for
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.looking_for = 0;
+    DatingProfile.prototype.looking_for = "";
 
     /**
      * DatingProfile relationship.
-     * @member {Relationship} relationship
+     * @member {string} relationship
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.relationship = 0;
+    DatingProfile.prototype.relationship = "";
 
     /**
      * DatingProfile family_plans.
-     * @member {FamilyPlans} family_plans
+     * @member {string} family_plans
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.family_plans = 0;
+    DatingProfile.prototype.family_plans = "";
 
     /**
      * DatingProfile workout.
-     * @member {Workout} workout
+     * @member {string} workout
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.workout = 0;
+    DatingProfile.prototype.workout = "";
 
     /**
      * DatingProfile personality.
-     * @member {Personality} personality
+     * @member {string} personality
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.personality = 0;
+    DatingProfile.prototype.personality = "";
 
     /**
      * DatingProfile smokes.
-     * @member {Smokes} smokes
+     * @member {string} smokes
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.smokes = 0;
+    DatingProfile.prototype.smokes = "";
 
     /**
      * DatingProfile drinks.
-     * @member {Drinks} drinks
+     * @member {string} drinks
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.drinks = 0;
+    DatingProfile.prototype.drinks = "";
 
     /**
      * DatingProfile cannabis.
-     * @member {Cannabis} cannabis
+     * @member {string} cannabis
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.cannabis = 0;
+    DatingProfile.prototype.cannabis = "";
 
     /**
      * DatingProfile banned.
@@ -1689,6 +1691,14 @@ $root.DatingProfile = (function() {
     DatingProfile.prototype.show_pronouns = false;
 
     /**
+     * DatingProfile wanting.
+     * @member {Array.<string>} wanting
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.wanting = $util.emptyArray;
+
+    /**
      * DatingProfile created_at.
      * @member {string} created_at
      * @memberof DatingProfile
@@ -1732,22 +1742,19 @@ $root.DatingProfile = (function() {
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
         if (message.owner_id != null && Object.hasOwnProperty.call(message, "owner_id"))
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.owner_id);
-        if (message.age != null && Object.hasOwnProperty.call(message, "age"))
-            writer.uint32(/* id 3, wireType 0 =*/24).int32(message.age);
+        if (message.birthday != null && Object.hasOwnProperty.call(message, "birthday"))
+            writer.uint32(/* id 3, wireType 2 =*/26).string(message.birthday);
         if (message.gender != null && Object.hasOwnProperty.call(message, "gender"))
-            writer.uint32(/* id 4, wireType 0 =*/32).int32(message.gender);
+            writer.uint32(/* id 4, wireType 2 =*/34).string(message.gender);
         if (message.fav_vgames != null && message.fav_vgames.length)
             for (var i = 0; i < message.fav_vgames.length; ++i)
                 writer.uint32(/* id 5, wireType 2 =*/42).string(message.fav_vgames[i]);
         if (message.fav_vgenres != null && message.fav_vgenres.length)
             for (var i = 0; i < message.fav_vgenres.length; ++i)
                 writer.uint32(/* id 6, wireType 2 =*/50).string(message.fav_vgenres[i]);
-        if (message.fav_vplatforms != null && message.fav_vplatforms.length) {
-            writer.uint32(/* id 7, wireType 2 =*/58).fork();
+        if (message.fav_vplatforms != null && message.fav_vplatforms.length)
             for (var i = 0; i < message.fav_vplatforms.length; ++i)
-                writer.int32(message.fav_vplatforms[i]);
-            writer.ldelim();
-        }
+                writer.uint32(/* id 7, wireType 2 =*/58).string(message.fav_vplatforms[i]);
         if (message.fav_vcharacter != null && Object.hasOwnProperty.call(message, "fav_vcharacter"))
             writer.uint32(/* id 8, wireType 2 =*/66).string(message.fav_vcharacter);
         if (message.likes_dnd != null && Object.hasOwnProperty.call(message, "likes_dnd"))
@@ -1786,27 +1793,27 @@ $root.DatingProfile = (function() {
         if (message.pronouns != null && Object.hasOwnProperty.call(message, "pronouns"))
             writer.uint32(/* id 24, wireType 2 =*/194).string(message.pronouns);
         if (message.height_unit != null && Object.hasOwnProperty.call(message, "height_unit"))
-            writer.uint32(/* id 25, wireType 0 =*/200).int32(message.height_unit);
+            writer.uint32(/* id 25, wireType 2 =*/202).string(message.height_unit);
         if (message.sexuality != null && Object.hasOwnProperty.call(message, "sexuality"))
-            writer.uint32(/* id 26, wireType 0 =*/208).int32(message.sexuality);
+            writer.uint32(/* id 26, wireType 2 =*/210).string(message.sexuality);
         if (message.education != null && Object.hasOwnProperty.call(message, "education"))
-            writer.uint32(/* id 27, wireType 0 =*/216).int32(message.education);
+            writer.uint32(/* id 27, wireType 2 =*/218).string(message.education);
         if (message.looking_for != null && Object.hasOwnProperty.call(message, "looking_for"))
-            writer.uint32(/* id 28, wireType 0 =*/224).int32(message.looking_for);
+            writer.uint32(/* id 28, wireType 2 =*/226).string(message.looking_for);
         if (message.relationship != null && Object.hasOwnProperty.call(message, "relationship"))
-            writer.uint32(/* id 29, wireType 0 =*/232).int32(message.relationship);
+            writer.uint32(/* id 29, wireType 2 =*/234).string(message.relationship);
         if (message.family_plans != null && Object.hasOwnProperty.call(message, "family_plans"))
-            writer.uint32(/* id 30, wireType 0 =*/240).int32(message.family_plans);
+            writer.uint32(/* id 30, wireType 2 =*/242).string(message.family_plans);
         if (message.workout != null && Object.hasOwnProperty.call(message, "workout"))
-            writer.uint32(/* id 31, wireType 0 =*/248).int32(message.workout);
+            writer.uint32(/* id 31, wireType 2 =*/250).string(message.workout);
         if (message.personality != null && Object.hasOwnProperty.call(message, "personality"))
-            writer.uint32(/* id 32, wireType 0 =*/256).int32(message.personality);
+            writer.uint32(/* id 32, wireType 2 =*/258).string(message.personality);
         if (message.smokes != null && Object.hasOwnProperty.call(message, "smokes"))
-            writer.uint32(/* id 33, wireType 0 =*/264).int32(message.smokes);
+            writer.uint32(/* id 33, wireType 2 =*/266).string(message.smokes);
         if (message.drinks != null && Object.hasOwnProperty.call(message, "drinks"))
-            writer.uint32(/* id 34, wireType 0 =*/272).int32(message.drinks);
+            writer.uint32(/* id 34, wireType 2 =*/274).string(message.drinks);
         if (message.cannabis != null && Object.hasOwnProperty.call(message, "cannabis"))
-            writer.uint32(/* id 35, wireType 0 =*/280).int32(message.cannabis);
+            writer.uint32(/* id 35, wireType 2 =*/282).string(message.cannabis);
         if (message.banned != null && Object.hasOwnProperty.call(message, "banned"))
             writer.uint32(/* id 36, wireType 0 =*/288).bool(message.banned);
         if (message.use_smart_photos != null && Object.hasOwnProperty.call(message, "use_smart_photos"))
@@ -1823,10 +1830,13 @@ $root.DatingProfile = (function() {
             writer.uint32(/* id 42, wireType 0 =*/336).bool(message.show_gender);
         if (message.show_pronouns != null && Object.hasOwnProperty.call(message, "show_pronouns"))
             writer.uint32(/* id 43, wireType 0 =*/344).bool(message.show_pronouns);
+        if (message.wanting != null && message.wanting.length)
+            for (var i = 0; i < message.wanting.length; ++i)
+                writer.uint32(/* id 44, wireType 2 =*/354).string(message.wanting[i]);
         if (message.created_at != null && Object.hasOwnProperty.call(message, "created_at"))
-            writer.uint32(/* id 44, wireType 2 =*/354).string(message.created_at);
+            writer.uint32(/* id 45, wireType 2 =*/362).string(message.created_at);
         if (message.updated_at != null && Object.hasOwnProperty.call(message, "updated_at"))
-            writer.uint32(/* id 45, wireType 2 =*/362).string(message.updated_at);
+            writer.uint32(/* id 46, wireType 2 =*/370).string(message.updated_at);
         return writer;
     };
 
@@ -1870,11 +1880,11 @@ $root.DatingProfile = (function() {
                     break;
                 }
             case 3: {
-                    message.age = reader.int32();
+                    message.birthday = reader.string();
                     break;
                 }
             case 4: {
-                    message.gender = reader.int32();
+                    message.gender = reader.string();
                     break;
                 }
             case 5: {
@@ -1892,12 +1902,7 @@ $root.DatingProfile = (function() {
             case 7: {
                     if (!(message.fav_vplatforms && message.fav_vplatforms.length))
                         message.fav_vplatforms = [];
-                    if ((tag & 7) === 2) {
-                        var end2 = reader.uint32() + reader.pos;
-                        while (reader.pos < end2)
-                            message.fav_vplatforms.push(reader.int32());
-                    } else
-                        message.fav_vplatforms.push(reader.int32());
+                    message.fav_vplatforms.push(reader.string());
                     break;
                 }
             case 8: {
@@ -1975,47 +1980,47 @@ $root.DatingProfile = (function() {
                     break;
                 }
             case 25: {
-                    message.height_unit = reader.int32();
+                    message.height_unit = reader.string();
                     break;
                 }
             case 26: {
-                    message.sexuality = reader.int32();
+                    message.sexuality = reader.string();
                     break;
                 }
             case 27: {
-                    message.education = reader.int32();
+                    message.education = reader.string();
                     break;
                 }
             case 28: {
-                    message.looking_for = reader.int32();
+                    message.looking_for = reader.string();
                     break;
                 }
             case 29: {
-                    message.relationship = reader.int32();
+                    message.relationship = reader.string();
                     break;
                 }
             case 30: {
-                    message.family_plans = reader.int32();
+                    message.family_plans = reader.string();
                     break;
                 }
             case 31: {
-                    message.workout = reader.int32();
+                    message.workout = reader.string();
                     break;
                 }
             case 32: {
-                    message.personality = reader.int32();
+                    message.personality = reader.string();
                     break;
                 }
             case 33: {
-                    message.smokes = reader.int32();
+                    message.smokes = reader.string();
                     break;
                 }
             case 34: {
-                    message.drinks = reader.int32();
+                    message.drinks = reader.string();
                     break;
                 }
             case 35: {
-                    message.cannabis = reader.int32();
+                    message.cannabis = reader.string();
                     break;
                 }
             case 36: {
@@ -2051,10 +2056,16 @@ $root.DatingProfile = (function() {
                     break;
                 }
             case 44: {
-                    message.created_at = reader.string();
+                    if (!(message.wanting && message.wanting.length))
+                        message.wanting = [];
+                    message.wanting.push(reader.string());
                     break;
                 }
             case 45: {
+                    message.created_at = reader.string();
+                    break;
+                }
+            case 46: {
                     message.updated_at = reader.string();
                     break;
                 }
@@ -2099,19 +2110,12 @@ $root.DatingProfile = (function() {
         if (message.owner_id != null && message.hasOwnProperty("owner_id"))
             if (!$util.isString(message.owner_id))
                 return "owner_id: string expected";
-        if (message.age != null && message.hasOwnProperty("age"))
-            if (!$util.isInteger(message.age))
-                return "age: integer expected";
+        if (message.birthday != null && message.hasOwnProperty("birthday"))
+            if (!$util.isString(message.birthday))
+                return "birthday: string expected";
         if (message.gender != null && message.hasOwnProperty("gender"))
-            switch (message.gender) {
-            default:
-                return "gender: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-                break;
-            }
+            if (!$util.isString(message.gender))
+                return "gender: string expected";
         if (message.fav_vgames != null && message.hasOwnProperty("fav_vgames")) {
             if (!Array.isArray(message.fav_vgames))
                 return "fav_vgames: array expected";
@@ -2130,18 +2134,8 @@ $root.DatingProfile = (function() {
             if (!Array.isArray(message.fav_vplatforms))
                 return "fav_vplatforms: array expected";
             for (var i = 0; i < message.fav_vplatforms.length; ++i)
-                switch (message.fav_vplatforms[i]) {
-                default:
-                    return "fav_vplatforms: enum value[] expected";
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                    break;
-                }
+                if (!$util.isString(message.fav_vplatforms[i]))
+                    return "fav_vplatforms: string[] expected";
         }
         if (message.fav_vcharacter != null && message.hasOwnProperty("fav_vcharacter"))
             if (!$util.isString(message.fav_vcharacter))
@@ -2207,148 +2201,38 @@ $root.DatingProfile = (function() {
             if (!$util.isString(message.pronouns))
                 return "pronouns: string expected";
         if (message.height_unit != null && message.hasOwnProperty("height_unit"))
-            switch (message.height_unit) {
-            default:
-                return "height_unit: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-                break;
-            }
+            if (!$util.isString(message.height_unit))
+                return "height_unit: string expected";
         if (message.sexuality != null && message.hasOwnProperty("sexuality"))
-            switch (message.sexuality) {
-            default:
-                return "sexuality: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-                break;
-            }
+            if (!$util.isString(message.sexuality))
+                return "sexuality: string expected";
         if (message.education != null && message.hasOwnProperty("education"))
-            switch (message.education) {
-            default:
-                return "education: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-                break;
-            }
+            if (!$util.isString(message.education))
+                return "education: string expected";
         if (message.looking_for != null && message.hasOwnProperty("looking_for"))
-            switch (message.looking_for) {
-            default:
-                return "looking_for: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                break;
-            }
+            if (!$util.isString(message.looking_for))
+                return "looking_for: string expected";
         if (message.relationship != null && message.hasOwnProperty("relationship"))
-            switch (message.relationship) {
-            default:
-                return "relationship: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                break;
-            }
+            if (!$util.isString(message.relationship))
+                return "relationship: string expected";
         if (message.family_plans != null && message.hasOwnProperty("family_plans"))
-            switch (message.family_plans) {
-            default:
-                return "family_plans: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                break;
-            }
+            if (!$util.isString(message.family_plans))
+                return "family_plans: string expected";
         if (message.workout != null && message.hasOwnProperty("workout"))
-            switch (message.workout) {
-            default:
-                return "workout: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                break;
-            }
+            if (!$util.isString(message.workout))
+                return "workout: string expected";
         if (message.personality != null && message.hasOwnProperty("personality"))
-            switch (message.personality) {
-            default:
-                return "personality: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-            case 7:
-            case 8:
-            case 9:
-            case 10:
-            case 11:
-            case 12:
-            case 13:
-            case 14:
-            case 15:
-                break;
-            }
+            if (!$util.isString(message.personality))
+                return "personality: string expected";
         if (message.smokes != null && message.hasOwnProperty("smokes"))
-            switch (message.smokes) {
-            default:
-                return "smokes: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                break;
-            }
+            if (!$util.isString(message.smokes))
+                return "smokes: string expected";
         if (message.drinks != null && message.hasOwnProperty("drinks"))
-            switch (message.drinks) {
-            default:
-                return "drinks: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-                break;
-            }
+            if (!$util.isString(message.drinks))
+                return "drinks: string expected";
         if (message.cannabis != null && message.hasOwnProperty("cannabis"))
-            switch (message.cannabis) {
-            default:
-                return "cannabis: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                break;
-            }
+            if (!$util.isString(message.cannabis))
+                return "cannabis: string expected";
         if (message.banned != null && message.hasOwnProperty("banned"))
             if (typeof message.banned !== "boolean")
                 return "banned: boolean expected";
@@ -2373,6 +2257,13 @@ $root.DatingProfile = (function() {
         if (message.show_pronouns != null && message.hasOwnProperty("show_pronouns"))
             if (typeof message.show_pronouns !== "boolean")
                 return "show_pronouns: boolean expected";
+        if (message.wanting != null && message.hasOwnProperty("wanting")) {
+            if (!Array.isArray(message.wanting))
+                return "wanting: array expected";
+            for (var i = 0; i < message.wanting.length; ++i)
+                if (!$util.isString(message.wanting[i]))
+                    return "wanting: string[] expected";
+        }
         if (message.created_at != null && message.hasOwnProperty("created_at"))
             if (!$util.isString(message.created_at))
                 return "created_at: string expected";
@@ -2398,32 +2289,10 @@ $root.DatingProfile = (function() {
             message.id = String(object.id);
         if (object.owner_id != null)
             message.owner_id = String(object.owner_id);
-        if (object.age != null)
-            message.age = object.age | 0;
-        switch (object.gender) {
-        default:
-            if (typeof object.gender === "number") {
-                message.gender = object.gender;
-                break;
-            }
-            break;
-        case "NONBINARY":
-        case 0:
-            message.gender = 0;
-            break;
-        case "MALE":
-        case 1:
-            message.gender = 1;
-            break;
-        case "FEMALE":
-        case 2:
-            message.gender = 2;
-            break;
-        case "OTHER":
-        case 3:
-            message.gender = 3;
-            break;
-        }
+        if (object.birthday != null)
+            message.birthday = String(object.birthday);
+        if (object.gender != null)
+            message.gender = String(object.gender);
         if (object.fav_vgames) {
             if (!Array.isArray(object.fav_vgames))
                 throw TypeError(".DatingProfile.fav_vgames: array expected");
@@ -2443,41 +2312,7 @@ $root.DatingProfile = (function() {
                 throw TypeError(".DatingProfile.fav_vplatforms: array expected");
             message.fav_vplatforms = [];
             for (var i = 0; i < object.fav_vplatforms.length; ++i)
-                switch (object.fav_vplatforms[i]) {
-                default:
-                    if (typeof object.fav_vplatforms[i] === "number") {
-                        message.fav_vplatforms[i] = object.fav_vplatforms[i];
-                        break;
-                    }
-                case "UNKNOWN":
-                case 0:
-                    message.fav_vplatforms[i] = 0;
-                    break;
-                case "PC":
-                case 1:
-                    message.fav_vplatforms[i] = 1;
-                    break;
-                case "PLAYSTATION":
-                case 2:
-                    message.fav_vplatforms[i] = 2;
-                    break;
-                case "XBOX":
-                case 3:
-                    message.fav_vplatforms[i] = 3;
-                    break;
-                case "SWITCH":
-                case 4:
-                    message.fav_vplatforms[i] = 4;
-                    break;
-                case "MOBILE":
-                case 5:
-                    message.fav_vplatforms[i] = 5;
-                    break;
-                case "OTHER":
-                case 6:
-                    message.fav_vplatforms[i] = 6;
-                    break;
-                }
+                message.fav_vplatforms[i] = String(object.fav_vplatforms[i]);
         }
         if (object.fav_vcharacter != null)
             message.fav_vcharacter = String(object.fav_vcharacter);
@@ -2528,402 +2363,28 @@ $root.DatingProfile = (function() {
             message.top_artist = String(object.top_artist);
         if (object.pronouns != null)
             message.pronouns = String(object.pronouns);
-        switch (object.height_unit) {
-        default:
-            if (typeof object.height_unit === "number") {
-                message.height_unit = object.height_unit;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.height_unit = 0;
-            break;
-        case "IMPERIAL":
-        case 1:
-            message.height_unit = 1;
-            break;
-        case "METRIC":
-        case 2:
-            message.height_unit = 2;
-            break;
-        }
-        switch (object.sexuality) {
-        default:
-            if (typeof object.sexuality === "number") {
-                message.sexuality = object.sexuality;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.sexuality = 0;
-            break;
-        case "STRAIGHT":
-        case 1:
-            message.sexuality = 1;
-            break;
-        case "GAY":
-        case 2:
-            message.sexuality = 2;
-            break;
-        case "LESBIAN":
-        case 3:
-            message.sexuality = 3;
-            break;
-        case "BISEXUAL":
-        case 4:
-            message.sexuality = 4;
-            break;
-        case "ASEXUAL":
-        case 5:
-            message.sexuality = 5;
-            break;
-        case "DEMISEXUAL":
-        case 6:
-            message.sexuality = 6;
-            break;
-        case "PANSEXUAL":
-        case 7:
-            message.sexuality = 7;
-            break;
-        case "QUEER":
-        case 8:
-            message.sexuality = 8;
-            break;
-        case "QUESTIONING":
-        case 9:
-            message.sexuality = 9;
-            break;
-        }
-        switch (object.education) {
-        default:
-            if (typeof object.education === "number") {
-                message.education = object.education;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.education = 0;
-            break;
-        case "BACHELORS":
-        case 1:
-            message.education = 1;
-            break;
-        case "IN_COLLEGE":
-        case 2:
-            message.education = 2;
-            break;
-        case "HIGH_SCHOOL":
-        case 3:
-            message.education = 3;
-            break;
-        case "PHD":
-        case 4:
-            message.education = 4;
-            break;
-        case "IN_GRAD_SCHOOL":
-        case 5:
-            message.education = 5;
-            break;
-        case "MASTERS":
-        case 6:
-            message.education = 6;
-            break;
-        case "TRADE_SCHOOL":
-        case 7:
-            message.education = 7;
-            break;
-        }
-        switch (object.looking_for) {
-        default:
-            if (typeof object.looking_for === "number") {
-                message.looking_for = object.looking_for;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.looking_for = 0;
-            break;
-        case "LONG_TERM_RELATIONSHIP":
-        case 1:
-            message.looking_for = 1;
-            break;
-        case "SHORT_TERM_RELATIONSHIP":
-        case 2:
-            message.looking_for = 2;
-            break;
-        case "LONG_TERM_OPEN_TO_SHORT":
-        case 3:
-            message.looking_for = 3;
-            break;
-        case "SHORT_TERM_OPEN_TO_LONG":
-        case 4:
-            message.looking_for = 4;
-            break;
-        case "NEW_FRIENDS":
-        case 5:
-            message.looking_for = 5;
-            break;
-        case "UNSURE":
-        case 6:
-            message.looking_for = 6;
-            break;
-        }
-        switch (object.relationship) {
-        default:
-            if (typeof object.relationship === "number") {
-                message.relationship = object.relationship;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.relationship = 0;
-            break;
-        case "MONOGAMY":
-        case 1:
-            message.relationship = 1;
-            break;
-        case "ETHICAL_NON_MONOGAMY":
-        case 2:
-            message.relationship = 2;
-            break;
-        case "OPEN_RELATIONSHIP":
-        case 3:
-            message.relationship = 3;
-            break;
-        case "POLYAMORY":
-        case 4:
-            message.relationship = 4;
-            break;
-        case "OPEN_TO_EXPLORING":
-        case 5:
-            message.relationship = 5;
-            break;
-        }
-        switch (object.family_plans) {
-        default:
-            if (typeof object.family_plans === "number") {
-                message.family_plans = object.family_plans;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.family_plans = 0;
-            break;
-        case "WANTS_CHILDREN":
-        case 1:
-            message.family_plans = 1;
-            break;
-        case "DOESNT_WANT_CHILDREN":
-        case 2:
-            message.family_plans = 2;
-            break;
-        case "HAVE_CHILDREN_WANT_MORE":
-        case 3:
-            message.family_plans = 3;
-            break;
-        case "HAVE_CHILDREN_DONT_WANT_MORE":
-        case 4:
-            message.family_plans = 4;
-            break;
-        case "UNSURE":
-        case 5:
-            message.family_plans = 5;
-            break;
-        }
-        switch (object.workout) {
-        default:
-            if (typeof object.workout === "number") {
-                message.workout = object.workout;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.workout = 0;
-            break;
-        case "EVERYDAY":
-        case 1:
-            message.workout = 1;
-            break;
-        case "OFTEN":
-        case 2:
-            message.workout = 2;
-            break;
-        case "SOMETIMES":
-        case 3:
-            message.workout = 3;
-            break;
-        case "NEVER":
-        case 4:
-            message.workout = 4;
-            break;
-        }
-        switch (object.personality) {
-        default:
-            if (typeof object.personality === "number") {
-                message.personality = object.personality;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.personality = 0;
-            break;
-        case "INTJ":
-        case 1:
-            message.personality = 1;
-            break;
-        case "INTP":
-        case 2:
-            message.personality = 2;
-            break;
-        case "ENTJ":
-        case 3:
-            message.personality = 3;
-            break;
-        case "ENTP":
-        case 4:
-            message.personality = 4;
-            break;
-        case "INFJ":
-        case 5:
-            message.personality = 5;
-            break;
-        case "INFP":
-        case 6:
-            message.personality = 6;
-            break;
-        case "ENFJ":
-        case 7:
-            message.personality = 7;
-            break;
-        case "ISTJ":
-        case 8:
-            message.personality = 8;
-            break;
-        case "ISFJ":
-        case 9:
-            message.personality = 9;
-            break;
-        case "ESTJ":
-        case 10:
-            message.personality = 10;
-            break;
-        case "ESFJ":
-        case 11:
-            message.personality = 11;
-            break;
-        case "ISTP":
-        case 12:
-            message.personality = 12;
-            break;
-        case "ISFP":
-        case 13:
-            message.personality = 13;
-            break;
-        case "ESTP":
-        case 14:
-            message.personality = 14;
-            break;
-        case "ESFP":
-        case 15:
-            message.personality = 15;
-            break;
-        }
-        switch (object.smokes) {
-        default:
-            if (typeof object.smokes === "number") {
-                message.smokes = object.smokes;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.smokes = 0;
-            break;
-        case "YES":
-        case 1:
-            message.smokes = 1;
-            break;
-        case "OCCASIONALLY":
-        case 2:
-            message.smokes = 2;
-            break;
-        case "SOCIALLY":
-        case 3:
-            message.smokes = 3;
-            break;
-        case "NEVER":
-        case 4:
-            message.smokes = 4;
-            break;
-        }
-        switch (object.drinks) {
-        default:
-            if (typeof object.drinks === "number") {
-                message.drinks = object.drinks;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.drinks = 0;
-            break;
-        case "NOT_FOR_ME":
-        case 1:
-            message.drinks = 1;
-            break;
-        case "SOBER":
-        case 2:
-            message.drinks = 2;
-            break;
-        case "ON_SPECIAL_OCCASIONS":
-        case 3:
-            message.drinks = 3;
-            break;
-        case "SOCIALLY":
-        case 4:
-            message.drinks = 4;
-            break;
-        case "REGULARLY":
-        case 5:
-            message.drinks = 5;
-            break;
-        }
-        switch (object.cannabis) {
-        default:
-            if (typeof object.cannabis === "number") {
-                message.cannabis = object.cannabis;
-                break;
-            }
-            break;
-        case "UNKNOWN":
-        case 0:
-            message.cannabis = 0;
-            break;
-        case "YES":
-        case 1:
-            message.cannabis = 1;
-            break;
-        case "OCCASIONALLY":
-        case 2:
-            message.cannabis = 2;
-            break;
-        case "SOCIALLY":
-        case 3:
-            message.cannabis = 3;
-            break;
-        case "NEVER":
-        case 4:
-            message.cannabis = 4;
-            break;
-        }
+        if (object.height_unit != null)
+            message.height_unit = String(object.height_unit);
+        if (object.sexuality != null)
+            message.sexuality = String(object.sexuality);
+        if (object.education != null)
+            message.education = String(object.education);
+        if (object.looking_for != null)
+            message.looking_for = String(object.looking_for);
+        if (object.relationship != null)
+            message.relationship = String(object.relationship);
+        if (object.family_plans != null)
+            message.family_plans = String(object.family_plans);
+        if (object.workout != null)
+            message.workout = String(object.workout);
+        if (object.personality != null)
+            message.personality = String(object.personality);
+        if (object.smokes != null)
+            message.smokes = String(object.smokes);
+        if (object.drinks != null)
+            message.drinks = String(object.drinks);
+        if (object.cannabis != null)
+            message.cannabis = String(object.cannabis);
         if (object.banned != null)
             message.banned = Boolean(object.banned);
         if (object.use_smart_photos != null)
@@ -2940,6 +2401,13 @@ $root.DatingProfile = (function() {
             message.show_gender = Boolean(object.show_gender);
         if (object.show_pronouns != null)
             message.show_pronouns = Boolean(object.show_pronouns);
+        if (object.wanting) {
+            if (!Array.isArray(object.wanting))
+                throw TypeError(".DatingProfile.wanting: array expected");
+            message.wanting = [];
+            for (var i = 0; i < object.wanting.length; ++i)
+                message.wanting[i] = String(object.wanting[i]);
+        }
         if (object.created_at != null)
             message.created_at = String(object.created_at);
         if (object.updated_at != null)
@@ -2967,12 +2435,13 @@ $root.DatingProfile = (function() {
             object.fav_bgames = [];
             object.prompts = [];
             object.known_langs = [];
+            object.wanting = [];
         }
         if (options.defaults) {
             object.id = "";
             object.owner_id = "";
-            object.age = 0;
-            object.gender = options.enums === String ? "NONBINARY" : 0;
+            object.birthday = "";
+            object.gender = "";
             object.fav_vcharacter = "";
             object.likes_dnd = false;
             object.likes_anime = false;
@@ -2987,17 +2456,17 @@ $root.DatingProfile = (function() {
             object.top_song = "";
             object.top_artist = "";
             object.pronouns = "";
-            object.height_unit = options.enums === String ? "UNKNOWN" : 0;
-            object.sexuality = options.enums === String ? "UNKNOWN" : 0;
-            object.education = options.enums === String ? "UNKNOWN" : 0;
-            object.looking_for = options.enums === String ? "UNKNOWN" : 0;
-            object.relationship = options.enums === String ? "UNKNOWN" : 0;
-            object.family_plans = options.enums === String ? "UNKNOWN" : 0;
-            object.workout = options.enums === String ? "UNKNOWN" : 0;
-            object.personality = options.enums === String ? "UNKNOWN" : 0;
-            object.smokes = options.enums === String ? "UNKNOWN" : 0;
-            object.drinks = options.enums === String ? "UNKNOWN" : 0;
-            object.cannabis = options.enums === String ? "UNKNOWN" : 0;
+            object.height_unit = "";
+            object.sexuality = "";
+            object.education = "";
+            object.looking_for = "";
+            object.relationship = "";
+            object.family_plans = "";
+            object.workout = "";
+            object.personality = "";
+            object.smokes = "";
+            object.drinks = "";
+            object.cannabis = "";
             object.banned = false;
             object.use_smart_photos = false;
             object.hide_distance = false;
@@ -3013,10 +2482,10 @@ $root.DatingProfile = (function() {
             object.id = message.id;
         if (message.owner_id != null && message.hasOwnProperty("owner_id"))
             object.owner_id = message.owner_id;
-        if (message.age != null && message.hasOwnProperty("age"))
-            object.age = message.age;
+        if (message.birthday != null && message.hasOwnProperty("birthday"))
+            object.birthday = message.birthday;
         if (message.gender != null && message.hasOwnProperty("gender"))
-            object.gender = options.enums === String ? $root.Gender[message.gender] === undefined ? message.gender : $root.Gender[message.gender] : message.gender;
+            object.gender = message.gender;
         if (message.fav_vgames && message.fav_vgames.length) {
             object.fav_vgames = [];
             for (var j = 0; j < message.fav_vgames.length; ++j)
@@ -3030,7 +2499,7 @@ $root.DatingProfile = (function() {
         if (message.fav_vplatforms && message.fav_vplatforms.length) {
             object.fav_vplatforms = [];
             for (var j = 0; j < message.fav_vplatforms.length; ++j)
-                object.fav_vplatforms[j] = options.enums === String ? $root.Platforms[message.fav_vplatforms[j]] === undefined ? message.fav_vplatforms[j] : $root.Platforms[message.fav_vplatforms[j]] : message.fav_vplatforms[j];
+                object.fav_vplatforms[j] = message.fav_vplatforms[j];
         }
         if (message.fav_vcharacter != null && message.hasOwnProperty("fav_vcharacter"))
             object.fav_vcharacter = message.fav_vcharacter;
@@ -3076,27 +2545,27 @@ $root.DatingProfile = (function() {
         if (message.pronouns != null && message.hasOwnProperty("pronouns"))
             object.pronouns = message.pronouns;
         if (message.height_unit != null && message.hasOwnProperty("height_unit"))
-            object.height_unit = options.enums === String ? $root.HeightUnit[message.height_unit] === undefined ? message.height_unit : $root.HeightUnit[message.height_unit] : message.height_unit;
+            object.height_unit = message.height_unit;
         if (message.sexuality != null && message.hasOwnProperty("sexuality"))
-            object.sexuality = options.enums === String ? $root.Sexuality[message.sexuality] === undefined ? message.sexuality : $root.Sexuality[message.sexuality] : message.sexuality;
+            object.sexuality = message.sexuality;
         if (message.education != null && message.hasOwnProperty("education"))
-            object.education = options.enums === String ? $root.Education[message.education] === undefined ? message.education : $root.Education[message.education] : message.education;
+            object.education = message.education;
         if (message.looking_for != null && message.hasOwnProperty("looking_for"))
-            object.looking_for = options.enums === String ? $root.Seeking[message.looking_for] === undefined ? message.looking_for : $root.Seeking[message.looking_for] : message.looking_for;
+            object.looking_for = message.looking_for;
         if (message.relationship != null && message.hasOwnProperty("relationship"))
-            object.relationship = options.enums === String ? $root.Relationship[message.relationship] === undefined ? message.relationship : $root.Relationship[message.relationship] : message.relationship;
+            object.relationship = message.relationship;
         if (message.family_plans != null && message.hasOwnProperty("family_plans"))
-            object.family_plans = options.enums === String ? $root.FamilyPlans[message.family_plans] === undefined ? message.family_plans : $root.FamilyPlans[message.family_plans] : message.family_plans;
+            object.family_plans = message.family_plans;
         if (message.workout != null && message.hasOwnProperty("workout"))
-            object.workout = options.enums === String ? $root.Workout[message.workout] === undefined ? message.workout : $root.Workout[message.workout] : message.workout;
+            object.workout = message.workout;
         if (message.personality != null && message.hasOwnProperty("personality"))
-            object.personality = options.enums === String ? $root.Personality[message.personality] === undefined ? message.personality : $root.Personality[message.personality] : message.personality;
+            object.personality = message.personality;
         if (message.smokes != null && message.hasOwnProperty("smokes"))
-            object.smokes = options.enums === String ? $root.Smokes[message.smokes] === undefined ? message.smokes : $root.Smokes[message.smokes] : message.smokes;
+            object.smokes = message.smokes;
         if (message.drinks != null && message.hasOwnProperty("drinks"))
-            object.drinks = options.enums === String ? $root.Drinks[message.drinks] === undefined ? message.drinks : $root.Drinks[message.drinks] : message.drinks;
+            object.drinks = message.drinks;
         if (message.cannabis != null && message.hasOwnProperty("cannabis"))
-            object.cannabis = options.enums === String ? $root.Cannabis[message.cannabis] === undefined ? message.cannabis : $root.Cannabis[message.cannabis] : message.cannabis;
+            object.cannabis = message.cannabis;
         if (message.banned != null && message.hasOwnProperty("banned"))
             object.banned = message.banned;
         if (message.use_smart_photos != null && message.hasOwnProperty("use_smart_photos"))
@@ -3113,6 +2582,11 @@ $root.DatingProfile = (function() {
             object.show_gender = message.show_gender;
         if (message.show_pronouns != null && message.hasOwnProperty("show_pronouns"))
             object.show_pronouns = message.show_pronouns;
+        if (message.wanting && message.wanting.length) {
+            object.wanting = [];
+            for (var j = 0; j < message.wanting.length; ++j)
+                object.wanting[j] = message.wanting[j];
+        }
         if (message.created_at != null && message.hasOwnProperty("created_at"))
             object.created_at = message.created_at;
         if (message.updated_at != null && message.hasOwnProperty("updated_at"))
@@ -4815,7 +4289,7 @@ $root.Media = (function() {
      * @property {number|null} [time_spent] Media time_spent
      * @property {string|null} [url] Media url
      * @property {string|null} [mime_type] Media mime_type
-     * @property {string|null} [file_size] Media file_size
+     * @property {number|null} [file_size] Media file_size
      * @property {string|null} [created_at] Media created_at
      * @property {string|null} [updated_at] Media updated_at
      */
@@ -4901,11 +4375,11 @@ $root.Media = (function() {
 
     /**
      * Media file_size.
-     * @member {string} file_size
+     * @member {number} file_size
      * @memberof Media
      * @instance
      */
-    Media.prototype.file_size = "";
+    Media.prototype.file_size = 0;
 
     /**
      * Media created_at.
@@ -4964,7 +4438,7 @@ $root.Media = (function() {
         if (message.mime_type != null && Object.hasOwnProperty.call(message, "mime_type"))
             writer.uint32(/* id 8, wireType 2 =*/66).string(message.mime_type);
         if (message.file_size != null && Object.hasOwnProperty.call(message, "file_size"))
-            writer.uint32(/* id 9, wireType 2 =*/74).string(message.file_size);
+            writer.uint32(/* id 9, wireType 0 =*/72).int32(message.file_size);
         if (message.created_at != null && Object.hasOwnProperty.call(message, "created_at"))
             writer.uint32(/* id 10, wireType 2 =*/82).string(message.created_at);
         if (message.updated_at != null && Object.hasOwnProperty.call(message, "updated_at"))
@@ -5036,7 +4510,7 @@ $root.Media = (function() {
                     break;
                 }
             case 9: {
-                    message.file_size = reader.string();
+                    message.file_size = reader.int32();
                     break;
                 }
             case 10: {
@@ -5107,8 +4581,8 @@ $root.Media = (function() {
             if (!$util.isString(message.mime_type))
                 return "mime_type: string expected";
         if (message.file_size != null && message.hasOwnProperty("file_size"))
-            if (!$util.isString(message.file_size))
-                return "file_size: string expected";
+            if (!$util.isInteger(message.file_size))
+                return "file_size: integer expected";
         if (message.created_at != null && message.hasOwnProperty("created_at"))
             if (!$util.isString(message.created_at))
                 return "created_at: string expected";
@@ -5147,7 +4621,7 @@ $root.Media = (function() {
         if (object.mime_type != null)
             message.mime_type = String(object.mime_type);
         if (object.file_size != null)
-            message.file_size = String(object.file_size);
+            message.file_size = object.file_size | 0;
         if (object.created_at != null)
             message.created_at = String(object.created_at);
         if (object.updated_at != null)
@@ -5177,7 +4651,7 @@ $root.Media = (function() {
             object.time_spent = 0;
             object.url = "";
             object.mime_type = "";
-            object.file_size = "";
+            object.file_size = 0;
             object.created_at = "";
             object.updated_at = "";
         }
@@ -8835,9 +8309,12 @@ $root.SyncResponse = (function() {
      * Properties of a SyncResponse.
      * @exports ISyncResponse
      * @interface ISyncResponse
-     * @property {IUser|null} [user] SyncResponse user
      * @property {Array.<IConversations>|null} [conversations] SyncResponse conversations
-     * @property {string|null} [message] SyncResponse message
+     * @property {Array.<IMedia>|null} [media] SyncResponse media
+     * @property {IPreferences|null} [preferences] SyncResponse preferences
+     * @property {ILimits|null} [limits] SyncResponse limits
+     * @property {IDatingProfile|null} [datingProfile] SyncResponse datingProfile
+     * @property {IUser|null} [user] SyncResponse user
      */
 
     /**
@@ -8850,19 +8327,12 @@ $root.SyncResponse = (function() {
      */
     function SyncResponse(properties) {
         this.conversations = [];
+        this.media = [];
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
                     this[keys[i]] = properties[keys[i]];
     }
-
-    /**
-     * SyncResponse user.
-     * @member {IUser|null|undefined} user
-     * @memberof SyncResponse
-     * @instance
-     */
-    SyncResponse.prototype.user = null;
 
     /**
      * SyncResponse conversations.
@@ -8873,12 +8343,44 @@ $root.SyncResponse = (function() {
     SyncResponse.prototype.conversations = $util.emptyArray;
 
     /**
-     * SyncResponse message.
-     * @member {string} message
+     * SyncResponse media.
+     * @member {Array.<IMedia>} media
      * @memberof SyncResponse
      * @instance
      */
-    SyncResponse.prototype.message = "";
+    SyncResponse.prototype.media = $util.emptyArray;
+
+    /**
+     * SyncResponse preferences.
+     * @member {IPreferences|null|undefined} preferences
+     * @memberof SyncResponse
+     * @instance
+     */
+    SyncResponse.prototype.preferences = null;
+
+    /**
+     * SyncResponse limits.
+     * @member {ILimits|null|undefined} limits
+     * @memberof SyncResponse
+     * @instance
+     */
+    SyncResponse.prototype.limits = null;
+
+    /**
+     * SyncResponse datingProfile.
+     * @member {IDatingProfile|null|undefined} datingProfile
+     * @memberof SyncResponse
+     * @instance
+     */
+    SyncResponse.prototype.datingProfile = null;
+
+    /**
+     * SyncResponse user.
+     * @member {IUser|null|undefined} user
+     * @memberof SyncResponse
+     * @instance
+     */
+    SyncResponse.prototype.user = null;
 
     /**
      * Creates a new SyncResponse instance using the specified properties.
@@ -8904,13 +8406,20 @@ $root.SyncResponse = (function() {
     SyncResponse.encode = function encode(message, writer) {
         if (!writer)
             writer = $Writer.create();
-        if (message.user != null && Object.hasOwnProperty.call(message, "user"))
-            $root.User.encode(message.user, writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
         if (message.conversations != null && message.conversations.length)
             for (var i = 0; i < message.conversations.length; ++i)
-                $root.Conversations.encode(message.conversations[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
-        if (message.message != null && Object.hasOwnProperty.call(message, "message"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.message);
+                $root.Conversations.encode(message.conversations[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        if (message.media != null && message.media.length)
+            for (var i = 0; i < message.media.length; ++i)
+                $root.Media.encode(message.media[i], writer.uint32(/* id 2, wireType 2 =*/18).fork()).ldelim();
+        if (message.preferences != null && Object.hasOwnProperty.call(message, "preferences"))
+            $root.Preferences.encode(message.preferences, writer.uint32(/* id 3, wireType 2 =*/26).fork()).ldelim();
+        if (message.limits != null && Object.hasOwnProperty.call(message, "limits"))
+            $root.Limits.encode(message.limits, writer.uint32(/* id 4, wireType 2 =*/34).fork()).ldelim();
+        if (message.datingProfile != null && Object.hasOwnProperty.call(message, "datingProfile"))
+            $root.DatingProfile.encode(message.datingProfile, writer.uint32(/* id 5, wireType 2 =*/42).fork()).ldelim();
+        if (message.user != null && Object.hasOwnProperty.call(message, "user"))
+            $root.User.encode(message.user, writer.uint32(/* id 6, wireType 2 =*/50).fork()).ldelim();
         return writer;
     };
 
@@ -8946,17 +8455,31 @@ $root.SyncResponse = (function() {
             var tag = reader.uint32();
             switch (tag >>> 3) {
             case 1: {
-                    message.user = $root.User.decode(reader, reader.uint32());
-                    break;
-                }
-            case 2: {
                     if (!(message.conversations && message.conversations.length))
                         message.conversations = [];
                     message.conversations.push($root.Conversations.decode(reader, reader.uint32()));
                     break;
                 }
+            case 2: {
+                    if (!(message.media && message.media.length))
+                        message.media = [];
+                    message.media.push($root.Media.decode(reader, reader.uint32()));
+                    break;
+                }
             case 3: {
-                    message.message = reader.string();
+                    message.preferences = $root.Preferences.decode(reader, reader.uint32());
+                    break;
+                }
+            case 4: {
+                    message.limits = $root.Limits.decode(reader, reader.uint32());
+                    break;
+                }
+            case 5: {
+                    message.datingProfile = $root.DatingProfile.decode(reader, reader.uint32());
+                    break;
+                }
+            case 6: {
+                    message.user = $root.User.decode(reader, reader.uint32());
                     break;
                 }
             default:
@@ -8994,11 +8517,6 @@ $root.SyncResponse = (function() {
     SyncResponse.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
-        if (message.user != null && message.hasOwnProperty("user")) {
-            var error = $root.User.verify(message.user);
-            if (error)
-                return "user." + error;
-        }
         if (message.conversations != null && message.hasOwnProperty("conversations")) {
             if (!Array.isArray(message.conversations))
                 return "conversations: array expected";
@@ -9008,9 +8526,35 @@ $root.SyncResponse = (function() {
                     return "conversations." + error;
             }
         }
-        if (message.message != null && message.hasOwnProperty("message"))
-            if (!$util.isString(message.message))
-                return "message: string expected";
+        if (message.media != null && message.hasOwnProperty("media")) {
+            if (!Array.isArray(message.media))
+                return "media: array expected";
+            for (var i = 0; i < message.media.length; ++i) {
+                var error = $root.Media.verify(message.media[i]);
+                if (error)
+                    return "media." + error;
+            }
+        }
+        if (message.preferences != null && message.hasOwnProperty("preferences")) {
+            var error = $root.Preferences.verify(message.preferences);
+            if (error)
+                return "preferences." + error;
+        }
+        if (message.limits != null && message.hasOwnProperty("limits")) {
+            var error = $root.Limits.verify(message.limits);
+            if (error)
+                return "limits." + error;
+        }
+        if (message.datingProfile != null && message.hasOwnProperty("datingProfile")) {
+            var error = $root.DatingProfile.verify(message.datingProfile);
+            if (error)
+                return "datingProfile." + error;
+        }
+        if (message.user != null && message.hasOwnProperty("user")) {
+            var error = $root.User.verify(message.user);
+            if (error)
+                return "user." + error;
+        }
         return null;
     };
 
@@ -9026,11 +8570,6 @@ $root.SyncResponse = (function() {
         if (object instanceof $root.SyncResponse)
             return object;
         var message = new $root.SyncResponse();
-        if (object.user != null) {
-            if (typeof object.user !== "object")
-                throw TypeError(".SyncResponse.user: object expected");
-            message.user = $root.User.fromObject(object.user);
-        }
         if (object.conversations) {
             if (!Array.isArray(object.conversations))
                 throw TypeError(".SyncResponse.conversations: array expected");
@@ -9041,8 +8580,36 @@ $root.SyncResponse = (function() {
                 message.conversations[i] = $root.Conversations.fromObject(object.conversations[i]);
             }
         }
-        if (object.message != null)
-            message.message = String(object.message);
+        if (object.media) {
+            if (!Array.isArray(object.media))
+                throw TypeError(".SyncResponse.media: array expected");
+            message.media = [];
+            for (var i = 0; i < object.media.length; ++i) {
+                if (typeof object.media[i] !== "object")
+                    throw TypeError(".SyncResponse.media: object expected");
+                message.media[i] = $root.Media.fromObject(object.media[i]);
+            }
+        }
+        if (object.preferences != null) {
+            if (typeof object.preferences !== "object")
+                throw TypeError(".SyncResponse.preferences: object expected");
+            message.preferences = $root.Preferences.fromObject(object.preferences);
+        }
+        if (object.limits != null) {
+            if (typeof object.limits !== "object")
+                throw TypeError(".SyncResponse.limits: object expected");
+            message.limits = $root.Limits.fromObject(object.limits);
+        }
+        if (object.datingProfile != null) {
+            if (typeof object.datingProfile !== "object")
+                throw TypeError(".SyncResponse.datingProfile: object expected");
+            message.datingProfile = $root.DatingProfile.fromObject(object.datingProfile);
+        }
+        if (object.user != null) {
+            if (typeof object.user !== "object")
+                throw TypeError(".SyncResponse.user: object expected");
+            message.user = $root.User.fromObject(object.user);
+        }
         return message;
     };
 
@@ -9059,21 +8626,34 @@ $root.SyncResponse = (function() {
         if (!options)
             options = {};
         var object = {};
-        if (options.arrays || options.defaults)
+        if (options.arrays || options.defaults) {
             object.conversations = [];
-        if (options.defaults) {
-            object.user = null;
-            object.message = "";
+            object.media = [];
         }
-        if (message.user != null && message.hasOwnProperty("user"))
-            object.user = $root.User.toObject(message.user, options);
+        if (options.defaults) {
+            object.preferences = null;
+            object.limits = null;
+            object.datingProfile = null;
+            object.user = null;
+        }
         if (message.conversations && message.conversations.length) {
             object.conversations = [];
             for (var j = 0; j < message.conversations.length; ++j)
                 object.conversations[j] = $root.Conversations.toObject(message.conversations[j], options);
         }
-        if (message.message != null && message.hasOwnProperty("message"))
-            object.message = message.message;
+        if (message.media && message.media.length) {
+            object.media = [];
+            for (var j = 0; j < message.media.length; ++j)
+                object.media[j] = $root.Media.toObject(message.media[j], options);
+        }
+        if (message.preferences != null && message.hasOwnProperty("preferences"))
+            object.preferences = $root.Preferences.toObject(message.preferences, options);
+        if (message.limits != null && message.hasOwnProperty("limits"))
+            object.limits = $root.Limits.toObject(message.limits, options);
+        if (message.datingProfile != null && message.hasOwnProperty("datingProfile"))
+            object.datingProfile = $root.DatingProfile.toObject(message.datingProfile, options);
+        if (message.user != null && message.hasOwnProperty("user"))
+            object.user = $root.User.toObject(message.user, options);
         return object;
     };
 
@@ -9948,7 +9528,7 @@ $root.ChangeEvent = (function() {
      * Properties of a ChangeEvent.
      * @exports IChangeEvent
      * @interface IChangeEvent
-     * @property {ChangeType|null} [type] ChangeEvent type
+     * @property {string|null} [type] ChangeEvent type
      * @property {string|null} [struct] ChangeEvent struct
      * @property {IUser|null} [user] ChangeEvent user
      * @property {IPreferences|null} [preferences] ChangeEvent preferences
@@ -9979,11 +9559,11 @@ $root.ChangeEvent = (function() {
 
     /**
      * ChangeEvent type.
-     * @member {ChangeType} type
+     * @member {string} type
      * @memberof ChangeEvent
      * @instance
      */
-    ChangeEvent.prototype.type = 0;
+    ChangeEvent.prototype.type = "";
 
     /**
      * ChangeEvent struct.
@@ -10211,7 +9791,7 @@ $root.ChangeEvent = (function() {
         if (!writer)
             writer = $Writer.create();
         if (message.type != null && Object.hasOwnProperty.call(message, "type"))
-            writer.uint32(/* id 1, wireType 0 =*/8).int32(message.type);
+            writer.uint32(/* id 1, wireType 2 =*/10).string(message.type);
         if (message.struct != null && Object.hasOwnProperty.call(message, "struct"))
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.struct);
         if (message.user != null && Object.hasOwnProperty.call(message, "user"))
@@ -10269,7 +9849,7 @@ $root.ChangeEvent = (function() {
             var tag = reader.uint32();
             switch (tag >>> 3) {
             case 1: {
-                    message.type = reader.int32();
+                    message.type = reader.string();
                     break;
                 }
             case 2: {
@@ -10353,14 +9933,8 @@ $root.ChangeEvent = (function() {
             return "object expected";
         var properties = {};
         if (message.type != null && message.hasOwnProperty("type"))
-            switch (message.type) {
-            default:
-                return "type: enum value expected";
-            case 0:
-            case 1:
-            case 2:
-                break;
-            }
+            if (!$util.isString(message.type))
+                return "type: string expected";
         if (message.struct != null && message.hasOwnProperty("struct"))
             if (!$util.isString(message.struct))
                 return "struct: string expected";
@@ -10459,26 +10033,8 @@ $root.ChangeEvent = (function() {
         if (object instanceof $root.ChangeEvent)
             return object;
         var message = new $root.ChangeEvent();
-        switch (object.type) {
-        default:
-            if (typeof object.type === "number") {
-                message.type = object.type;
-                break;
-            }
-            break;
-        case "CREATE":
-        case 0:
-            message.type = 0;
-            break;
-        case "UPDATE":
-        case 1:
-            message.type = 1;
-            break;
-        case "DELETE":
-        case 2:
-            message.type = 2;
-            break;
-        }
+        if (object.type != null)
+            message.type = String(object.type);
         if (object.struct != null)
             message.struct = String(object.struct);
         if (object.user != null) {
@@ -10548,11 +10104,11 @@ $root.ChangeEvent = (function() {
             options = {};
         var object = {};
         if (options.defaults) {
-            object.type = options.enums === String ? "CREATE" : 0;
+            object.type = "";
             object.struct = "";
         }
         if (message.type != null && message.hasOwnProperty("type"))
-            object.type = options.enums === String ? $root.ChangeType[message.type] === undefined ? message.type : $root.ChangeType[message.type] : message.type;
+            object.type = message.type;
         if (message.struct != null && message.hasOwnProperty("struct"))
             object.struct = message.struct;
         if (message.user != null && message.hasOwnProperty("user")) {
@@ -10635,328 +10191,6 @@ $root.ChangeEvent = (function() {
     };
 
     return ChangeEvent;
-})();
-
-/**
- * ChangeType enum.
- * @exports ChangeType
- * @enum {number}
- * @property {number} CREATE=0 CREATE value
- * @property {number} UPDATE=1 UPDATE value
- * @property {number} DELETE=2 DELETE value
- */
-$root.ChangeType = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "CREATE"] = 0;
-    values[valuesById[1] = "UPDATE"] = 1;
-    values[valuesById[2] = "DELETE"] = 2;
-    return values;
-})();
-
-/**
- * Platforms enum.
- * @exports Platforms
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} PC=1 PC value
- * @property {number} PLAYSTATION=2 PLAYSTATION value
- * @property {number} XBOX=3 XBOX value
- * @property {number} SWITCH=4 SWITCH value
- * @property {number} MOBILE=5 MOBILE value
- * @property {number} OTHER=6 OTHER value
- */
-$root.Platforms = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "PC"] = 1;
-    values[valuesById[2] = "PLAYSTATION"] = 2;
-    values[valuesById[3] = "XBOX"] = 3;
-    values[valuesById[4] = "SWITCH"] = 4;
-    values[valuesById[5] = "MOBILE"] = 5;
-    values[valuesById[6] = "OTHER"] = 6;
-    return values;
-})();
-
-/**
- * Gender enum.
- * @exports Gender
- * @enum {number}
- * @property {number} NONBINARY=0 NONBINARY value
- * @property {number} MALE=1 MALE value
- * @property {number} FEMALE=2 FEMALE value
- * @property {number} OTHER=3 OTHER value
- */
-$root.Gender = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "NONBINARY"] = 0;
-    values[valuesById[1] = "MALE"] = 1;
-    values[valuesById[2] = "FEMALE"] = 2;
-    values[valuesById[3] = "OTHER"] = 3;
-    return values;
-})();
-
-/**
- * HeightUnit enum.
- * @exports HeightUnit
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} IMPERIAL=1 IMPERIAL value
- * @property {number} METRIC=2 METRIC value
- */
-$root.HeightUnit = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "IMPERIAL"] = 1;
-    values[valuesById[2] = "METRIC"] = 2;
-    return values;
-})();
-
-/**
- * Sexuality enum.
- * @exports Sexuality
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} STRAIGHT=1 STRAIGHT value
- * @property {number} GAY=2 GAY value
- * @property {number} LESBIAN=3 LESBIAN value
- * @property {number} BISEXUAL=4 BISEXUAL value
- * @property {number} ASEXUAL=5 ASEXUAL value
- * @property {number} DEMISEXUAL=6 DEMISEXUAL value
- * @property {number} PANSEXUAL=7 PANSEXUAL value
- * @property {number} QUEER=8 QUEER value
- * @property {number} QUESTIONING=9 QUESTIONING value
- */
-$root.Sexuality = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "STRAIGHT"] = 1;
-    values[valuesById[2] = "GAY"] = 2;
-    values[valuesById[3] = "LESBIAN"] = 3;
-    values[valuesById[4] = "BISEXUAL"] = 4;
-    values[valuesById[5] = "ASEXUAL"] = 5;
-    values[valuesById[6] = "DEMISEXUAL"] = 6;
-    values[valuesById[7] = "PANSEXUAL"] = 7;
-    values[valuesById[8] = "QUEER"] = 8;
-    values[valuesById[9] = "QUESTIONING"] = 9;
-    return values;
-})();
-
-/**
- * Education enum.
- * @exports Education
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} BACHELORS=1 BACHELORS value
- * @property {number} IN_COLLEGE=2 IN_COLLEGE value
- * @property {number} HIGH_SCHOOL=3 HIGH_SCHOOL value
- * @property {number} PHD=4 PHD value
- * @property {number} IN_GRAD_SCHOOL=5 IN_GRAD_SCHOOL value
- * @property {number} MASTERS=6 MASTERS value
- * @property {number} TRADE_SCHOOL=7 TRADE_SCHOOL value
- */
-$root.Education = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "BACHELORS"] = 1;
-    values[valuesById[2] = "IN_COLLEGE"] = 2;
-    values[valuesById[3] = "HIGH_SCHOOL"] = 3;
-    values[valuesById[4] = "PHD"] = 4;
-    values[valuesById[5] = "IN_GRAD_SCHOOL"] = 5;
-    values[valuesById[6] = "MASTERS"] = 6;
-    values[valuesById[7] = "TRADE_SCHOOL"] = 7;
-    return values;
-})();
-
-/**
- * Seeking enum.
- * @exports Seeking
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} LONG_TERM_RELATIONSHIP=1 LONG_TERM_RELATIONSHIP value
- * @property {number} SHORT_TERM_RELATIONSHIP=2 SHORT_TERM_RELATIONSHIP value
- * @property {number} LONG_TERM_OPEN_TO_SHORT=3 LONG_TERM_OPEN_TO_SHORT value
- * @property {number} SHORT_TERM_OPEN_TO_LONG=4 SHORT_TERM_OPEN_TO_LONG value
- * @property {number} NEW_FRIENDS=5 NEW_FRIENDS value
- * @property {number} UNSURE=6 UNSURE value
- */
-$root.Seeking = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "LONG_TERM_RELATIONSHIP"] = 1;
-    values[valuesById[2] = "SHORT_TERM_RELATIONSHIP"] = 2;
-    values[valuesById[3] = "LONG_TERM_OPEN_TO_SHORT"] = 3;
-    values[valuesById[4] = "SHORT_TERM_OPEN_TO_LONG"] = 4;
-    values[valuesById[5] = "NEW_FRIENDS"] = 5;
-    values[valuesById[6] = "UNSURE"] = 6;
-    return values;
-})();
-
-/**
- * Relationship enum.
- * @exports Relationship
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} MONOGAMY=1 MONOGAMY value
- * @property {number} ETHICAL_NON_MONOGAMY=2 ETHICAL_NON_MONOGAMY value
- * @property {number} OPEN_RELATIONSHIP=3 OPEN_RELATIONSHIP value
- * @property {number} POLYAMORY=4 POLYAMORY value
- * @property {number} OPEN_TO_EXPLORING=5 OPEN_TO_EXPLORING value
- */
-$root.Relationship = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "MONOGAMY"] = 1;
-    values[valuesById[2] = "ETHICAL_NON_MONOGAMY"] = 2;
-    values[valuesById[3] = "OPEN_RELATIONSHIP"] = 3;
-    values[valuesById[4] = "POLYAMORY"] = 4;
-    values[valuesById[5] = "OPEN_TO_EXPLORING"] = 5;
-    return values;
-})();
-
-/**
- * FamilyPlans enum.
- * @exports FamilyPlans
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} WANTS_CHILDREN=1 WANTS_CHILDREN value
- * @property {number} DOESNT_WANT_CHILDREN=2 DOESNT_WANT_CHILDREN value
- * @property {number} HAVE_CHILDREN_WANT_MORE=3 HAVE_CHILDREN_WANT_MORE value
- * @property {number} HAVE_CHILDREN_DONT_WANT_MORE=4 HAVE_CHILDREN_DONT_WANT_MORE value
- * @property {number} UNSURE=5 UNSURE value
- */
-$root.FamilyPlans = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "WANTS_CHILDREN"] = 1;
-    values[valuesById[2] = "DOESNT_WANT_CHILDREN"] = 2;
-    values[valuesById[3] = "HAVE_CHILDREN_WANT_MORE"] = 3;
-    values[valuesById[4] = "HAVE_CHILDREN_DONT_WANT_MORE"] = 4;
-    values[valuesById[5] = "UNSURE"] = 5;
-    return values;
-})();
-
-/**
- * Workout enum.
- * @exports Workout
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} EVERYDAY=1 EVERYDAY value
- * @property {number} OFTEN=2 OFTEN value
- * @property {number} SOMETIMES=3 SOMETIMES value
- * @property {number} NEVER=4 NEVER value
- */
-$root.Workout = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "EVERYDAY"] = 1;
-    values[valuesById[2] = "OFTEN"] = 2;
-    values[valuesById[3] = "SOMETIMES"] = 3;
-    values[valuesById[4] = "NEVER"] = 4;
-    return values;
-})();
-
-/**
- * Personality enum.
- * @exports Personality
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} INTJ=1 INTJ value
- * @property {number} INTP=2 INTP value
- * @property {number} ENTJ=3 ENTJ value
- * @property {number} ENTP=4 ENTP value
- * @property {number} INFJ=5 INFJ value
- * @property {number} INFP=6 INFP value
- * @property {number} ENFJ=7 ENFJ value
- * @property {number} ISTJ=8 ISTJ value
- * @property {number} ISFJ=9 ISFJ value
- * @property {number} ESTJ=10 ESTJ value
- * @property {number} ESFJ=11 ESFJ value
- * @property {number} ISTP=12 ISTP value
- * @property {number} ISFP=13 ISFP value
- * @property {number} ESTP=14 ESTP value
- * @property {number} ESFP=15 ESFP value
- */
-$root.Personality = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "INTJ"] = 1;
-    values[valuesById[2] = "INTP"] = 2;
-    values[valuesById[3] = "ENTJ"] = 3;
-    values[valuesById[4] = "ENTP"] = 4;
-    values[valuesById[5] = "INFJ"] = 5;
-    values[valuesById[6] = "INFP"] = 6;
-    values[valuesById[7] = "ENFJ"] = 7;
-    values[valuesById[8] = "ISTJ"] = 8;
-    values[valuesById[9] = "ISFJ"] = 9;
-    values[valuesById[10] = "ESTJ"] = 10;
-    values[valuesById[11] = "ESFJ"] = 11;
-    values[valuesById[12] = "ISTP"] = 12;
-    values[valuesById[13] = "ISFP"] = 13;
-    values[valuesById[14] = "ESTP"] = 14;
-    values[valuesById[15] = "ESFP"] = 15;
-    return values;
-})();
-
-/**
- * Smokes enum.
- * @exports Smokes
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} YES=1 YES value
- * @property {number} OCCASIONALLY=2 OCCASIONALLY value
- * @property {number} SOCIALLY=3 SOCIALLY value
- * @property {number} NEVER=4 NEVER value
- */
-$root.Smokes = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "YES"] = 1;
-    values[valuesById[2] = "OCCASIONALLY"] = 2;
-    values[valuesById[3] = "SOCIALLY"] = 3;
-    values[valuesById[4] = "NEVER"] = 4;
-    return values;
-})();
-
-/**
- * Drinks enum.
- * @exports Drinks
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} NOT_FOR_ME=1 NOT_FOR_ME value
- * @property {number} SOBER=2 SOBER value
- * @property {number} ON_SPECIAL_OCCASIONS=3 ON_SPECIAL_OCCASIONS value
- * @property {number} SOCIALLY=4 SOCIALLY value
- * @property {number} REGULARLY=5 REGULARLY value
- */
-$root.Drinks = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "NOT_FOR_ME"] = 1;
-    values[valuesById[2] = "SOBER"] = 2;
-    values[valuesById[3] = "ON_SPECIAL_OCCASIONS"] = 3;
-    values[valuesById[4] = "SOCIALLY"] = 4;
-    values[valuesById[5] = "REGULARLY"] = 5;
-    return values;
-})();
-
-/**
- * Cannabis enum.
- * @exports Cannabis
- * @enum {number}
- * @property {number} UNKNOWN=0 UNKNOWN value
- * @property {number} YES=1 YES value
- * @property {number} OCCASIONALLY=2 OCCASIONALLY value
- * @property {number} SOCIALLY=3 SOCIALLY value
- * @property {number} NEVER=4 NEVER value
- */
-$root.Cannabis = (function() {
-    var valuesById = {}, values = Object.create(valuesById);
-    values[valuesById[0] = "UNKNOWN"] = 0;
-    values[valuesById[1] = "YES"] = 1;
-    values[valuesById[2] = "OCCASIONALLY"] = 2;
-    values[valuesById[3] = "SOCIALLY"] = 3;
-    values[valuesById[4] = "NEVER"] = 4;
-    return values;
 })();
 
 module.exports = $root;

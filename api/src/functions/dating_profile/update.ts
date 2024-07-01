@@ -35,7 +35,7 @@ const route: Route = {
         })
 
         response.status(200)
-        response.sendProto("DatingProfile", sanitize(profile) as any)
+        response.sendProto("DatingProfile", sanitize(profile))
     }
 }
 

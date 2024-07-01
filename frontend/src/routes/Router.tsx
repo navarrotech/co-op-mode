@@ -17,6 +17,7 @@ import DashboardLayout from "./dashboard/Layout";
 import VerifyPhoneNumber from "./authentication/VerifyPhoneNumber";
 import ProfileBuilder from "./profile/Builder";
 import Logout from "./authentication/Logout";
+import { ProfileCompletionOutlet } from "./profile/hooks";
 
 /*
  * Homepage and marketing should be in a separate repository!
@@ -36,9 +37,15 @@ export default function Router() {
       <Route path={urls.logout}  element={<Logout />} />
 
       {/* Primary Application */}
+      
+      {/* This outlet ensures that all nested routes are authorized: */}
       <Route path={urls.app} element={<AuthorizedOutlet />}>
         <Route path={urls.buildProfile} element={<ProfileBuilder />} />
-        <Route path={urls.app} element={<DashboardLayout />} />
+
+        {/* This route ensures that the user's profile is fully completed before letting users access these nested routes */}
+        <Route path={urls.app} element={<ProfileCompletionOutlet />}>
+          <Route path={urls.matching} element={<DashboardLayout />} />
+        </Route>
       </Route>
 
       {/* Misc */}

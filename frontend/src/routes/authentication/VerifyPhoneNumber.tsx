@@ -18,6 +18,7 @@ import { useTranslation } from 'react-i18next'
 import { dispatch, useSelector } from '@/store'
 import FormatNumber from '@/common/formatNumber'
 import { setUser } from '@/modules/auth/reducer'
+import { init } from '@/store/Initialization'
 
 export default function VerifyPhoneNumber() {
   const phoneNumber = useSelector(state => state.user.current?.phone)
@@ -51,6 +52,7 @@ export default function VerifyPhoneNumber() {
       dispatch(
         setUser(user)
       )
+      await init()
       navigate(urls.buildProfile)
       return
     }
@@ -129,6 +131,11 @@ export default function VerifyPhoneNumber() {
             disabled={isLoading}
             value={code}
             onChange={e => setCode(e.target.value.trim().replaceAll(/\D/gmi, ''))}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                submit()
+              }
+            }}
             max={6}
           />
         </div>

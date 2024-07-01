@@ -42,6 +42,8 @@
   "who_do_you_want_to_date": "Who do you want to date?",
   "birthday_title": "When is your birthday?",
   "birthday_placeholder": "May 19th, 2005",
+  "confirm_birthday": "Are you {{age_years}} years old?",
+  "confirm_birthday_warning": "We're just making sure this is correct, because you cannot change this later.",
 
   "location_access_title": "We need location access to find your player 2",
   "notification_access_title": "Enable notifications so you don't miss messages from other people",
@@ -53,6 +55,7 @@
 
   "next": "Next",
   "continue": "Continue",
+  "select": "Select",
   "submit": "Submit",
   "back": "Back",
   "nice": "Nice",
@@ -66,6 +69,9 @@
   "edit": "Edit",
   "add": "Add",
   "upload": "Upload",
+  "yes": "Yes",
+  "no": "No",
+  "confirm": "Confirm",
 
   "generic_error":  "Something went wrong. Please try again.",
   "choose_language": "Select your language"

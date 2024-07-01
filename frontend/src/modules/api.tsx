@@ -2,6 +2,7 @@
 
 import ProtoBufs, { type ProtoBufMessages } from '@/modules/protobuf'
 import { defaultLanguage } from './language'
+import { API_URL, NODE_ENV } from '@/env'
 
 // This should be synced with the user's preferences eventually!
 const defaults: Record<string, string> = {
@@ -43,7 +44,7 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
     }
 
     const response = await fetch(
-        "http://localhost:3000" + url,
+        API_URL + url,
         {
             method,
             headers: {
@@ -57,7 +58,7 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
         }
     )
 
-    const rawResponse = await response.text()
+    const rawResponse = await response.arrayBuffer()
     const headers = response.headers
     if (headers.get('content-type') !== 'application/x-protobuf') {
         console.log("Invalid content type, returning undefined: ", headers.get('content-type'))
@@ -91,11 +92,11 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
     
     try {
         const body = returnConstruct.decode(
-            new TextEncoder().encode(rawResponse)
+            new Uint8Array(rawResponse)
         )
 
         const data = body.toJSON()
-        if (import.meta.env.NODE_ENV === 'development') {
+        if (NODE_ENV === 'development') {
             console.log(response.status + ", Decoded data: " + returnStruct, data)
         }
 

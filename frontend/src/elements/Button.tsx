@@ -17,6 +17,8 @@ type Props = {
     info?: boolean
     link?: boolean
 
+    inverted?: boolean
+
     color?: BulmaColor
     children: ReactNode
     className?: string
@@ -39,6 +41,8 @@ export default function Button(props: Props){
         link,
         dark,
         light,
+
+        inverted,
         
         className,
         children,
@@ -57,6 +61,8 @@ export default function Button(props: Props){
         success && 'is-success',
         info && 'is-info',
         link && 'is-link',
+
+        inverted && 'is-inverted', 
         
         ghost && 'is-ghost',
         disabled && 'is-disabled',

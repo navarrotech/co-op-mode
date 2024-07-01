@@ -78,6 +78,7 @@ model dating_profile {
 
   birthday     DateTime?
   gender       Gender?       // M/F/Non-binary/Other
+  wanting      Gender[]      @default([]) // Who they're looking for
   relationship Relationship? // Monogomy, Polyamory, etc
 
   // Video game values
@@ -96,7 +97,7 @@ model dating_profile {
   bio          String   @default("") @db.VarChar(512)
   prompts      String[] @default([])
 
-  known_langs  String[] @default([]) @db.VarChar(2) // Short codes for languages
+  known_langs  String[] @default([]) @db.VarChar(2)  // Short codes for languages
   location     String   @default("") @db.VarChar(32) // City or zip code only
   location2    String   @default("") @db.VarChar(32) // State if needed
   school       String   @default("") @db.VarChar(64) // School name
@@ -109,7 +110,7 @@ model dating_profile {
   height_unit  UnitPreference  @default(Imperial) // imperial vs metric
   sexuality    Sexuality?      @default(Unknown)  // Straight vs gay vs bi vs pan vs etc
   education    Education?      @default(Unknown)  // High school, college, in college, etc
-  looking_for  Seeking[]       @default([])       // Friends, Long term, short term, etc
+  looking_for  Seeking?        @default(Unknown)  // Friends, Long term, short term, etc
   family_plans Family?         @default(Unknown)  // Wants kids, doesn't want kids, etc
   workout      Workout?        @default(Unknown)  // How often they workout
   personality  Personality?    @default(Unknown)  // INFJ, ENTP, etc
@@ -323,7 +324,6 @@ enum Gender {
   NonBinary
   Male
   Female
-  Other
 }
 
 enum Seeking { 

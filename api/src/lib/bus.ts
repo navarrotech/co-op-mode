@@ -14,12 +14,13 @@ let connection: Connection
 let channel: Channel
 
 const options = {
-
+    persistent: true
 }
 
 export async function initMessageBus() {
     connection = await amqplib.connect(RABBITMQ_URL)
     channel = await connection.createChannel()
+    await channel.assertQueue(queue, { durable: true })
     console.log('[PASS] Rabbit MQ connection ready')
 }
 
@@ -126,6 +127,7 @@ export async function publishToBus<T extends keyof typeof structsToTableTypes>(t
         [key]: data
     })
 
+    console.log("Publishing event to bus", event)
     channel.sendToQueue(
         queue,
         Buffer.from(

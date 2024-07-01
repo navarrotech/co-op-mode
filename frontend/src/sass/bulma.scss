@@ -9,6 +9,7 @@ $family-primary: "Montserrat", Arial, sans-serif;
   $family-primary: $family-primary,
   $primary: $primary,
   $link: $link,
+  $info: $info,
   $title-family: $family-titles,
   $input-shadow: none
 );
@@ -30,10 +31,53 @@ $family-primary: "Montserrat", Arial, sans-serif;
   strong {
     color: black;
   }
+
+  .button {
+    &.is-primary {
+      &.is-inverted {
+        color: black !important;
+      }
+    }
+    &.is-info {
+      &.is-inverted {
+        color: black !important;
+      }
+    }
+  }
+}
+
+.theme-dark {
+  .button {
+    &.is-primary {
+      &.is-inverted {
+        color: white !important;
+      }
+    }
+    &.is-info {
+      &.is-inverted {
+        color: white !important;
+      }
+    }
+  }
 }
 
 .button {
   &.is-primary {
+    &.is-inverted {
+      border-width: 2px;
+      border-style: solid;
+      background: transparent !important;
+      border-color: $primary;
+    }
+    color: white;
+  }
+  &.is-info {
+    &.is-inverted {
+      border-width: 2px;
+      border-style: solid;
+      background: transparent !important;
+      border-color: $info;
+    }
     color: white;
   }
 

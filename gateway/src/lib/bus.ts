@@ -22,15 +22,19 @@ let connection: Connection
 let channel: Channel
 
 const options = {
-
+    prefetch: 1
 }
 
 export async function initMessageBus() {
     connection = await amqplib.connect(RABBITMQ_URL)
     channel = await connection.createChannel()
 
+    await channel.assertQueue(queue, { durable: true })
+    channel.prefetch(options.prefetch)
+
     channel.assertQueue(queue)
     channel.consume(queue, async (message) => {
+        console.log("Something new to consume: ", message)
         try {
             if (!message) {
                 return
@@ -49,9 +53,11 @@ export async function initMessageBus() {
 
             channel.ack(message)
 
+            console.log(`Received message from bus: ${struct} ${type}`)
             await Handlers[struct]?.(type, data, message.content)
         } catch (error: any) {
             console.error(error)
+            channel.nack(message!, false, false)
         }
     })
 

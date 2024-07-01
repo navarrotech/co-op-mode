@@ -35,11 +35,11 @@ message Preferences {
 message DatingProfile {
     string id = 1;
     string owner_id = 2;
-    int32 age = 3;
-    Gender gender = 4;
+    string birthday = 3;
+    string gender = 4;
     repeated string fav_vgames = 5;
     repeated string fav_vgenres = 6;
-    repeated Platforms fav_vplatforms = 7;
+    repeated string fav_vplatforms = 7;
     string fav_vcharacter = 8;
     bool likes_dnd = 9;
     bool likes_anime = 10;
@@ -57,17 +57,17 @@ message DatingProfile {
     string top_song = 22;
     string top_artist = 23;
     string pronouns = 24;
-    HeightUnit height_unit = 25;
-    Sexuality sexuality = 26;
-    Education education = 27;
-    Seeking looking_for = 28;
-    Relationship relationship = 29;
-    FamilyPlans family_plans = 30;
-    Workout workout = 31;
-    Personality personality = 32;
-    Smokes smokes = 33;
-    Drinks drinks = 34;
-    Cannabis cannabis = 35;
+    string height_unit = 25;
+    string sexuality = 26;
+    string education = 27;
+    string looking_for = 28;
+    string relationship = 29;
+    string family_plans = 30;
+    string workout = 31;
+    string personality = 32;
+    string smokes = 33;
+    string drinks = 34;
+    string cannabis = 35;
     bool banned = 36;
     bool use_smart_photos = 37;
     bool hide_distance = 38;
@@ -76,8 +76,9 @@ message DatingProfile {
     bool show_sexuality = 41;
     bool show_gender = 42;
     bool show_pronouns = 43;
-    string created_at = 44;
-    string updated_at = 45;
+    repeated string wanting = 44;
+    string created_at = 45;
+    string updated_at = 46;
 }
 
 message Status {
@@ -131,7 +132,7 @@ message Media {
     int32  time_spent = 6;
     string url = 7;
     string mime_type = 8;
-    string file_size = 9;
+    int32 file_size = 9;
     string created_at = 10;
     string updated_at = 11;
 }
@@ -253,9 +254,12 @@ message AuthResponse {
 }
 
 message SyncResponse {
-    User user = 1;
-    repeated Conversations conversations = 2;
-    string message = 3;
+    repeated Conversations conversations = 1;
+    repeated Media media = 2;
+    Preferences preferences = 3;
+    Limits limits = 4;
+    DatingProfile datingProfile = 5;
+    User user = 6;
 }
 
 // General Messages
@@ -278,7 +282,7 @@ message Blank {
 
 // Bus Messages
 message ChangeEvent {
-    ChangeType type = 1;
+    string type = 1;
     string struct = 2;
 
     optional User user = 3;
@@ -291,138 +295,4 @@ message ChangeEvent {
     optional Status status = 10;
     optional Conversations conversations = 11;
     optional Messages messages = 12;
-}
-
-// Enum Definitions
-enum ChangeType {
-    CREATE = 0;
-    UPDATE = 1;
-    DELETE = 2;
-}
-
-enum Platforms {
-    UNKNOWN = 0;
-    PC = 1;
-    PLAYSTATION = 2;
-    XBOX = 3;
-    SWITCH = 4;
-    MOBILE = 5;
-    OTHER = 6;
-}
-
-enum Gender {
-    NONBINARY = 0;
-    MALE = 1;
-    FEMALE = 2;
-    OTHER = 3;
-}
-
-enum HeightUnit {
-    UNKNOWN = 0;
-    IMPERIAL = 1;
-    METRIC = 2;
-}
-
-enum Sexuality {
-    UNKNOWN = 0;
-    STRAIGHT = 1;
-    GAY = 2;
-    LESBIAN = 3;
-    BISEXUAL = 4;
-    ASEXUAL = 5;
-    DEMISEXUAL = 6;
-    PANSEXUAL = 7;
-    QUEER = 8;
-    QUESTIONING = 9;
-}
-
-enum Education {
-    UNKNOWN = 0;
-    BACHELORS = 1;
-    IN_COLLEGE = 2;
-    HIGH_SCHOOL = 3;
-    PHD = 4;
-    IN_GRAD_SCHOOL = 5;
-    MASTERS = 6;
-    TRADE_SCHOOL = 7;
-}
-
-enum Seeking {
-    UNKNOWN = 0;
-    LONG_TERM_RELATIONSHIP = 1;
-    SHORT_TERM_RELATIONSHIP = 2;
-    LONG_TERM_OPEN_TO_SHORT = 3;
-    SHORT_TERM_OPEN_TO_LONG = 4;
-    NEW_FRIENDS = 5;
-    UNSURE = 6;
-}
-
-enum Relationship {
-    UNKNOWN = 0;
-    MONOGAMY = 1;
-    ETHICAL_NON_MONOGAMY = 2;
-    OPEN_RELATIONSHIP = 3;
-    POLYAMORY = 4;
-    OPEN_TO_EXPLORING = 5;
-}
-
-enum FamilyPlans {
-    UNKNOWN = 0;
-    WANTS_CHILDREN = 1;
-    DOESNT_WANT_CHILDREN = 2;
-    HAVE_CHILDREN_WANT_MORE = 3;
-    HAVE_CHILDREN_DONT_WANT_MORE = 4;
-    UNSURE = 5;
-}
-
-enum Workout {
-    UNKNOWN = 0;
-    EVERYDAY = 1;
-    OFTEN = 2;
-    SOMETIMES = 3;
-    NEVER = 4;
-}
-
-enum Personality {
-    UNKNOWN = 0;
-    INTJ = 1;
-    INTP = 2;
-    ENTJ = 3;
-    ENTP = 4;
-    INFJ = 5;
-    INFP = 6;
-    ENFJ = 7;
-    ISTJ = 8;
-    ISFJ = 9;
-    ESTJ = 10;
-    ESFJ = 11;
-    ISTP = 12;
-    ISFP = 13;
-    ESTP = 14;
-    ESFP = 15;
-}
-
-enum Smokes {
-    UNKNOWN = 0;
-    YES = 1;
-    OCCASIONALLY = 2;
-    SOCIALLY = 3;
-    NEVER = 4;
-}
-
-enum Drinks {
-    UNKNOWN = 0;
-    NOT_FOR_ME = 1;
-    SOBER = 2;
-    ON_SPECIAL_OCCASIONS = 3;
-    SOCIALLY = 4;
-    REGULARLY = 5;
-}
-
-enum Cannabis {
-    UNKNOWN = 0;
-    YES = 1;
-    OCCASIONALLY = 2;
-    SOCIALLY = 3;
-    NEVER = 4;
 }

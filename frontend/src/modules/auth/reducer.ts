@@ -3,29 +3,38 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 import type { PayloadAction } from "@reduxjs/toolkit"
-import type { Preferences, User } from "../protobuf/schema"
+import type { IPreferences, IUser, IDailyLimits, IMonthlyLimits, IPermanentLimits } from "../protobuf/schema"
 
 export type State = {
-  current: User | undefined
-  preferences: Preferences | undefined
-  sid?: string
+  current: IUser | undefined
+  preferences: IPreferences | undefined
+  limits: {
+    daily?: IDailyLimits,
+    monthly?: IMonthlyLimits,
+    permanent?: IPermanentLimits,
+  },
   authorized: boolean
   loading: boolean
 }
 
 const initialState: State = {
-  authorized: false,
   loading: true,
-  sid: undefined,
+
+  authorized: false,
   current: undefined,
   preferences: undefined,
+  limits: {
+    daily: undefined,
+    monthly: undefined,
+    permanent: undefined,
+  },
 }
 
 const slice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<User>) => {
+    setUser: (state, action: PayloadAction<IUser>) => {
       state.current = action.payload
       state.loading = false
       state.authorized = !!action.payload?.phone
@@ -35,10 +44,24 @@ const slice = createSlice({
       }
       return state;
     },
-    setPreferences: (state, action: PayloadAction<Preferences>) => {
+    setPreferences: (state, action: PayloadAction<IPreferences>) => {
       state.preferences = action.payload
       return state;
     },
+
+    setDailyLimits: (state, action: PayloadAction<IDailyLimits>) => {
+      state.limits.daily = action.payload
+      return state;
+    },
+    setMonthlyLimits: (state, action: PayloadAction<IMonthlyLimits>) => {
+      state.limits.monthly = action.payload
+      return state;
+    },
+    setPermanentLimits: (state, action: PayloadAction<IPermanentLimits>) => {
+      state.limits.permanent = action.payload
+      return state;
+    },
+
     logout: (state) => {
       state = {
         ...initialState,
@@ -56,8 +79,13 @@ const slice = createSlice({
 export const {
   setUser,
   setPreferences,
-  finishInit,
+
+  setDailyLimits,
+  setMonthlyLimits,
+  setPermanentLimits,
+
   logout,
+  finishInit,
 } = slice.actions
 
 export default slice

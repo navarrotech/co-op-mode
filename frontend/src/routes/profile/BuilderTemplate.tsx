@@ -8,7 +8,6 @@ import { useEffect } from 'react'
 import Button from '@/elements/Button'
 
 type Props = {
-  hideNext?: boolean
   disabled?: boolean
   onNext: () => void
   errors: FormInvalid,
@@ -17,7 +16,7 @@ type Props = {
   nextText: string
 }
 
-export default function BuilderTemplate({ title, hideNext, onNext, nextText, errors, disabled, children }: Props) {
+export default function BuilderTemplate({ title, onNext, nextText, errors, disabled, children }: Props) {
 
   useEffect(() => {
     const keyListener = (e: KeyboardEvent) => {
@@ -45,23 +44,17 @@ export default function BuilderTemplate({ title, hideNext, onNext, nextText, err
       ? errors.map(({ key, message }) => <div key={key} className="block notification is-danger">{ message }</div>)
       : <></>
     }
-    { !hideNext
-      ? <>
-        <div className="block v-spacer" />
-        <div className="block buttons is-centered">
-          <Button
-            primary
-            fullwidth
-            disabled={disabled}
-            onClick={onNext}
-            hidden={hideNext}
-          >{
-            nextText
-          }</Button>
-        </div>
-      </>
-      : <></>
-    }
+    <div className="block v-spacer" />
+    <div className="block buttons is-centered">
+      <Button
+        primary
+        fullwidth
+        disabled={disabled}
+        onClick={onNext}
+      >{
+        nextText
+      }</Button>
+    </div>
   </section>
 }
 
