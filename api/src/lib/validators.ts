@@ -96,9 +96,9 @@ export const passwordValidator = () => yup
   .matches(/[\W_]/, "validator_password")
 
 export const datingProfileValidator = (setRequired: boolean = false) => yup.object({
-  age: setRequired
+  birthday: setRequired
     ? ageValidator().required()
-    : ageValidator().optional(),
+    : ageValidator().optional(), 
   gender: setRequired
     ? genderValidator().required()
     : genderValidator().optional(),

@@ -6,7 +6,12 @@ import type { users } from "@prisma/client"
 
 // Utility
 import database from "@/lib/database"
-import yup, { emailValidator, firstNameValidator, lastNameValidator } from "@/lib/validators"
+import { sanitize } from "@/lib/protobuf"
+import yup, {
+    emailValidator,
+    firstNameValidator,
+    lastNameValidator,
+} from "@/lib/validators"
 
 type Body = Partial<users>
 
@@ -32,6 +37,12 @@ const route: Route = {
 
             const data = request.body as Body
 
+            // @ts-ignore
+            delete data.owner_id
+            delete data.created_at
+            delete data.updated_at
+            delete data.id
+
             // TODO: if email changed, re-send verification email and unverify
 
             await database.users.update({
@@ -40,10 +51,22 @@ const route: Route = {
                 },
                 data
             })
-
-            response.sendStatus(200)
         } catch(e){}
-        response.sendStatus(200)
+
+        const latestUser = await database.users.findFirst({
+            where: {
+                id: request.session.user.id
+            }
+        })
+
+        request.session.user.first_name = latestUser.first_name
+        request.session.user.last_name = latestUser.last_name
+        request.session.user.email = latestUser.email
+
+        response.status(200)
+        response.sendProto("User", sanitize(latestUser))
+
+        request.session.saveAsync()
     }
 
 }

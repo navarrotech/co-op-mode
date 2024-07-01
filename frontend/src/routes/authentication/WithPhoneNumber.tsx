@@ -149,7 +149,7 @@ export default function WithPhoneNumber() {
         loading={isLoading}
         onClick={submit}
       >
-        { t('next_button') }
+        { t('next') }
       </Button>
     </div>
   </section>

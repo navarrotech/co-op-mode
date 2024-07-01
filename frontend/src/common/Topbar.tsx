@@ -15,6 +15,7 @@ import { useSelector } from "@/store"
 import Dropdown from "./Dropdown"
 
 export default function Topbar() {
+    return <></>
     const [ showMobileMenu, setShowMobileMenu ] = useState<boolean>(false)
     const user = useSelector(state => state.user.current)
 

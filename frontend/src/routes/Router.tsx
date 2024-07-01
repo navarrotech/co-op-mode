@@ -38,7 +38,7 @@ export default function Router() {
       {/* Primary Application */}
       <Route path={urls.app} element={<AuthorizedOutlet />}>
         <Route path={urls.buildProfile} element={<ProfileBuilder />} />
-        <Route index path={urls.app} element={<DashboardLayout />} />
+        <Route path={urls.app} element={<DashboardLayout />} />
       </Route>
 
       {/* Misc */}
@@ -46,7 +46,7 @@ export default function Router() {
       <Route path={urls.privacyPolicy} element={<h1>Privacy Policy</h1>} />
 
       {/* Catch-all 404 */}
-      <Route path="*" element={<Navigate to="/dashboard" />} />
+      <Route path="*" element={<Navigate to={urls.welcome} />} />
     </Routes>
   </BrowserRouter>
 }

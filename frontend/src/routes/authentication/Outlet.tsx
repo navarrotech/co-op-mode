@@ -8,15 +8,16 @@ import { LoaderLayout } from "@/common/Loader"
 // Actions
 import { useSelector } from "@/store"
 import Topbar from "@/common/Topbar"
+import urls from "../urls"
 
-export function AuthorizedOutlet(){
+export function AuthorizedOutlet() {
     const authorized = useSelector(state => state.user.authorized)
     const navigate = useNavigate()
 
     useEffect(() => {
         if (!authorized) {
             console.log('Unauthorized, redirecting to login')
-            navigate('/welcome')
+            navigate(urls.welcome)
             return
         }
     }, [ authorized ])

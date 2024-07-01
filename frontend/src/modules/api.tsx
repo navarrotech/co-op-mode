@@ -24,8 +24,8 @@ export type ProtoResponse<T = any> = {
     data: T
     status: number
     headers: any
+    struct: keyof typeof ProtoBufs
 }
-
 
 // Type utility to get the properties of a type that are not functions
 type NonFunctionProperties<T> = {
@@ -66,6 +66,7 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
             headers: response.headers,
             // @ts-ignore
             data: undefined,
+            struct: "Blank",
         }
     }
 
@@ -84,6 +85,7 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
             headers: response.headers,
             // @ts-ignore
             data: undefined,
+            struct: "Blank",
         }
     }
     
@@ -92,10 +94,16 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
             new TextEncoder().encode(rawResponse)
         )
 
+        const data = body.toJSON()
+        if (import.meta.env.NODE_ENV === 'development') {
+            console.log(response.status + ", Decoded data: " + returnStruct, data)
+        }
+
         return {
-            data: body.toJSON(),
+            data,
             status: response.status,
-            headers: response.headers
+            headers: response.headers,
+            struct: returnStruct,
         } as ProtoResponse<K>
     } catch (error: any){
         console.log(error)
@@ -104,6 +112,7 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
             headers: response.headers,
             // @ts-ignore
             data: undefined,
+            struct: "Blank",
         }
     }
 }

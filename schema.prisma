@@ -76,10 +76,9 @@ model dating_profile {
   owner_id     String @unique
   user         users @relation(fields: [owner_id], references : [id])
 
-  // Required
-  age          Int
-  gender       Gender       // M/F/Non-binary/Other
-  relationship Relationship // Monogomy, Polyamory, etc
+  birthday     DateTime?
+  gender       Gender?       // M/F/Non-binary/Other
+  relationship Relationship? // Monogomy, Polyamory, etc
 
   // Video game values
   fav_vgames     String[]    @default([])

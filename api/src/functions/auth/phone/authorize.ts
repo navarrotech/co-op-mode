@@ -164,42 +164,41 @@ const route: Route = {
       }
     }
 
-    // await Promise.all([
-    //     database.preferences.create({
-    //         data: {
-    //             owner_id: user.id,
-    //             language
-    //         }
-    //     }),
-    //     database.dating_profile.create({
-    //         data: {
-    //             owner_id: user.id,
-    //             age,
-    //             gender,
-    //             relationship
-    //         }
-    //     }),
-    //     database.permanent_limits.create({
-    //         data: {
-    //             owner_id: user.id
-    //         }
-    //     }),
-    //     database.daily_limits.create({
-    //         data: {
-    //             owner_id: user.id
-    //         }
-    //     }),
-    //     database.monthly_limits.create({
-    //         data: {
-    //             owner_id: user.id
-    //         }
-    //     }),
-    //     database.status.create({
-    //         data: {
-    //             owner_id: user.id,
-    //         }
-    //     }),
-    // ])
+    const { language } = request
+
+    await Promise.all([
+        database.preferences.create({
+            data: {
+                owner_id: user.id,
+                language
+            }
+        }),
+        database.dating_profile.create({
+            data: {
+                owner_id: user.id,
+            }
+        }),
+        database.permanent_limits.create({
+            data: {
+                owner_id: user.id
+            }
+        }),
+        database.daily_limits.create({
+            data: {
+                owner_id: user.id
+            }
+        }),
+        database.monthly_limits.create({
+            data: {
+                owner_id: user.id
+            }
+        }),
+        database.status.create({
+            data: {
+                owner_id: user.id,
+            }
+        }),
+    ])
 
     request.session.user = user
     request.session.authorized = true

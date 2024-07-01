@@ -32,9 +32,7 @@ export default function Welcome() {
             <figure className="block image is-160x160 is-centered">
                 <img src="/logo.png" alt="Co-Op Mode" />
             </figure>
-            <div className="block v-spacer">
-                
-            </div>
+            <div className="block v-spacer" />
             <div className="block buttons is-centered">
                 <Link to={urls.discord} className="button is-logo is-discord is-fullwidth">
                     <span className="icon">

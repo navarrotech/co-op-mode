@@ -3,10 +3,11 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 import type { PayloadAction } from "@reduxjs/toolkit"
-import type { User } from "firebase/auth"
+import type { Preferences, User } from "../protobuf/schema"
 
 export type State = {
   current: User | undefined
+  preferences: Preferences | undefined
   sid?: string
   authorized: boolean
   loading: boolean
@@ -16,17 +17,26 @@ const initialState: State = {
   authorized: false,
   loading: true,
   sid: undefined,
-  current: undefined
+  current: undefined,
+  preferences: undefined,
 }
 
 const slice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<any>) => {
+    setUser: (state, action: PayloadAction<User>) => {
       state.current = action.payload
       state.loading = false
-      state.authorized = !!action.payload?.email
+      state.authorized = !!action.payload?.phone
+      if (action.payload?.preferences) {
+        // @ts-ignore
+        state.preferences = action.payload.preferences
+      }
+      return state;
+    },
+    setPreferences: (state, action: PayloadAction<Preferences>) => {
+      state.preferences = action.payload
       return state;
     },
     logout: (state) => {
@@ -45,6 +55,7 @@ const slice = createSlice({
 
 export const {
   setUser,
+  setPreferences,
   finishInit,
   logout,
 } = slice.actions

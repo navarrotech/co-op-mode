@@ -19,7 +19,7 @@ import { useSelector } from '@/store'
 import FormatNumber from '@/common/formatNumber'
 
 export default function VerifyPhoneNumber() {
-  const phoneNumber = useSelector(state => state.user.current?.phoneNumber)
+  const phoneNumber = useSelector(state => state.user.current?.phone)
   const navigate = useNavigate()
 
   const [ error, setError ] = useState<string>("")
@@ -143,7 +143,7 @@ export default function VerifyPhoneNumber() {
         loading={isLoading}
         onClick={submit}
       >
-        { t('next_button') }
+        { t('next') }
       </Button>
     </div>
   </section>
@@ -151,7 +151,7 @@ export default function VerifyPhoneNumber() {
 
 function ResendCode() {
   const { t } = useTranslation()
-  const phoneNumber = useSelector(state => state.user.current?.phoneNumber)
+  const phoneNumber = useSelector(state => state.user.current?.phone)
   const [ seconds, setTimeLeft ] = useState<number>(60)
 
   async function resendCode() {
