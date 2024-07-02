@@ -5,7 +5,7 @@
 
 // Typescript
 import type { ReactNode } from 'react'
-import type { BulmaColor } from '@/common/Colors'
+import type { BulmaColor } from '@/types'
 
 type Props = {
     primary?: boolean

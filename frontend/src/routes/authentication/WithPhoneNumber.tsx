@@ -42,7 +42,9 @@ export default function WithPhoneNumber() {
   try {
     isValid = validator.isValidSync(fullNumber)
   }
-  catch (e) {}
+  catch (e) {
+    // No action needed
+  }
 
   async function submit() {
     if (!isValid || isLoading) {

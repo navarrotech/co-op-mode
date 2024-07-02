@@ -5,14 +5,14 @@ import { createPortal } from 'react-dom'
 
 // Typescript
 import type { ReactNode } from 'react'
-import type { BulmaColors } from '@/types'
+import type { BulmaColor } from '@/types'
 
 // Components
 import Button from './Button'
 
 type ModalButton = {
     text: string
-    color: BulmaColors
+    color: BulmaColor
     loading?: boolean
     disabled?: boolean
     closeAfterOnClick?: boolean

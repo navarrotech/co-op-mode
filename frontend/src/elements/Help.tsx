@@ -8,6 +8,6 @@ type Props = {
   children: React.ReactNode
 }
 
-export default function Help({ url, children }: Props) {
+export default function Help({ children }: Props) {
   return children
 }

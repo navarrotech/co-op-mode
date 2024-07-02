@@ -27,7 +27,7 @@ import moment from 'moment'
 import BuilderTemplate from './BuilderTemplate'
 import Button from '@/elements/Button'
 import Meme from '@/elements/Meme'
-import UploadMedia from './UploadMedia'
+// import UploadMedia from './UploadMedia'
 
 // Misc
 import memeStyles from '@/elements/Meme.module.sass'
@@ -369,9 +369,9 @@ export default function ProfileBuilder() {
     </BuilderTemplate>
   }
 
-  if (!user.media) {
-    // return <UploadMedia />
-  }
+  // if (!user.media) {
+  // return <UploadMedia />
+  // }
 
   // TODO: Check if we can access notifications
   

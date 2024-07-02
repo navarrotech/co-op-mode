@@ -1,6 +1,6 @@
 // Copyright © 2024 Navarrotech
 
-import { BulmaColor } from '@/common/Colors'
+import type { BulmaColor } from '@/types'
 import { ReactNode } from 'react'
 
 type Props = {
@@ -14,16 +14,14 @@ type Props = {
 } & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
 export default function ToggleSwitch(props: Props) {
-  const { color = 'primary', checked, onChange, rounded, label, disabled, className, ...rest } = props
+  const { color = 'primary', checked, onChange, rounded, label, disabled, className='', ...rest } = props
 
-  let classes = `switch is-${color}`
-
-  if (disabled){
-    classes += ' is-disabled'
-  }
-  if (rounded){
-    classes += ' is-rounded'
-  }
+  const classes = [
+    `switch is-${color}`,
+    className,
+    disabled && 'is-disabled',
+    rounded && 'is-rounded'
+  ].filter(Boolean).join(' ')
 
   return (
     <label className={classes}>

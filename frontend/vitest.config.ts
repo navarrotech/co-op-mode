@@ -9,10 +9,10 @@ export default defineConfig({
   test: {
     // Reporting:
     reporters: [
-      'junit',
+      'junit'
     ],
     outputFile: {
-      junit: './test/test-results.xml',
+      junit: './test/test-results.xml'
     },
     passWithNoTests: true,
   

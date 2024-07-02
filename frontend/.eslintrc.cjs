@@ -16,6 +16,9 @@ module.exports = {
     'vite-env.d.ts',
     '.eslintrc.cjs',
     'forge.config.ts',
+    'schema.d.ts',
+    'routes.ts',
+    'ProtoTypes.ts',
     'node_modules',
     '.json'
   ],
@@ -96,6 +99,7 @@ module.exports = {
     // Bad practices by Alex :)
 
     'react-refresh/only-export-components': 'off',
+    'react-hooks/exhaustive-deps': 'off',
 
     //////////////////////////////////////////
     // Best practices
