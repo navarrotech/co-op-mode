@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech.
+// Copyright © 2024 Navarrotech
 
 module.exports = {
   root: true,
@@ -9,27 +9,20 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
   ],
   ignorePatterns: [
     'dist',
     'vite-env.d.ts',
     '.eslintrc.cjs',
-    'forge.config.ts',
     'node_modules',
     '.json'
   ],
   parser: '@typescript-eslint/parser',
   plugins: [
-    'react-refresh',
     'header',
     '@stylistic/js'
   ],
   rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
 
     //////////////////////////////////////////
     // Typescript rules:
@@ -92,10 +85,6 @@ module.exports = {
 
     //////////////////////////////////////////
     // Best practices
-
-    // Disable no console https://eslint.org/docs/latest/rules/no-console
-    // We should be using an official logger like log4js:
-    // 'no-console': 'warn',
 
     // Custom plugin: https://www.npmjs.com/package/eslint-plugin-header
     // We should be enforcing a copyright header on all files
