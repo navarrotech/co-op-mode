@@ -15,6 +15,20 @@ body
 .section
   height: 100vh
 
+  &.is-beautiful
+    background: rgb(38,120,151)
+    background: linear-gradient(180deg, rgba(38,120,151,1) 0%, rgba(19,48,93,1) 35%, rgba(43,23,64,1) 100%)
+
+    h1, h2, span, p
+      color: white !important
+
+  &.is-danger
+    background: rgb(151,38,38)
+    background: linear-gradient(180deg, rgba(151,38,38,1) 0%, rgba(93,19,19,1) 35%, rgba(64,23,43,1) 100%)
+
+    h1, h2, span, p
+      color: white !important
+
   > .container
     height: 100%
 

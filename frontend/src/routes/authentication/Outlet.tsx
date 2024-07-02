@@ -3,11 +3,10 @@ import { useEffect } from "react"
 
 // UI
 import { Outlet, useNavigate } from "react-router"
-import { LoaderLayout } from "@/common/Loader"
+import { LoaderLayout } from "@/elements/Loader"
 
 // Actions
 import { useSelector } from "@/store"
-import Topbar from "@/common/Topbar"
 import urls from "../urls"
 
 export function AuthorizedOutlet() {
@@ -26,8 +25,5 @@ export function AuthorizedOutlet() {
         return <LoaderLayout />
     }
 
-    return <div>
-        <Topbar />
-        <Outlet />
-    </div>
+    return <Outlet />
 }

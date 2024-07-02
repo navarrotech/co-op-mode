@@ -9,8 +9,12 @@ const route: Route = {
     inboundStruct: null,
     handler: async function logoutHandler(request, response) {
         try {
+            request.session.user = null
+            request.session.authorized = false
             await request.session.destroyAsync()
-        } catch(e){}
+        } catch(e){
+            console.error(e)
+        }
         response.sendStatus(200)
     }
 

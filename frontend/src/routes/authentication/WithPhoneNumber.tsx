@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 // Smart components
-import Help from '@/common/Help'
-import AdvancedSelect from '@/common/AdvancedSelect'
+import Help from '@/elements/Help'
+import AdvancedSelect from '@/elements/AdvancedSelect'
 import Button from '@/elements/Button'
 
 // Redux

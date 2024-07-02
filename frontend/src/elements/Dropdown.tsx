@@ -6,6 +6,7 @@ type Props = {
     trigger: React.ReactNode
     children: React.ReactNode
     className?: string
+    isTriggerRounded?: boolean
 }
 
 export default function Dropdown({ children, trigger, className = '', ...props }: Props) {
@@ -28,9 +29,16 @@ export default function Dropdown({ children, trigger, className = '', ...props }
     }, [])
 
     return (
-        <div className={`dropdown ${className} ${isOpen ? "is-active" : ""}`} ref={dropdownRef} { ...props }>
-            <div className="dropdown-trigger" onClick={() => setIsOpen(!isOpen)}>
-                { trigger }
+        <div className={`dropdown ${className} ${isOpen ? "is-active" : ""}`} ref={dropdownRef}>
+            <div className="dropdown-trigger">
+                <button
+                    className={`button ${props.isTriggerRounded ? "is-rounded" : ""}`}
+                    aria-haspopup="true"
+                    aria-controls="dropdown-menu"
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    { trigger }
+                </button>
             </div>
             <div className="dropdown-menu" role="menu">
                 <div className="dropdown-content">

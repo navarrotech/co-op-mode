@@ -12,10 +12,9 @@ import { faUser } from "@fortawesome/free-solid-svg-icons"
 import { useSelector } from "@/store"
 
 // Components
-import Dropdown from "./Dropdown"
+import Dropdown from "../../elements/Dropdown"
 
 export default function Topbar() {
-    return <></>
     const [ showMobileMenu, setShowMobileMenu ] = useState<boolean>(false)
     const user = useSelector(state => state.user.current)
 
@@ -37,6 +36,7 @@ export default function Topbar() {
                     aria-expanded="false"
                     onClick={() => setShowMobileMenu(!showMobileMenu)}
                 >
+                    <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>
                     <span aria-hidden="true"></span>

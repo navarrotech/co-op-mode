@@ -1,10 +1,19 @@
 // Copyright © 2024 Navarrotech
 
-import { useSelector } from "@/store"
+// React.js
 import { useEffect } from "react"
 import { Outlet, useNavigate } from "react-router"
-import { isProfileComplete } from "./Builder"
+
+// Redux
+import { useSelector } from "@/store"
+
+// Utility
 import urls from "../urls"
+import { isProfileComplete } from "./Builder"
+
+// Components
+import Topbar from "@/routes/dashboard/Topbar"
+import NavBar from "../dashboard/NavBar"
 
 export function ProfileCompletionOutlet() {
   const user = useSelector(state => state.user.current)
@@ -22,6 +31,12 @@ export function ProfileCompletionOutlet() {
     }
   }, [ user, datingProfile ])
 
-  return <Outlet />
+  return <div className="dashboard">
+    <Topbar />
+    <div className="dashboard-content">
+      <Outlet />
+    </div>
+    <NavBar />
+  </div>
 } 
 

@@ -12,7 +12,7 @@ import { useSelector } from '@/store'
 
 // Utility
 import { Trans, useTranslation } from 'react-i18next'
-import LanguageChooser from '@/common/LanguageChooser'
+import LanguageChooser from '@/elements/LanguageChooser'
 import urls from '../urls'
 
 export default function Welcome() {

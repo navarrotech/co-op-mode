@@ -73,6 +73,9 @@
   "no": "No",
   "confirm": "Confirm",
 
+  "something_went_wrong": "Something went wrong.",
+  "failed_to_connect_to_api": "Failed to connect to the server. Automatically retrying...",
+
   "generic_error":  "Something went wrong. Please try again.",
   "choose_language": "Select your language"
 }

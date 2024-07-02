@@ -26,12 +26,12 @@ import moment from 'moment'
 // Components
 import BuilderTemplate from './BuilderTemplate'
 import Button from '@/elements/Button'
-import Meme from '@/common/Meme'
+import Meme from '@/elements/Meme'
 import UploadMedia from './UploadMedia'
 
 // Misc
-import memeStyles from "@/common/Meme.module.sass"
-import Confirm from '@/common/Confirm'
+import memeStyles from "@/elements/Meme.module.sass"
+import Confirm from '@/elements/Confirm'
 
 export default function ProfileBuilder() {
   const { t } = useTranslation()
@@ -370,8 +370,14 @@ export default function ProfileBuilder() {
   }
 
   if (!user.media) {
-    return <UploadMedia />
+    // return <UploadMedia />
   }
+
+  // TODO: Check if we can access notifications
+  
+
+  // TODO: Check if we can access location
+
 
   console.log("Profile building complete, redirecting to app")
 
@@ -386,5 +392,5 @@ export function isProfileComplete(user: IUser, datingProfile: IDatingProfile) {
     && datingProfile.gender
     && datingProfile.birthday
     && datingProfile.looking_for?.length
-    && user.media?.length
+    // && user.media?.length // TODO: Media!
 }

@@ -61,7 +61,7 @@ export function updateAccount(data: IUpdateAccount) {
 }
 
 export type IUpdateDatingProfile = {
-	birthday?: date
+	birthday?: string
 	gender?: string
 	wanting?: string[]
 	height?: number

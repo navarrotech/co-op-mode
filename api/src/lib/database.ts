@@ -15,11 +15,7 @@ export async function initDatabase() {
     // Replication middleware
     database.$use(
         async (params, next) => {
-            const { action, model, args } = params
-
-            if (action !== "findMany" && action !== "findUnique" && action !== "count") {
-                console.log("Executing middleware on prisma action", action, "for model", model, "with args", args)
-            }
+            const { action, model } = params
 
             const result = await next(params)
             PrismaMiddlewareHandlers[action]?.(model, result)

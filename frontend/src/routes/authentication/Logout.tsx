@@ -9,13 +9,15 @@ import { shutdown } from '@/modules/actions'
 import { logout as apiLogout } from '@/modules/generated/routes'
 
 // UI
-import { LoaderLayout } from '@/common/Loader'
+import { LoaderLayout } from '@/elements/Loader'
 
 // Constants
 import urls from '../urls'
 
 export default function Logout() {
   const [ isFinished, setFinished ] = useState<boolean>(false)
+
+  console.log("Logging out!")
 
   useEffect(() => {
     Promise.all([

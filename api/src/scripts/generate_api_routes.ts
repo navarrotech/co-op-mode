@@ -65,6 +65,9 @@ for (const { handler, path, method = "post", inboundStruct, validator } of route
             if (type === "array"){
                 type = "string[]"
             }
+            if (type === "date"){
+                type = "string"
+            }
 
             output += `\t${key}${isOptional ? '?' : ''}: ${type}\n`
         }

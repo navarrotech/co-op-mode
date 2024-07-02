@@ -4,3 +4,5 @@ export type FormInvalid = {
   key: string,
   message: string,
 }[]
+
+export type BulmaColor = 'primary' | 'secondary' | 'link' | 'info' | 'success' | 'warning' | 'danger' | 'white' | 'black' | 'text' | 'ghost'

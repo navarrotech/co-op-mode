@@ -4,21 +4,22 @@
 import { useEffect, useState } from 'react'
 import { Navigate, useNavigate } from 'react-router'
 
-// Smart components
-import Button from '@/elements/Button'
-
-// Utility
-import urls from '../urls'
-
-// Iconography
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import { authorizeByPhone } from '@/modules/generated/routes'
-import { useTranslation } from 'react-i18next'
+// Redux
 import { dispatch, useSelector } from '@/store'
-import FormatNumber from '@/common/formatNumber'
 import { setUser } from '@/modules/auth/reducer'
 import { init } from '@/store/Initialization'
+
+// UI
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import FormatNumber from '@/common/formatNumber'
+import Button from '@/elements/Button'
+
+// Misc
+import urls from '../urls'
+
+import { authorizeByPhone } from '@/modules/generated/routes'
+import { useTranslation } from 'react-i18next'
 
 export default function VerifyPhoneNumber() {
   const phoneNumber = useSelector(state => state.user.current?.phone)
