@@ -1,0 +1,71 @@
+# Copyright © 2024 Navarrotech
+
+name: Test each push
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+# The whole purpose of this is to ensure that:
+# 1. The code is linted
+# 2. The unit tests all pass (not to generate a report)
+# 3. The build is successful
+# On all pull requests and main branch pushes
+
+# We let another action (like circleci) do the actual building and packaging
+
+jobs:
+  test-and-build-standard:
+    runs-on: ubuntu-latest
+
+    container:
+      image: node:20.11.0-bullseye-slim
+
+    strategy:
+      matrix:
+        subdir:
+          - analytics
+          - api
+          - frontend
+          - gateway
+          - notifications
+          - routines
+
+    steps:
+
+      # Setup:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore api cache
+        id: cache-deps
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-${{ matrix.subdir }}-dependencies-${{ hashFiles('**/yarn.lock') }}
+
+      # Install dependencies & make assets:
+      - name: Install dependencies
+        if: steps.cache-deps.outputs.cache-hit != 'true'
+        run: yarn install
+
+      - name: Ensure eslint
+        run: yarn lint
+
+      # Testing:
+      - name: Run unit tests
+        run: yarn test
+
+      # Build:
+      - name: Build
+        run: yarn build
+
+      # Save cache
+      - name: Save node_modules cache
+        uses: actions/cache@v4
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-flagship-dependencies-${{ hashFiles('**/yarn.lock') }}
