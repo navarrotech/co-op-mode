@@ -1,6 +1,6 @@
 # Copyright © 2024 Navarrotech
 
-name: Test each push
+name: Test and Build
 
 on:
   push:
@@ -18,7 +18,7 @@ on:
 # We let another action (like circleci) do the actual building and packaging
 
 jobs:
-  test-and-build-standard:
+  test-and-build:
     runs-on: ubuntu-latest
 
     container:
@@ -43,32 +43,40 @@ jobs:
       - name: Change to subdirectory
         run: cd ${{ matrix.subdir }}
 
-      - name: Restore api cache
+      - name: Restore node_modules cache
         id: cache-deps
         uses: actions/cache@v4
         with:
-          path: node_modules
+          path: ${{ matrix.subdir }}/node_modules
           key: ${{ runner.os }}-${{ matrix.subdir }}-dependencies-${{ hashFiles('**/yarn.lock') }}
 
       # Install dependencies & make assets:
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
-        run: yarn install
+        run: |
+          cd ${{ matrix.subdir }}
+          yarn install
 
       - name: Ensure eslint
-        run: yarn lint
+        run: |
+          cd ${{ matrix.subdir }}
+          yarn lint
 
       # Testing:
       - name: Run unit tests
-        run: yarn test
+        run: |
+          cd ${{ matrix.subdir }}
+          yarn test
 
       # Build:
       - name: Build
-        run: yarn build
+        run: |
+          cd ${{ matrix.subdir }}
+          yarn build
 
       # Save cache
       - name: Save node_modules cache
         uses: actions/cache@v4
         with:
-          path: node_modules
-          key: ${{ runner.os }}-flagship-dependencies-${{ hashFiles('**/yarn.lock') }}
+          path: ${{ matrix.subdir }}/node_modules
+          key: ${{ runner.os }}-${{ matrix.subdir }}-dependencies-${{ hashFiles('**/yarn.lock') }}
