@@ -40,6 +40,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Change to subdirectory
+        run: cd ${{ matrix.subdir }}
+
       - name: Restore api cache
         id: cache-deps
         uses: actions/cache@v4
