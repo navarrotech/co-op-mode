@@ -68,11 +68,6 @@ jobs:
           cd ${{ matrix.subdir }}
           yarn test
 
-      - name: Typescript check
-        run: |
-          cd ${{ matrix.subdir }}
-          yarn tsc --noEmit --skipLibCheck
-
       # Build:
       - name: Build
         run: |

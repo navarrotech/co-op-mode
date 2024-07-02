@@ -11,6 +11,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest run --coverage",
     "test:dev": "DEBUG_PRINT_LIMIT=100000 vites watch --ui --coverage.enabled=true",
+    "build": "tsc",
     "proto": "pbjs -t static-module --keep-case -w commonjs -o ./src/lib/generated/schema.js ../schema.proto && pbts -o ./src/lib/generated/schema.d.ts ./src/lib/generated/schema.js"
   },
   "devDependencies": {

@@ -17,6 +17,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "test": "vitest run --coverage",
     "test:dev": "DEBUG_PRINT_LIMIT=100000 vites watch --ui --coverage.enabled=true",
+    "build": "tsc",
     "frontend_api": "ts-node --project tsconfig.json -r tsconfig-paths/register src/scripts/generate_api_routes.ts",
     "frontend_api:dev": "nodemon --legacy-watch --exec 'ts-node --project tsconfig.json -r tsconfig-paths/register' src/scripts/generate_api_routes.ts"
   },
