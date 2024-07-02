@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 // Typescript
 import type { Route } from '@/types'
@@ -8,8 +8,8 @@ import like from './like'
 import dislike from './dislike'
 
 const routes: Route[] = [
-    like,
-    dislike,
+  like,
+  dislike
 ]
 
 export default routes

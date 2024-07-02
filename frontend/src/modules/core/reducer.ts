@@ -1,15 +1,15 @@
 // Copyright © 2024 Navarrotech
 
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
 // Typescript
-import type { Theme } from "./types"
-import type { PayloadAction } from "@reduxjs/toolkit"
+import type { Theme } from './types'
+import type { PayloadAction } from '@reduxjs/toolkit'
 
 // Utilities
-import { applyTheme } from "./utility"
-import { setApiDefault } from "../api"
-import { defaultLanguage } from "../language"
+import { applyTheme } from './utility'
+import { setApiDefault } from '../api'
+import { defaultLanguage } from '../language'
 
 export type State = {
   theme: Theme,
@@ -36,13 +36,13 @@ const slice = createSlice({
       state.language = action.payload
       localStorage.setItem('language', action.payload)
       setApiDefault('language', action.payload)
-    },
+    }
   }
 })
 
 export const {
   setTheme,
-  setLanguage,
+  setLanguage
 } = slice.actions
 
-export default slice;
+export default slice

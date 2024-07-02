@@ -28,9 +28,9 @@ const validator = phoneValidator()
 export default function WithPhoneNumber() {
   const navigate = useNavigate()
 
-  const [ countryCode, setCountryCode ] = useState<string>("US +1")
-  const [ error, setError ] = useState<string>("")
-  const [ phoneNumber, setPhoneNumber ] = useState<string>("")
+  const [ countryCode, setCountryCode ] = useState<string>('US +1')
+  const [ error, setError ] = useState<string>('')
+  const [ phoneNumber, setPhoneNumber ] = useState<string>('')
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
 
   const { t } = useTranslation()
@@ -41,14 +41,15 @@ export default function WithPhoneNumber() {
   let isValid = false
   try {
     isValid = validator.isValidSync(fullNumber)
-  } catch (e) {}
+  }
+  catch (e) {}
 
   async function submit() {
     if (!isValid || isLoading) {
       return
     }
 
-    setError("")
+    setError('')
     setIsLoading(true)
 
     const { data, struct, status } = await authorizeByPhone({
@@ -58,7 +59,7 @@ export default function WithPhoneNumber() {
     setIsLoading(false)
 
     if (status === 204 || status === 200 || status === 409) {
-      const user = struct === "AuthResponse" ? data?.user : {}
+      const user = struct === 'AuthResponse' ? data?.user : {}
       dispatch(
         // @ts-ignore
         setUser({
@@ -196,7 +197,7 @@ const countryCodes = [
   { key: 'CY +357', value: 'CY +357', text: '+357 Cyprus' },
   { key: 'MT +356', value: 'MT +356', text: '+356 Malta' },
   { key: 'Other', value: 'Other', text: 'Other' }
-];
+]
 
 const countryCodesToValues = {
   'US +1': '1',
@@ -230,5 +231,5 @@ const countryCodesToValues = {
   'LU +352': '352',
   'CY +357': '357',
   'MT +356': '356',
-  'Other': '',
-};
+  'Other': ''
+}

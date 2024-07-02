@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 import type { Route } from '@/types'
 
@@ -14,12 +14,12 @@ import logout from './logout'
 import check from './check'
 
 const routes: Route[] = [
-    // emailLogin,
-    // emailSignup,
-    authorizeByPhone,
+  // emailLogin,
+  // emailSignup,
+  authorizeByPhone,
 
-    logout,
-    check,
+  logout,
+  check
 ]
 
 export default routes

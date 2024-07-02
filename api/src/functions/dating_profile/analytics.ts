@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 // // Typescript
 // import type { Route } from "@/types"

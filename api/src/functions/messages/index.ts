@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 import type { Route } from '@/types'
 
@@ -12,13 +12,13 @@ import markRead from './markRead'
 import markReceived from './markReceived'
 
 const routes: Route[] = [
-    createMessage,
-    updateMessage,
-    listMessages,
-    deleteMessage,
+  createMessage,
+  updateMessage,
+  listMessages,
+  deleteMessage,
 
-    markRead,
-    markReceived,    
+  markRead,
+  markReceived    
 ]
 
 export default routes

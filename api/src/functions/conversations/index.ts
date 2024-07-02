@@ -1,4 +1,4 @@
-// Copyright © 2023 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 // Typescript
 import type { Route } from '@/types'
@@ -7,7 +7,7 @@ import type { Route } from '@/types'
 import list from './list'
 
 const routes: Route[] = [
-    list,
+  list
 ]
 
 export default routes

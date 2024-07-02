@@ -17,12 +17,12 @@ import urls from '../urls'
 export default function Logout() {
   const [ isFinished, setFinished ] = useState<boolean>(false)
 
-  console.log("Logging out!")
+  console.log('Logging out!')
 
   useEffect(() => {
     Promise.all([
       apiLogout().catch(console.error),
-      shutdown().catch(console.error),
+      shutdown().catch(console.error)
     ]).finally(() => {
       setFinished(true)
     })

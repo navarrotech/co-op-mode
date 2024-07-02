@@ -1,6 +1,6 @@
 // Copyright © 2024 Navarrotech
 
-import { useTranslation } from "react-i18next"
+import { useTranslation } from 'react-i18next'
 
 type Props = {
   title: string

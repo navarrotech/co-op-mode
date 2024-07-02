@@ -1,17 +1,17 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 import type {
-    Request as ExpressRequest,
-    Response as ExpressResponse,
-    NextFunction,
-} from "express"
+  Request as ExpressRequest,
+  Response as ExpressResponse,
+  NextFunction
+} from 'express'
 
-import type { ProtoBufTables, ProtoBufs } from "./lib/protobuf"
-import type { Session } from "express-session"
-import type i18nAPI from "i18n"
-import type { SupportedLanguages } from "./lib/language"
-import type { users } from "@prisma/client"
-import type { AnyObjectSchema } from "yup"
+import type { ProtoBufTables, ProtoBufs } from './lib/protobuf'
+import type { Session } from 'express-session'
+import type i18nAPI from 'i18n'
+import type { SupportedLanguages } from './lib/language'
+import type { users } from '@prisma/client'
+import type { AnyObjectSchema } from 'yup'
 
 //////////////////////////////////////////////////////
 // Utilities
@@ -52,7 +52,7 @@ export type RouteHandler = (request: Request, response: Response, next: NextFunc
 
 export type Route = {
     path: string
-    method?: "all" | "get" | "post" | "put" | "delete" | "patch"
+    method?: 'all' | 'get' | 'post' | 'put' | 'delete' | 'patch'
     inboundStruct: ProtoBufTables | null,
     validator?: AnyObjectSchema
     middlewares?: any[]

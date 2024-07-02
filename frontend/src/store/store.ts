@@ -17,7 +17,7 @@ const store = configureStore({
     core: core.reducer,
     dating: dating.reducer,
     user: user.reducer,
-    messages: messages.reducer,
+    messages: messages.reducer
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

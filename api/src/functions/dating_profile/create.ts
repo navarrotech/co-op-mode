@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 // This should be created upon sign up!
 

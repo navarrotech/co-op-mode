@@ -1,4 +1,4 @@
-// Copyright © 2023 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 // Typescript
 import type { Route } from '@/types'
@@ -21,18 +21,18 @@ import test from './test'
 // import MakeRoutes from './crud'
 
 const routes: Route[] = [
-    ...auth,
-    sync,
+  ...auth,
+  sync,
 
-    ...preferences,
-    ...status,
-    ...account,
-    ...datingProfile,
-    ...messages,
-    ...conversations,
-    ...matching,
+  ...preferences,
+  ...status,
+  ...account,
+  ...datingProfile,
+  ...messages,
+  ...conversations,
+  ...matching,
 
-    test,
+  test
 ]
 
 export default routes

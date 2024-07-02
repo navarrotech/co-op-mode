@@ -1,9 +1,9 @@
 // Copyright © 2024 Navarrotech
 
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
-import type { PayloadAction } from "@reduxjs/toolkit"
-import type { IDatingProfile, IMedia, IStatus } from "../protobuf/schema"
+import type { PayloadAction } from '@reduxjs/toolkit'
+import type { IDatingProfile, IMedia, IStatus } from '../protobuf/schema'
 
 export type State = {
   profile: IDatingProfile | undefined
@@ -38,7 +38,8 @@ const slice = createSlice({
       const index = state.media.findIndex(media => media.id === action.payload.id)
       if (index !== -1) {
         state.media[index] = action.payload
-      } else {
+      }
+      else {
         state.media.push(action.payload)
       }
       return state
@@ -64,7 +65,7 @@ export const {
   setMedia,
   upsertMedia,
   updateMedia,
-  deleteMedia,
+  deleteMedia
 } = slice.actions
 
 export default slice

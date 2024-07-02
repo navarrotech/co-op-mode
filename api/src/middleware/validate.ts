@@ -1,17 +1,17 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 // Typescript
-import { IFormInvalid } from "@/lib/generated/schema"
-import type { Request, Response } from "@/types"
+import { IFormInvalid } from '@/lib/generated/schema'
+import type { Request, Response } from '@/types'
 
 // Constants
-import { defaultLanguage, defaultLanguageJson, type SupportedLanguages } from "@/lib/language"
+import { defaultLanguage, defaultLanguageJson, type SupportedLanguages } from '@/lib/language'
 
 // Utility
-import { languageValidator } from "@/lib/validators"
-import { AnyObjectSchema, ValidationError } from "yup"
-import { startCase } from "lodash"
-import { NODE_ENV } from "@/env"
+import { languageValidator } from '@/lib/validators'
+import { AnyObjectSchema, ValidationError } from 'yup'
+import { startCase } from 'lodash'
+import { NODE_ENV } from '@/env'
 
 type SuccessObject = {
     body: Record<string, any>
@@ -20,113 +20,115 @@ type SuccessObject = {
 
 const languageSchema = languageValidator()
 
-type ValidationErrorTypes = "max" | "min" | "typeError" | "optionality"
+type ValidationErrorTypes = 'max' | 'min' | 'typeError' | 'optionality'
 
 export default async function validateMiddleware(
-    request: Request,
-    response: Response,
-    validator: AnyObjectSchema,
+  request: Request,
+  response: Response,
+  validator: AnyObjectSchema
 ): Promise<null | SuccessObject> {
-    let validatedBody: Record<string, any> = {}
-    if (validator) {
-        try {
-            validatedBody = await validator.validate(
-                { body: request.body, query: request.query, },
-                { abortEarly: false, stripUnknown: true, disableStackTrace: true }
-            )
-        } catch (err: any) {
-            if (err instanceof ValidationError) {
-                const validationError = err as ValidationError
-
-                const payloads: IFormInvalid[] = []
-                for (const error of validationError.inner) {
-                    const key = (error.path?.replace(/((body)|(query))\./gi, '')) ?? ""
-
-                    let value: string = error.params.originalValue || error.value || null
-                    let message = error.message // <-- Default to unlocalized message
-
-                    const type = error.type as ValidationErrorTypes
-                    const what = startCase(key)
-
-                    // If the reason for the error is a bad password
-                    if (key.includes('password')) {
-                        // You can never be too secure!
-                        value = undefined
-                        message = request.__("validator_password")
-                    }
-                    // If the error is because it was too long
-                    else if (type === "max") {
-                        const length = error.params.max as string
-                        message = request.__("validator_long", { what, length })
-                    }
-                    // If the error is because it was too short
-                    else if (type === "min") {
-                        const length = error.params.min as string
-                        message = request.__("validator_short", { what, length })
-                    }
-                    else if (type === "typeError") {
-                        const type = error.params.type as string
-                        message = request.__("validator_type", { what, type })
-                    }
-                    else if (type === "optionality") {
-                        message = request.__("validator_required", { what })
-                    }
-                    else if (type === "oneOf"){
-                        message = request.__("validator_oneof", { what, values: error.params.values as string })
-                    }
-                    else if (type === "matches" && defaultLanguageJson[error.params.message as string]) {
-                        message = request.__(error.params.message as string, { what, type, values: error.params.values as string })
-                    }
-                    else {
-                        console.error("!!!! Unhandled error type, sending unlocalized error message", validationError)
-                    }
-
-                    payloads.push({ key, value, message })
-                }
-
-                if (NODE_ENV === "development") {
-                    console.log("Validation error: ", payloads, request.body)
-                }
-
-                response.status(400)
-                response.sendProto("FormsInvalid", { invalid: payloads })
-
-                return null
-            }
-
-            console.log(err)
-            response.status(500)
-            response.sendProto("ServerError", {
-                message: request.__("generic_error"),
-            })
-
-            return null
-        }
-    }
-
-    let language = request.headers['accept-language'] || defaultLanguage
-
-    // A wee bit hacky, because direct GET requests from Chrome, has headers like "en-US,en;q=0.9" :/ But our app gives those requests as "en" or "fr"
-    // TODO: Should come back and fix this sometime ;)
-    if (language.length > 2) {
-        language = language.slice(0, 2)
-    }
-
+  let validatedBody: Record<string, any> = {}
+  if (validator) {
     try {
-        languageSchema.validateSync(language)
-    } catch (error) {
-        if (error instanceof ValidationError) {
-            if (error.type === "oneOf" && error) {
-                // Do nothing
-            }
-        }
-        else {
-            console.error("Unknown language validation error", error)
-        }
-        language = defaultLanguage
+      validatedBody = await validator.validate(
+        { body: request.body, query: request.query },
+        { abortEarly: false, stripUnknown: true, disableStackTrace: true }
+      )
     }
+    catch (err: any) {
+      if (err instanceof ValidationError) {
+        const validationError = err as ValidationError
 
-    request.language = language as SupportedLanguages
+        const payloads: IFormInvalid[] = []
+        for (const error of validationError.inner) {
+          const key = (error.path?.replace(/((body)|(query))\./gi, '')) ?? ''
 
-    return validatedBody as SuccessObject
+          let value: string = error.params.originalValue || error.value || null
+          let message = error.message // <-- Default to unlocalized message
+
+          const type = error.type as ValidationErrorTypes
+          const what = startCase(key)
+
+          // If the reason for the error is a bad password
+          if (key.includes('password')) {
+            // You can never be too secure!
+            value = undefined
+            message = request.__('validator_password')
+          }
+          // If the error is because it was too long
+          else if (type === 'max') {
+            const length = error.params.max as string
+            message = request.__('validator_long', { what, length })
+          }
+          // If the error is because it was too short
+          else if (type === 'min') {
+            const length = error.params.min as string
+            message = request.__('validator_short', { what, length })
+          }
+          else if (type === 'typeError') {
+            const type = error.params.type as string
+            message = request.__('validator_type', { what, type })
+          }
+          else if (type === 'optionality') {
+            message = request.__('validator_required', { what })
+          }
+          else if (type === 'oneOf'){
+            message = request.__('validator_oneof', { what, values: error.params.values as string })
+          }
+          else if (type === 'matches' && defaultLanguageJson[error.params.message as string]) {
+            message = request.__(error.params.message as string, { what, type, values: error.params.values as string })
+          }
+          else {
+            console.error('!!!! Unhandled error type, sending unlocalized error message', validationError)
+          }
+
+          payloads.push({ key, value, message })
+        }
+
+        if (NODE_ENV === 'development') {
+          console.log('Validation error: ', payloads, request.body)
+        }
+
+        response.status(400)
+        response.sendProto('FormsInvalid', { invalid: payloads })
+
+        return null
+      }
+
+      console.log(err)
+      response.status(500)
+      response.sendProto('ServerError', {
+        message: request.__('generic_error')
+      })
+
+      return null
+    }
+  }
+
+  let language = request.headers['accept-language'] || defaultLanguage
+
+  // A wee bit hacky, because direct GET requests from Chrome, has headers like "en-US,en;q=0.9" :/ But our app gives those requests as "en" or "fr"
+  // TODO: Should come back and fix this sometime ;)
+  if (language.length > 2) {
+    language = language.slice(0, 2)
+  }
+
+  try {
+    languageSchema.validateSync(language)
+  }
+  catch (error) {
+    if (error instanceof ValidationError) {
+      if (error.type === 'oneOf' && error) {
+        // Do nothing
+      }
+    }
+    else {
+      console.error('Unknown language validation error', error)
+    }
+    language = defaultLanguage
+  }
+
+  request.language = language as SupportedLanguages
+
+  return validatedBody as SuccessObject
 }

@@ -20,19 +20,19 @@ export default function BuilderTemplate({ title, onNext, nextText, errors, disab
 
   useEffect(() => {
     const keyListener = (e: KeyboardEvent) => {
-      if (e.key === "Enter") {
+      if (e.key === 'Enter') {
         onNext()
       }
     }
-    document.addEventListener("keydown", keyListener)
+    document.addEventListener('keydown', keyListener)
     return () => {
-      document.removeEventListener("keydown", keyListener)
+      document.removeEventListener('keydown', keyListener)
     }
   }, [])
 
   return <section className="section is-stacked">
     <figure className="block image is-64x64 is-centered">
-        <img src="/logo.png" alt="Co-Op Mode" />
+      <img src="/logo.png" alt="Co-Op Mode" />
     </figure>
     <div className="block has-text-centered has-text-pretty">
       <h1 className="title is-size-4">{ title }</h1>
@@ -52,8 +52,8 @@ export default function BuilderTemplate({ title, onNext, nextText, errors, disab
         disabled={disabled}
         onClick={onNext}
       >{
-        nextText
-      }</Button>
+          nextText
+        }</Button>
     </div>
   </section>
 }

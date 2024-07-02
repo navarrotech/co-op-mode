@@ -1,9 +1,9 @@
 // Copyright © 2024 Navarrotech
 
 import {
-    type TypedUseSelectorHook,
-    useDispatch as useDefaultDispatch,
-    useSelector as useDefaultSelector
+  type TypedUseSelectorHook,
+  useDispatch as useDefaultDispatch,
+  useSelector as useDefaultSelector
 } from 'react-redux'
 import type { RootState, AppDispatch } from './store'
 

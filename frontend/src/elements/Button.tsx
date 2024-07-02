@@ -4,8 +4,8 @@
 // https://bulma.io/documentation/elements/button/
 
 // Typescript
-import type { ReactNode } from "react";
-import type { BulmaColor } from "@/common/Colors";
+import type { ReactNode } from 'react'
+import type { BulmaColor } from '@/common/Colors'
 
 type Props = {
     primary?: boolean
@@ -30,60 +30,60 @@ type Props = {
 } & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 export default function Button(props: Props){
-    const {
-        primary,
-        secondary,
-        ghost,
-        warning,
-        error,
-        success,
-        info,
-        link,
-        dark,
-        light,
+  const {
+    primary,
+    secondary,
+    ghost,
+    warning,
+    error,
+    success,
+    info,
+    link,
+    dark,
+    light,
 
-        inverted,
+    inverted,
         
-        className,
-        children,
-        disabled,
-        loading,
-        color,
-        fullwidth,
-        ...rest
-    } = props
+    className,
+    children,
+    disabled,
+    loading,
+    color,
+    fullwidth,
+    ...rest
+  } = props
 
-    const statusClasses = [
-        primary && 'is-primary',
-        secondary && 'is-secondary',
-        warning && 'is-warning',
-        error && 'is-error',
-        success && 'is-success',
-        info && 'is-info',
-        link && 'is-link',
+  const statusClasses = [
+    primary && 'is-primary',
+    secondary && 'is-secondary',
+    warning && 'is-warning',
+    error && 'is-error',
+    success && 'is-success',
+    info && 'is-info',
+    link && 'is-link',
 
-        inverted && 'is-inverted', 
+    inverted && 'is-inverted', 
         
-        ghost && 'is-ghost',
-        disabled && 'is-disabled',
-        loading && 'is-loading',
-        dark && 'is-dark',
-        light && 'is-light',
-    ].filter(Boolean).join(' ');
+    ghost && 'is-ghost',
+    disabled && 'is-disabled',
+    loading && 'is-loading',
+    dark && 'is-dark',
+    light && 'is-light'
+  ].filter(Boolean).join(' ')
 
-    const colorClass = color ? `is-${color}` : '';
-    const sizeClass = fullwidth ? 'is-fullwidth' : '';
+  const colorClass = color ? `is-${color}` : ''
+  const sizeClass = fullwidth ? 'is-fullwidth' : ''
 
-    const classes = `button ${className || ''} ${statusClasses} ${colorClass} ${sizeClass}`.trim();
+  const classes = `button ${className || ''} ${statusClasses} ${colorClass} ${sizeClass}`.trim()
 
-    return (
-        <button
-            type="button"
-            className={classes}
-            disabled={disabled || loading}
-            {...rest}
-        >
-            {children}
-        </button>
-    );
+  return (
+    <button
+      type="button"
+      className={classes}
+      disabled={disabled || loading}
+      {...rest}
+    >
+      {children}
+    </button>
+  )
 }

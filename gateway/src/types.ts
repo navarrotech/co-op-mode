@@ -1,3 +1,3 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
-export type ChangeType = "CREATE" | "UPDATE" | "DELETE"
+export type ChangeType = 'CREATE' | 'UPDATE' | 'DELETE'

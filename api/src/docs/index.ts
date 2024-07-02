@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 // This file does not get imported by the rest of the API ecosystem.
 // It is called specifically from package.json to auto-generate the documentation.
@@ -7,7 +7,7 @@
 // Meant only for development use, NOT FOR PRODUCTION
 
 // Types
-import type { Schema, SchemaObjectDescription } from 'yup'
+import type { SchemaObjectDescription } from 'yup'
 
 // Routes
 import routes from '@/functions'
@@ -35,7 +35,7 @@ async function generate(){
     ...route,
     // @ts-ignore
     id: route.path.replaceAll('/', '-'),
-    method: (route.method || "post").toUpperCase(),
+    method: (route.method || 'post').toUpperCase(),
     jsonSchema: JSON.stringify(
       filterDescribedSchema(
         route.validator?.describe()
@@ -52,7 +52,7 @@ async function generate(){
       routes: routesWithInfo,
       protobufs: ProtoBufs,
       // img: LOGO_IMG_URL,
-      img: "https://navarrotech.com/img/logo.png",
+      img: 'https://navarrotech.com/img/logo.png'
     }
   )
 
@@ -63,7 +63,7 @@ async function generate(){
     removeTagWhitespace: true,
     collapseWhitespace: true,
     collapseInlineTagWhitespace: true,
-    removeEmptyAttributes: true,
+    removeEmptyAttributes: true
   })
 
   fs.mkdirSync(
@@ -79,52 +79,52 @@ async function generate(){
 function filterDescribedSchema(schema: SchemaObjectDescription | undefined, firstSchema = true){
   const newSchema: Record<string, any> = {}
 
-  if(schema === undefined){
+  if (schema === undefined){
     return newSchema
   }
-  if(!firstSchema){
-    if(schema.meta !== undefined){
+  if (!firstSchema){
+    if (schema.meta !== undefined){
       newSchema.meta = schema.meta
     }
-    if(schema.label !== undefined){
+    if (schema.label !== undefined){
       newSchema.label = schema.label
     }
-    if(schema.oneOf.length){
+    if (schema.oneOf.length){
       newSchema.oneOf = schema.oneOf
     }
-    if(schema.notOneOf.length){
+    if (schema.notOneOf.length){
       newSchema.notOneOf = schema.notOneOf
     }
-    if(schema.tests.length){
+    if (schema.tests.length){
       schema.tests.forEach(test => {
-        if(test.name === "required"){
+        if (test.name === 'required'){
           newSchema.required = true
         }
-        else if(test.name === "min"){
+        else if (test.name === 'min'){
           newSchema.minLength = test.params?.min
         }
-        else if(test.name === "max"){
+        else if (test.name === 'max'){
           newSchema.maxLength = test.params?.max
         }
-        else if(test.name === "email"){
+        else if (test.name === 'email'){
           newSchema.email = true
         }
       })
     }
-    if(typeof schema.default === "object" && schema.default !== null){
+    if (typeof schema.default === 'object' && schema.default !== null){
       // Remove all undefined values from defaults
       const newDefaults: any = {}
       let hasSome = false
       // @ts-ignore
-      for(const key in schema.default){
+      for (const key in schema.default){
         // @ts-ignore
-        if(schema.default[key] !== undefined){
+        if (schema.default[key] !== undefined){
           // @ts-ignore
           newDefaults[key] = schema.default[key]
           hasSome = true
         }
       }
-      if(hasSome){
+      if (hasSome){
         newSchema.default = newDefaults
       }
     }
@@ -135,13 +135,13 @@ function filterDescribedSchema(schema: SchemaObjectDescription | undefined, firs
   }
 
   const fields = Object.entries(schema.fields || {})
-  if(fields.length){
+  if (fields.length){
     newSchema.fields = {}
-    for(const [key, value] of fields){
+    for (const [ key, value ] of fields){
       // @ts-ignore
       newSchema.fields[key] = filterDescribedSchema(value, false)
     }
-    if(firstSchema){
+    if (firstSchema){
       return newSchema.fields
     }
   }
@@ -165,7 +165,7 @@ function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
 
   const lines = stringified.split('\n')
   for (let index = 0; index < lines.length; index++) {
-    const line = lines[index] || ""
+    const line = lines[index] || ''
 
     if (index + 1 >= lines.length) {
       break
@@ -179,24 +179,26 @@ function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
     const status = line.match(/(?:response|res)\.(?:status|sendStatus)\((\d+)\)/)?.[1]
 
     if (status === undefined) {
-      console.warn("Found no status code in static code analysis of line for route: ", url, line)
+      console.warn('Found no status code in static code analysis of line for route: ', url, line)
       continue
     }
 
-    let color = "warning"
-    if (status.startsWith("2")) {
-      color = "success"
-    } else if (status.startsWith("4")) {
-      color = "danger"
-    } else if (status.startsWith("5")) {
-      color = "link"
+    let color = 'warning'
+    if (status.startsWith('2')) {
+      color = 'success'
+    }
+    else if (status.startsWith('4')) {
+      color = 'danger'
+    }
+    else if (status.startsWith('5')) {
+      color = 'link'
     }
   
     const nextLineIsSend = lines[index + 1]?.includes('response.sendProto')
     if (!nextLineIsSend) {
       results.push({
         code: parseInt(status),
-        protobuf: "-- No Payload Response --",
+        protobuf: '-- No Payload Response --',
         color
       })
     }
@@ -204,7 +206,7 @@ function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
     const proto = lines[index + 1].match(/response\.sendProto\("(\w+)",/)?.[1]
 
     if (proto === undefined) {
-      console.warn("Found no proto in static code analysis of line for route: ", url, lines[index + 1])
+      console.warn('Found no proto in static code analysis of line for route: ', url, lines[index + 1])
       continue
     }
     results.push({
@@ -215,7 +217,7 @@ function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
   }
 
   if (!results){
-    console.warn("Found no responses in static code analysis for route: ", url)
+    console.warn('Found no responses in static code analysis for route: ', url)
   }
 
   // Filter duplicates if code and protobuf match

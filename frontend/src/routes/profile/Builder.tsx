@@ -30,7 +30,7 @@ import Meme from '@/elements/Meme'
 import UploadMedia from './UploadMedia'
 
 // Misc
-import memeStyles from "@/elements/Meme.module.sass"
+import memeStyles from '@/elements/Meme.module.sass'
 import Confirm from '@/elements/Confirm'
 
 export default function ProfileBuilder() {
@@ -39,7 +39,7 @@ export default function ProfileBuilder() {
   const [ firstNameMeme, setFirstNameMeme ] = useState<boolean>(true)
   const [ lastNameMeme, setLastNameMeme ] = useState<boolean>(true)
   const [ errors, setErrors ] = useState<FormInvalid>([])
-  const [ draft, setDraft ] = useState<string>("")
+  const [ draft, setDraft ] = useState<string>('')
   const [ draftArr, setDraftArr ] = useState<string[]>([])
   const [ confirm, setConfirm ] = useState<boolean>(false)
   const user = useSelector(state => state.user.current)!
@@ -47,7 +47,7 @@ export default function ProfileBuilder() {
 
   if (!user.first_name) {
     if (firstNameMeme){
-      console.log(`First name not found, setting meme to be shown`)
+      console.log('First name not found, setting meme to be shown')
       setFirstNameMeme(false)
       return <></>
     }
@@ -66,13 +66,13 @@ export default function ProfileBuilder() {
             )
           }
           setErrors([])
-          setDraft("")
+          setDraft('')
         }
-        if (struct === "FormsInvalid") {
+        if (struct === 'FormsInvalid') {
           setErrors(data.invalid)
         }
         if (data?.message) {
-          setErrors([data.message])
+          setErrors([ data.message ])
         }
       }}
     >
@@ -113,7 +113,7 @@ export default function ProfileBuilder() {
 
   if (!user.last_name) {
     if (lastNameMeme) {
-      console.log(`Last name not found, setting meme to be shown`)
+      console.log('Last name not found, setting meme to be shown')
       setLastNameMeme(false)
       return <></>
     }
@@ -132,13 +132,13 @@ export default function ProfileBuilder() {
             )
           }
           setErrors([])
-          setDraft("")
+          setDraft('')
         }
-        if (struct === "FormsInvalid") {
+        if (struct === 'FormsInvalid') {
           setErrors(data.invalid)
         }
         if (data?.message) {
-          setErrors([data.message])
+          setErrors([ data.message ])
         }
       }}
     >
@@ -165,7 +165,7 @@ export default function ProfileBuilder() {
 
   if (!lastNameMeme) {
     return <BuilderTemplate
-      title={t('excellent') + "."}
+      title={t('excellent') + '.'}
       nextText={t('excellent')}
       errors={errors}
       onNext={() => {
@@ -194,11 +194,11 @@ export default function ProfileBuilder() {
         const { status, struct, data } = await updateDatingProfile({
           gender: draft
         })
-        if (status === 200 && struct === "DatingProfile") {
+        if (status === 200 && struct === 'DatingProfile') {
           dispatch(
             setProfile(data)
           )
-          setDraft("")
+          setDraft('')
         }
       }}
     >
@@ -207,8 +207,8 @@ export default function ProfileBuilder() {
           info
           fullwidth
           className='is-logo'
-          inverted={draft !== "Male"}
-          onClick={() => setDraft("Male")}
+          inverted={draft !== 'Male'}
+          onClick={() => setDraft('Male')}
         >
           <span className="icon">
             <FontAwesomeIcon icon={faMars} />
@@ -219,8 +219,8 @@ export default function ProfileBuilder() {
           info
           fullwidth
           className='is-logo'
-          inverted={draft !== "Female"}
-          onClick={() => setDraft("Female")}
+          inverted={draft !== 'Female'}
+          onClick={() => setDraft('Female')}
         >
           <span className="icon">
             <FontAwesomeIcon icon={faVenus} />
@@ -231,8 +231,8 @@ export default function ProfileBuilder() {
           info
           fullwidth
           className='is-logo'
-          inverted={draft !== "NonBinary"}
-          onClick={() => setDraft("NonBinary")}
+          inverted={draft !== 'NonBinary'}
+          onClick={() => setDraft('NonBinary')}
         >
           <span className="icon">
             <FontAwesomeIcon icon={faPlus} />
@@ -256,11 +256,11 @@ export default function ProfileBuilder() {
         const { status, struct, data } = await updateDatingProfile({
           wanting: draftArr
         })
-        if (status === 200 && struct === "DatingProfile") {
+        if (status === 200 && struct === 'DatingProfile') {
           dispatch(
             setProfile(data)
           )
-          setDraft("")
+          setDraft('')
           setDraftArr([])
         }
       }}
@@ -270,10 +270,10 @@ export default function ProfileBuilder() {
           info
           fullwidth
           className='is-logo'
-          inverted={!draftArr.includes("Male")}
-          onClick={() => draftArr.includes("Male")
-            ? setDraftArr(draftArr.filter(gender => gender !== "Male"))
-            : setDraftArr([ ...draftArr, "Male" ])
+          inverted={!draftArr.includes('Male')}
+          onClick={() => draftArr.includes('Male')
+            ? setDraftArr(draftArr.filter(gender => gender !== 'Male'))
+            : setDraftArr([ ...draftArr, 'Male' ])
           }
         >
           <span className="icon">
@@ -285,10 +285,10 @@ export default function ProfileBuilder() {
           info
           fullwidth
           className='is-logo'
-          inverted={!draftArr.includes("Female")}
-          onClick={() => draftArr.includes("Female")
-            ? setDraftArr(draftArr.filter(gender => gender !== "Female"))
-            : setDraftArr([ ...draftArr, "Female" ])
+          inverted={!draftArr.includes('Female')}
+          onClick={() => draftArr.includes('Female')
+            ? setDraftArr(draftArr.filter(gender => gender !== 'Female'))
+            : setDraftArr([ ...draftArr, 'Female' ])
           }
         >
           <span className="icon">
@@ -300,10 +300,10 @@ export default function ProfileBuilder() {
           info
           fullwidth
           className='is-logo'
-          inverted={!draftArr.includes("NonBinary")}
-          onClick={() => draftArr.includes("NonBinary")
-            ? setDraftArr(draftArr.filter(gender => gender !== "NonBinary"))
-            : setDraftArr([ ...draftArr, "NonBinary" ])
+          inverted={!draftArr.includes('NonBinary')}
+          onClick={() => draftArr.includes('NonBinary')
+            ? setDraftArr(draftArr.filter(gender => gender !== 'NonBinary'))
+            : setDraftArr([ ...draftArr, 'NonBinary' ])
           }
         >
           <span className="icon">
@@ -324,11 +324,11 @@ export default function ProfileBuilder() {
           const { status, struct, data } = await updateDatingProfile({
             birthday: draft
           })
-          if (status === 200 && struct === "DatingProfile") {
+          if (status === 200 && struct === 'DatingProfile') {
             dispatch(
               setProfile(data)
             )
-            setDraft("")
+            setDraft('')
             setConfirm(false)
           }
         }}
@@ -346,7 +346,7 @@ export default function ProfileBuilder() {
       errors={errors}
       onNext={async () => {
         if (!draft) {
-          console.log(`Draft is empty, returning`)
+          console.log('Draft is empty, returning')
           return
         }
         setConfirm(true)
@@ -379,7 +379,7 @@ export default function ProfileBuilder() {
   // TODO: Check if we can access location
 
 
-  console.log("Profile building complete, redirecting to app")
+  console.log('Profile building complete, redirecting to app')
 
   return <Navigate to={urls.app} />
 }

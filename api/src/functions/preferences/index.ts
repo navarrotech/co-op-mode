@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 import type { Route } from '@/types'
 
@@ -7,7 +7,7 @@ import update from './update'
 
 
 const routes: Route[] = [
-    update
+  update
 ]
 
 export default routes

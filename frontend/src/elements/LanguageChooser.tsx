@@ -1,14 +1,14 @@
 // Copyright © 2024 Navarrotech
 
-import { dispatch, useSelector } from "@/store"
-import { languageLocalizedRecord, languageToFlag, supportedLanguages } from "@/modules/language"
-import { faGlobeAmericas } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import AdvancedSelect from "./AdvancedSelect"
-import { setLanguage } from "@/modules/core/reducer"
-import { useTranslation } from "react-i18next"
-import { updatePreferences } from "@/modules/generated/routes"
-import { setPreferences } from "@/modules/auth/reducer"
+import { dispatch, useSelector } from '@/store'
+import { languageLocalizedRecord, languageToFlag, supportedLanguages } from '@/modules/language'
+import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import AdvancedSelect from './AdvancedSelect'
+import { setLanguage } from '@/modules/core/reducer'
+import { useTranslation } from 'react-i18next'
+import { updatePreferences } from '@/modules/generated/routes'
+import { setPreferences } from '@/modules/auth/reducer'
 
 export default function LanguageChooser() {
   const authorized = useSelector(state => state.user.authorized)
@@ -25,14 +25,14 @@ export default function LanguageChooser() {
         updatePreferences({
           language: value
         })
-        .then(({ data, status, struct }) => {
-          if (status === 200 && struct === "Preferences") {
-            dispatch(
-              setPreferences(data)
-            )
-          }
-        })
-        .catch(console.error)
+          .then(({ data, status, struct }) => {
+            if (status === 200 && struct === 'Preferences') {
+              dispatch(
+                setPreferences(data)
+              )
+            }
+          })
+          .catch(console.error)
       }
     }}
     options={

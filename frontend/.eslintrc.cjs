@@ -51,9 +51,11 @@ module.exports = {
     // Enforce no comma dangling https://eslint.org/docs/latest/rules/comma-dangle
     'comma-dangle': ['error', 'never'],
     // Camel case! https://eslint.org/docs/latest/rules/camelcase
-    camelcase: 'warn',
+    camelcase: 'off',
     // No unused vars https://eslint.org/docs/latest/rules/no-unused-vars
-    'no-unused-vars': 'warn',
+    "no-unused-vars": "off",
+    // https://stackoverflow.com/a/61555310/9951599
+    "@typescript-eslint/no-unused-vars": ["error"],
     // No useless escape https://eslint.org/docs/latest/rules/no-useless-escape
     'no-useless-escape': 'error',
     // Disable vars https://eslint.org/docs/latest/rules/no-var
@@ -91,6 +93,11 @@ module.exports = {
     ],
 
     //////////////////////////////////////////
+    // Bad practices by Alex :)
+
+    'react-refresh/only-export-components': 'off',
+
+    //////////////////////////////////////////
     // Best practices
 
     // Disable no console https://eslint.org/docs/latest/rules/no-console
@@ -101,8 +108,8 @@ module.exports = {
     // We should be enforcing a copyright header on all files
     'header/header': ['error', 'line', [
       {
-        pattern: 'Copyright © \\d{4} Navarrotech.',
-        template: 'Copyright © 2024 Navarrotech.'
+        pattern: 'Copyright © \\d{4} Navarrotech',
+        template: 'Copyright © 2024 Navarrotech'
       }
     ]],
   },

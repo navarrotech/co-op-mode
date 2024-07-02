@@ -1,23 +1,23 @@
 // Copyright © 2024 Navarrotech
 
 // React.js & Router
-import { Navigate, Routes, Route } from "react-router"
-import { BrowserRouter } from "react-router-dom";
+import { Navigate, Routes, Route } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
 
 // Outlets
-import { AuthorizedOutlet } from "@/routes/authentication/Outlet";
+import { AuthorizedOutlet } from '@/routes/authentication/Outlet'
 
 // Constants
-import urls from "./urls";
+import urls from './urls'
 
 // Pages
-import Welcome from "./authentication/Welcome";
-import WithPhoneNumber from "./authentication/WithPhoneNumber";
-import DashboardLayout from "./dashboard/Layout";
-import VerifyPhoneNumber from "./authentication/VerifyPhoneNumber";
-import ProfileBuilder from "./profile/Builder";
-import Logout from "./authentication/Logout";
-import { ProfileCompletionOutlet } from "./profile/hooks";
+import Welcome from './authentication/Welcome'
+import WithPhoneNumber from './authentication/WithPhoneNumber'
+import DashboardLayout from './dashboard/Layout'
+import VerifyPhoneNumber from './authentication/VerifyPhoneNumber'
+import ProfileBuilder from './profile/Builder'
+import Logout from './authentication/Logout'
+import { ProfileCompletionOutlet } from './profile/hooks'
 
 /*
  * Homepage and marketing should be in a separate repository!

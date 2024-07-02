@@ -1,14 +1,14 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
-import cleanupStatuses from "./status"
+import cleanupStatuses from './status'
 
 export default async function initRoutes() {
-    cleanupStatuses()
+  cleanupStatuses()
     
-    setInterval(
-        () => cleanupStatuses(),
-        1_000 * 60 * 5 // 5 minutes
-    )
+  setInterval(
+    () => cleanupStatuses(),
+    1_000 * 60 * 5 // 5 minutes
+  )
 
-    console.log("[PASS] Routines started up")
+  console.log('[PASS] Routines started up')
 }

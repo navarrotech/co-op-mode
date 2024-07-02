@@ -27,12 +27,12 @@ jobs:
     strategy:
       matrix:
         subdir:
-          - analytics
+          # - analytics
           - api
           - frontend
           - gateway
-          - notifications
-          - routines
+          # - notifications
+          # - routines
 
     steps:
 

@@ -1,9 +1,9 @@
 // Copyright © 2024 Navarrotech
 
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
-import type { PayloadAction } from "@reduxjs/toolkit"
-import type { IMessages, IConversations } from "../protobuf/schema"
+import type { PayloadAction } from '@reduxjs/toolkit'
+import type { IMessages, IConversations } from '../protobuf/schema'
 
 export type State = {
   last100UnreadMessages: IMessages[],
@@ -12,7 +12,7 @@ export type State = {
 
 const initialState: State = {
   last100UnreadMessages: [],
-  conversations: [],
+  conversations: []
 }
 
 const slice = createSlice({
@@ -27,7 +27,8 @@ const slice = createSlice({
       const index = state.last100UnreadMessages.findIndex(message => message.id === action.payload.id)
       if (index !== -1) {
         state.last100UnreadMessages[index] = action.payload
-      } else {
+      }
+      else {
         state.last100UnreadMessages.push(action.payload)
       }
       return state
@@ -52,7 +53,8 @@ const slice = createSlice({
       const index = state.conversations.findIndex(conversation => conversation.id === action.payload.id)
       if (index !== -1) {
         state.conversations[index] = action.payload
-      } else {
+      }
+      else {
         state.conversations.push(action.payload)
       }
       return state
@@ -67,7 +69,7 @@ const slice = createSlice({
     deleteConversation(state, action: PayloadAction<IConversations>) {
       state.conversations = state.conversations.filter(conversation => conversation.id !== action.payload.id)
       return state
-    },
+    }
   }
 })
 
@@ -80,7 +82,7 @@ export const {
   setConversations,
   upsertConversation,
   updateConversation,
-  deleteConversation,
+  deleteConversation
 } = slice.actions
 
 export default slice

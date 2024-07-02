@@ -1,4 +1,4 @@
-// Copyright © 2024 Navarrotech
+//Copyright © 2024 Navarrotech.
 
 // Typescript
 import type { Route } from '@/types'
@@ -8,8 +8,8 @@ import deleteAccount from './delete'
 import updateAccount from './update'
 
 const routes: Route[] = [
-    deleteAccount,
-    updateAccount,
+  deleteAccount,
+  updateAccount
 ]
 
 export default routes

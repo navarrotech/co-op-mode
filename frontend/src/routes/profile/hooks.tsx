@@ -1,19 +1,19 @@
 // Copyright © 2024 Navarrotech
 
 // React.js
-import { useEffect } from "react"
-import { Outlet, useNavigate } from "react-router"
+import { useEffect } from 'react'
+import { Outlet, useNavigate } from 'react-router'
 
 // Redux
-import { useSelector } from "@/store"
+import { useSelector } from '@/store'
 
 // Utility
-import urls from "../urls"
-import { isProfileComplete } from "./Builder"
+import urls from '../urls'
+import { isProfileComplete } from './Builder'
 
 // Components
-import Topbar from "@/routes/dashboard/Topbar"
-import NavBar from "../dashboard/NavBar"
+import Topbar from '@/routes/dashboard/Topbar'
+import NavBar from '../dashboard/NavBar'
 
 export function ProfileCompletionOutlet() {
   const user = useSelector(state => state.user.current)
@@ -22,7 +22,7 @@ export function ProfileCompletionOutlet() {
 
   useEffect(() => {
     if (!user || !datingProfile) {
-      console.log("Redirecting to welcome: There is no user or dating profile data")
+      console.log('Redirecting to welcome: There is no user or dating profile data')
       navigate(urls.welcome)
       return
     }

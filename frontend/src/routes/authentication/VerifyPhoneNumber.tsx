@@ -25,31 +25,31 @@ export default function VerifyPhoneNumber() {
   const phoneNumber = useSelector(state => state.user.current?.phone)
   const navigate = useNavigate()
 
-  const [ error, setError ] = useState<string>("")
-  const [ code, setCode ] = useState<string>("")
+  const [ error, setError ] = useState<string>('')
+  const [ code, setCode ] = useState<string>('')
   const [ isLoading, setIsLoading ] = useState<boolean>(false)
 
   const { t } = useTranslation()
-  let isValid = code.length === 6
+  const isValid = code.length === 6
 
   async function submit() {
     if (!isValid || isLoading || !phoneNumber) {
       return
     }
 
-    setError("")
+    setError('')
     setIsLoading(true)
 
     const { data, struct, status } = await authorizeByPhone({
       phone: phoneNumber,
-      OTP: code,
+      OTP: code
     })
 
     setIsLoading(false)
 
     // Handle success
     if (status === 200 && data?.authorized === true) {
-      const user = struct === "AuthResponse" ? data?.user : {}
+      const user = struct === 'AuthResponse' ? data?.user : {}
       dispatch(
         setUser(user)
       )
@@ -173,7 +173,7 @@ function ResendCode() {
     }
 
     await authorizeByPhone({
-      phone: phoneNumber,
+      phone: phoneNumber
     })
   }
   

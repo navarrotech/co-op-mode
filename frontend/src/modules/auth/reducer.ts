@@ -1,9 +1,9 @@
 // Copyright © 2024 Navarrotech
 
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice } from '@reduxjs/toolkit'
 
-import type { PayloadAction } from "@reduxjs/toolkit"
-import type { IPreferences, IUser, IDailyLimits, IMonthlyLimits, IPermanentLimits } from "../protobuf/schema"
+import type { PayloadAction } from '@reduxjs/toolkit'
+import type { IPreferences, IUser, IDailyLimits, IMonthlyLimits, IPermanentLimits } from '../protobuf/schema'
 
 export type State = {
   current: IUser | undefined
@@ -26,8 +26,8 @@ const initialState: State = {
   limits: {
     daily: undefined,
     monthly: undefined,
-    permanent: undefined,
-  },
+    permanent: undefined
+  }
 }
 
 const slice = createSlice({
@@ -42,24 +42,24 @@ const slice = createSlice({
         // @ts-ignore
         state.preferences = action.payload.preferences
       }
-      return state;
+      return state
     },
     setPreferences: (state, action: PayloadAction<IPreferences>) => {
       state.preferences = action.payload
-      return state;
+      return state
     },
 
     setDailyLimits: (state, action: PayloadAction<IDailyLimits>) => {
       state.limits.daily = action.payload
-      return state;
+      return state
     },
     setMonthlyLimits: (state, action: PayloadAction<IMonthlyLimits>) => {
       state.limits.monthly = action.payload
-      return state;
+      return state
     },
     setPermanentLimits: (state, action: PayloadAction<IPermanentLimits>) => {
       state.limits.permanent = action.payload
-      return state;
+      return state
     },
 
     logout: (state) => {
@@ -68,11 +68,11 @@ const slice = createSlice({
         authorized: false,
         loading: false
       }
-      return state;
+      return state
     },
     finishInit: (state) => {
       state.loading = false
-    },
+    }
   }
 })
 
@@ -85,7 +85,7 @@ export const {
   setPermanentLimits,
 
   logout,
-  finishInit,
+  finishInit
 } = slice.actions
 
 export default slice
