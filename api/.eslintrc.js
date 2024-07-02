@@ -94,8 +94,8 @@ module.exports = {
     // We should be enforcing a copyright header on all files
     'header/header': ['error', 'line', [
       {
-        pattern: 'Copyright © \\d{4} Navarrotech.',
-        template: 'Copyright © 2024 Navarrotech.'
+        pattern: 'Copyright © \\d{4} Navarrotech',
+        template: 'Copyright © 2024 Navarrotech'
       }
     ]],
   },
