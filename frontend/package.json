@@ -11,6 +11,8 @@
     "proto": "pbjs -t static-module --es6 --keep-case -w es6 -o ./src/modules/protobuf/schema.js ../schema.proto && pbts -o ./src/modules/protobuf/schema.d.ts ./src/modules/protobuf/schema.js",
     "deploy:production": "firebase deploy",
     "deploy:staging": "firebase hosting:channel:deploy staging",
+    "test": "vitest run --dom --coverage",
+    "test:dev": "DEBUG_PRINT_LIMIT=100000 vites watch --ui --dom --coverage.enabled=true",
     "analyze": "vite-bundle-analyzer"
   },
   "dependencies": {
@@ -24,6 +26,7 @@
     "bulma-divider": "^0.2.0",
     "country-flag-icons": "^1.5.12",
     "firebase": "^10.12.2",
+    "happy-dom": "^14.12.3",
     "i18next": "^23.11.5",
     "i18next-browser-languagedetector": "^8.0.0",
     "i18next-http-backend": "^2.5.2",
@@ -39,6 +42,7 @@
     "redux": "^5.0.1",
     "sass": "^1.77.4",
     "socket.io-client": "^4.7.5",
+    "vitest": "^1.6.0",
     "yup": "^1.4.0"
   },
   "devDependencies": {
@@ -50,6 +54,7 @@
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
+    "@vitest/coverage-v8": "^1.6.0",
     "eslint": "^8.57.0",
     "eslint-plugin-header": "^3.1.1",
     "eslint-plugin-react-hooks": "^4.6.2",

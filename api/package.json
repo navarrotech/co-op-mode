@@ -14,8 +14,10 @@
     "dev": "yarn install && nodemon --legacy-watch --exec 'ts-node -r tsconfig-paths/register' ./index.ts",
     "proto": "pbjs -t static-module --keep-case -w commonjs -o ./src/lib/generated/schema.js ../schema.proto && pbts -o ./src/lib/generated/schema.d.ts ./src/lib/generated/schema.js",
     "docs": "ts-node --project tsconfig.json -r tsconfig-paths/register src/docs/index.ts",
-    "frontend_api": "ts-node --project tsconfig.json -r tsconfig-paths/register src/scripts/generate_api_routes.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "vitest run --coverage",
+    "test:dev": "DEBUG_PRINT_LIMIT=100000 vites watch --ui --coverage.enabled=true",
+    "frontend_api": "ts-node --project tsconfig.json -r tsconfig-paths/register src/scripts/generate_api_routes.ts",
     "frontend_api:dev": "nodemon --legacy-watch --exec 'ts-node --project tsconfig.json -r tsconfig-paths/register' src/scripts/generate_api_routes.ts"
   },
   "_moduleAliases": {
@@ -63,6 +65,7 @@
     "@types/uuid": "^9.0.7",
     "@typescript-eslint/eslint-plugin": "^7.15.0",
     "@typescript-eslint/parser": "^7.15.0",
+    "@vitest/coverage-v8": "^1.6.0",
     "eslint": "^8.57.0",
     "eslint-plugin-header": "^3.1.1",
     "html-minifier": "^4.0.0",
@@ -72,6 +75,7 @@
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "type-fest": "^4.8.3",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.2",
+    "vitest": "^1.6.0"
   }
 }
