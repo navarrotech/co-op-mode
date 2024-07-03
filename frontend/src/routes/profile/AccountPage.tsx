@@ -1,8 +1,8 @@
 // Copyright © 2024 Navarrotech
 
-import { useState, useEffect } from 'react'
+// import { useState, useEffect } from 'react'
 
-import { useSelector, dispatch } from '@/store'
+// import { useSelector, dispatch } from '@/store'
 
 export default function AccountPage() {
   return <section className="section">
