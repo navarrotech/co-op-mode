@@ -13,7 +13,7 @@ import { isProfileComplete } from './Builder'
 
 // Components
 import Topbar from '@/routes/dashboard/Topbar'
-import NavBar from '../dashboard/NavBar'
+import BottomBar from '../dashboard/BottomBar'
 
 export function ProfileCompletionOutlet() {
   const user = useSelector(state => state.user.current)
@@ -36,7 +36,7 @@ export function ProfileCompletionOutlet() {
     <div className="dashboard-content">
       <Outlet />
     </div>
-    <NavBar />
+    <BottomBar />
   </div>
 } 
 

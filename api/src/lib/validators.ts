@@ -52,14 +52,14 @@ export const firstNameValidator = () => yup
   .string()
   .typeError('')
   .trim()
-  .max(32)
+  .max(64)
   .min(3)
 
 export const lastNameValidator = () => yup
   .string()
   .typeError('')
   .trim()
-  .max(32)
+  .max(64)
   .min(3)
 
 export const emailValidator = () => yup

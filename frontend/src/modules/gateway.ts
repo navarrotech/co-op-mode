@@ -2,13 +2,17 @@
 
 import type { IChangeEvent } from './protobuf/schema'
 
-import { GATEWAY_URL, NODE_ENV } from '@/env'
+// Lib
 import socketio from 'socket.io-client'
 import ProtoBufs from './protobuf'
 
 // Redux
-// import { dispatch } from "@/store"
-// import { setUser } from "./auth/reducer";
+import { dispatch } from '@/store'
+import { setGatewayConnected } from './auth/reducer'
+
+// Environment
+import { GATEWAY_URL, NODE_ENV } from '@/env'
+import { init } from '@/store/Initialization'
 
 // Define a type that ensures the required property for a specific key
 type RequiredProperty<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
@@ -22,14 +26,39 @@ const io = socketio(GATEWAY_URL, {
   transports: [ 'websocket' ]
 })
 
+let disconnectTimeout: ReturnType<typeof setTimeout>
+let needToReInit = false
 io.on('connect', () => {
   console.log('Connected to gateway')
+
+  clearTimeout(
+    disconnectTimeout
+  )
+
+  dispatch(
+    setGatewayConnected(true)
+  )
+
+  // Reinitialize the app, in case we missed any data while the gateway was down!
+  if (needToReInit) {
+    needToReInit = false
+    // TODO: Maybe it'd be better to just refresh the page and let the main catch function deal with it?
+    init().catch(console.error)
+  }
 })
 io.on('error', (error: Error) => {
   console.error('Error from gateway', error)
 })
 io.on('disconnect', () => {
   console.log('Disconnected from gateway')
+
+  // This will show the user that the connection is lost after 5 seconds!
+  disconnectTimeout = setTimeout(() => {
+    dispatch(
+      setGatewayConnected(false)
+    )
+    needToReInit = true
+  }, 5_000)
 })
 
 function parseProto<T extends keyof typeof ProtoBufs, K = any>(struct: T, rawResponse: ArrayBuffer): K | undefined {

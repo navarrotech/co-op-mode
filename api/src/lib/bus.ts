@@ -4,7 +4,7 @@ import type { Prisma } from '@prisma/client'
 import type { PrismaTableNames } from './database'
 import amqplib, { type Channel, type Connection } from 'amqplib'
 import { ProtoBufs } from './protobuf'
-import { RABBITMQ_URL } from '@/env'
+import { RABBITMQ_URL } from '../env'
 
 // Use RabbitMQ to send messages between services
 

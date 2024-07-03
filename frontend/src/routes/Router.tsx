@@ -13,11 +13,15 @@ import urls from './urls'
 // Pages
 import Welcome from './authentication/Welcome'
 import WithPhoneNumber from './authentication/WithPhoneNumber'
-import DashboardLayout from './dashboard/Layout'
 import VerifyPhoneNumber from './authentication/VerifyPhoneNumber'
 import ProfileBuilder from './profile/Builder'
 import Logout from './authentication/Logout'
 import { ProfileCompletionOutlet } from './profile/hooks'
+import MatchingPage from './dating/MatchingPage'
+import DiscoverPage from './dating/DiscoverPage'
+import MatchesPage from './dating/MatchesPage'
+import ConversationsPage from './messages/ConversationsPage'
+import AccountPage from './profile/AccountPage'
 
 /*
  * Homepage and marketing should be in a separate repository!
@@ -44,7 +48,11 @@ export default function Router() {
 
         {/* This route ensures that the user's profile is fully completed before letting users access these nested routes */}
         <Route path={urls.app} element={<ProfileCompletionOutlet />}>
-          <Route path={urls.matching} element={<DashboardLayout />} />
+          <Route path={urls.matching} element={<MatchingPage />} />
+          <Route path={urls.discover} element={<DiscoverPage />} />
+          <Route path={urls.likes} element={<MatchesPage />} />
+          <Route path={urls.messages} element={<ConversationsPage />} />
+          <Route path={urls.profile} element={<AccountPage />} />
         </Route>
       </Route>
 

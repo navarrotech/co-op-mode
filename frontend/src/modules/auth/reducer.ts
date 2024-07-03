@@ -15,10 +15,12 @@ export type State = {
   },
   authorized: boolean
   loading: boolean
+  gatewayConnected: boolean
 }
 
 const initialState: State = {
   loading: true,
+  gatewayConnected: false,
 
   authorized: false,
   current: undefined,
@@ -72,6 +74,9 @@ const slice = createSlice({
     },
     finishInit: (state) => {
       state.loading = false
+    },
+    setGatewayConnected: (state, action: PayloadAction<boolean>) => {
+      state.gatewayConnected = action.payload
     }
   }
 })
@@ -85,6 +90,7 @@ export const {
   setPermanentLimits,
 
   logout,
+  setGatewayConnected,
   finishInit
 } = slice.actions
 

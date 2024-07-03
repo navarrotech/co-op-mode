@@ -26,8 +26,8 @@ export default function Topbar() {
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
         <div className="navbar-item">
-          <img src="/logo512.png" width="28" height="28" alt="Navarrotech" />
-          <h1 className="title is-5 ml-3">Navarrotech</h1>
+          <img src="/logo.png" width="28" height="28" alt="Navarrotech" />
+          <h1 className="title is-5 ml-3">Co-Op Mode</h1>
         </div>
         <div
           role="button"
@@ -45,33 +45,7 @@ export default function Topbar() {
 
       <div className={'navbar-menu' + (showMobileMenu ? ' is-active' : '')}>
         <div className="navbar-start">
-          <NavLink
-            className={({ isActive }) => `navbar-item ${isActive ? 'is-selected' : ''}`}
-            to="/dashboard/today"
-            onClick={() => setShowMobileMenu(false)}
-          >
-                        Today
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => `navbar-item ${isActive ? 'is-selected' : ''}`}
-            to="/dashboard/meals"
-            onClick={() => setShowMobileMenu(false)}
-          >
-                        Meal Planner
-          </NavLink>
-          <NavLink
-            className={({ isActive }) => `navbar-item ${isActive ? 'is-selected' : ''}`}
-            to="/dashboard/recipes"
-            onClick={() => setShowMobileMenu(false)}
-          >
-                        Recipes
-          </NavLink>
           <hr className="navbar-divider is-hidden-desktop" />
-          <NavLink
-            to="/account"
-            className="navbar-item is-hidden-desktop"
-            onClick={() => setShowMobileMenu(false)}
-          >Account (Coming soon)</NavLink>
           <NavLink
             to="/logout"
             className="navbar-item is-hidden-desktop"

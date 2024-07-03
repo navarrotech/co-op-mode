@@ -57,7 +57,7 @@ export default function ProfileBuilder() {
       disabled={!draft.length}
       nextText={t('next')}
       errors={errors}
-      onNext={async function updateFirstName() {
+      onNext={async () => {
         const { status, struct, data } = await updateAccount({ first_name: draft })
         if (status === 200) {
           if (data?.id){
@@ -123,7 +123,7 @@ export default function ProfileBuilder() {
       disabled={!draft.length}
       nextText={t('next')}
       errors={errors}
-      onNext={async function updateLastName() {
+      onNext={async () => {
         const { status, struct, data } = await updateAccount({ last_name: draft })
         if (status === 200) {
           if (data?.id){
@@ -356,7 +356,7 @@ export default function ProfileBuilder() {
         <div className="control has-icons-left">
           <input
             autoFocus
-            className="input"
+            className="input is-fullwidth"
             type="date"
             value={draft}
             onChange={e => setDraft(e.target.value)}

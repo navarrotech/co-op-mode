@@ -18,6 +18,20 @@ const route: Route = {
           id: request.session.user.id
         }
       })
+
+      if (!user) {
+        request.session.authorized = false
+        request.session.user = null
+        await request.session.destroyAsync()
+        response.status(401)
+        response.sendProto('AuthResponse', {
+          message: request.__('unauthorized'),
+          user: null,
+          authorized: false
+        })
+        return
+      }
+
       response.status(200)
       response.sendProto('AuthResponse', {
         message: request.__('authorized'),

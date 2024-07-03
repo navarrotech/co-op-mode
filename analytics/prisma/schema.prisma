@@ -13,11 +13,12 @@ datasource db {
 model users {
   id              String @id @default(uuid())
 
-  first_name      String?  @db.VarChar(32)
-  last_name       String?  @db.VarChar(32)
+  first_name      String?  @db.VarChar(64)
+  last_name       String?  @db.VarChar(64)
   email           String? @unique @db.VarChar(128)
   phone           String  @unique @db.VarChar(16)
 
+  media           media[]
   preferences     preferences?
   dating_profile  dating_profile?
   limits          permanent_limits?
@@ -25,7 +26,6 @@ model users {
   monthly_limits  monthly_limits?
   status          status?
 
-  media           media[]
   likes           likes[]
   dislikes        dislikes[]
   linked_accounts linked_accounts[]
@@ -130,7 +130,9 @@ model dating_profile {
   show_gender      Boolean @default(false)
   show_pronouns    Boolean @default(false)
 
+  // Linked tables
   analytics    profile_analytics?
+  media        media[]
 
   created_at   DateTime @default(now())
   updated_at   DateTime @updatedAt @default(now())
@@ -181,7 +183,10 @@ model dislikes {
 model media {
   id           String @id @default(uuid())
   owner_id     String
-  user         users @relation(fields: [owner_id], references: [id])
+  profile_id   String
+
+  dating_profile dating_profile @relation(fields: [profile_id], references: [id])
+  user           users @relation(fields: [owner_id], references: [id])
 
   likes        Int @default(0)
   superlikes   Int @default(0)

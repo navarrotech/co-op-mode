@@ -3201,6 +3201,109 @@ export class SyncResponse implements ISyncResponse {
     public static getTypeUrl(typeUrlPrefix?: string): string;
 }
 
+/** Properties of a DataProfilesForYou. */
+export interface IDataProfilesForYou {
+
+    /** DataProfilesForYou profiles */
+    profiles?: (IDatingProfile[]|null);
+
+    /** DataProfilesForYou total */
+    total?: (number|null);
+}
+
+/** Represents a DataProfilesForYou. */
+export class DataProfilesForYou implements IDataProfilesForYou {
+
+    /**
+     * Constructs a new DataProfilesForYou.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IDataProfilesForYou);
+
+    /** DataProfilesForYou profiles. */
+    public profiles: IDatingProfile[];
+
+    /** DataProfilesForYou total. */
+    public total: number;
+
+    /**
+     * Creates a new DataProfilesForYou instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns DataProfilesForYou instance
+     */
+    public static create(properties?: IDataProfilesForYou): DataProfilesForYou;
+
+    /**
+     * Encodes the specified DataProfilesForYou message. Does not implicitly {@link DataProfilesForYou.verify|verify} messages.
+     * @param message DataProfilesForYou message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IDataProfilesForYou, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified DataProfilesForYou message, length delimited. Does not implicitly {@link DataProfilesForYou.verify|verify} messages.
+     * @param message DataProfilesForYou message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IDataProfilesForYou, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a DataProfilesForYou message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns DataProfilesForYou
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): DataProfilesForYou;
+
+    /**
+     * Decodes a DataProfilesForYou message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns DataProfilesForYou
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): DataProfilesForYou;
+
+    /**
+     * Verifies a DataProfilesForYou message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a DataProfilesForYou message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns DataProfilesForYou
+     */
+    public static fromObject(object: { [k: string]: any }): DataProfilesForYou;
+
+    /**
+     * Creates a plain object from a DataProfilesForYou message. Also converts values to other types if specified.
+     * @param message DataProfilesForYou
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: DataProfilesForYou, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this DataProfilesForYou to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for DataProfilesForYou
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
 /** Properties of a ServerError. */
 export interface IServerError {
 

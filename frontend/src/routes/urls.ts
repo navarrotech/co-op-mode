@@ -20,6 +20,10 @@ const urls = {
   app: '/app',
   dashboard: '/app/dashboard',
   matching: '/app/dashboard/matching',
+  discover: '/app/dashboard/discover',
+  likes: '/app/dashboard/likes',
+  messages: '/app/dashboard/messages',
+  profile: '/app/dashboard/profile',
 
   // Misc
   termsOfService: '/terms-of-service',

@@ -28,7 +28,7 @@ export default function BuilderTemplate({ title, onNext, nextText, errors, disab
     return () => {
       document.removeEventListener('keydown', keyListener)
     }
-  }, [])
+  }, [ onNext ])
 
   return <section className="section is-stacked">
     <figure className="block image is-64x64 is-centered">

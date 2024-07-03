@@ -8684,6 +8684,254 @@ export const SyncResponse = $root.SyncResponse = (() => {
     return SyncResponse;
 })();
 
+export const DataProfilesForYou = $root.DataProfilesForYou = (() => {
+
+    /**
+     * Properties of a DataProfilesForYou.
+     * @exports IDataProfilesForYou
+     * @interface IDataProfilesForYou
+     * @property {Array.<IDatingProfile>|null} [profiles] DataProfilesForYou profiles
+     * @property {number|null} [total] DataProfilesForYou total
+     */
+
+    /**
+     * Constructs a new DataProfilesForYou.
+     * @exports DataProfilesForYou
+     * @classdesc Represents a DataProfilesForYou.
+     * @implements IDataProfilesForYou
+     * @constructor
+     * @param {IDataProfilesForYou=} [properties] Properties to set
+     */
+    function DataProfilesForYou(properties) {
+        this.profiles = [];
+        if (properties)
+            for (let keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * DataProfilesForYou profiles.
+     * @member {Array.<IDatingProfile>} profiles
+     * @memberof DataProfilesForYou
+     * @instance
+     */
+    DataProfilesForYou.prototype.profiles = $util.emptyArray;
+
+    /**
+     * DataProfilesForYou total.
+     * @member {number} total
+     * @memberof DataProfilesForYou
+     * @instance
+     */
+    DataProfilesForYou.prototype.total = 0;
+
+    /**
+     * Creates a new DataProfilesForYou instance using the specified properties.
+     * @function create
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {IDataProfilesForYou=} [properties] Properties to set
+     * @returns {DataProfilesForYou} DataProfilesForYou instance
+     */
+    DataProfilesForYou.create = function create(properties) {
+        return new DataProfilesForYou(properties);
+    };
+
+    /**
+     * Encodes the specified DataProfilesForYou message. Does not implicitly {@link DataProfilesForYou.verify|verify} messages.
+     * @function encode
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {IDataProfilesForYou} message DataProfilesForYou message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    DataProfilesForYou.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.profiles != null && message.profiles.length)
+            for (let i = 0; i < message.profiles.length; ++i)
+                $root.DatingProfile.encode(message.profiles[i], writer.uint32(/* id 1, wireType 2 =*/10).fork()).ldelim();
+        if (message.total != null && Object.hasOwnProperty.call(message, "total"))
+            writer.uint32(/* id 2, wireType 0 =*/16).int32(message.total);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified DataProfilesForYou message, length delimited. Does not implicitly {@link DataProfilesForYou.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {IDataProfilesForYou} message DataProfilesForYou message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    DataProfilesForYou.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a DataProfilesForYou message from the specified reader or buffer.
+     * @function decode
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {DataProfilesForYou} DataProfilesForYou
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    DataProfilesForYou.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        let end = length === undefined ? reader.len : reader.pos + length, message = new $root.DataProfilesForYou();
+        while (reader.pos < end) {
+            let tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 1: {
+                    if (!(message.profiles && message.profiles.length))
+                        message.profiles = [];
+                    message.profiles.push($root.DatingProfile.decode(reader, reader.uint32()));
+                    break;
+                }
+            case 2: {
+                    message.total = reader.int32();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a DataProfilesForYou message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {DataProfilesForYou} DataProfilesForYou
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    DataProfilesForYou.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a DataProfilesForYou message.
+     * @function verify
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    DataProfilesForYou.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.profiles != null && message.hasOwnProperty("profiles")) {
+            if (!Array.isArray(message.profiles))
+                return "profiles: array expected";
+            for (let i = 0; i < message.profiles.length; ++i) {
+                let error = $root.DatingProfile.verify(message.profiles[i]);
+                if (error)
+                    return "profiles." + error;
+            }
+        }
+        if (message.total != null && message.hasOwnProperty("total"))
+            if (!$util.isInteger(message.total))
+                return "total: integer expected";
+        return null;
+    };
+
+    /**
+     * Creates a DataProfilesForYou message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {DataProfilesForYou} DataProfilesForYou
+     */
+    DataProfilesForYou.fromObject = function fromObject(object) {
+        if (object instanceof $root.DataProfilesForYou)
+            return object;
+        let message = new $root.DataProfilesForYou();
+        if (object.profiles) {
+            if (!Array.isArray(object.profiles))
+                throw TypeError(".DataProfilesForYou.profiles: array expected");
+            message.profiles = [];
+            for (let i = 0; i < object.profiles.length; ++i) {
+                if (typeof object.profiles[i] !== "object")
+                    throw TypeError(".DataProfilesForYou.profiles: object expected");
+                message.profiles[i] = $root.DatingProfile.fromObject(object.profiles[i]);
+            }
+        }
+        if (object.total != null)
+            message.total = object.total | 0;
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a DataProfilesForYou message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {DataProfilesForYou} message DataProfilesForYou
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    DataProfilesForYou.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        let object = {};
+        if (options.arrays || options.defaults)
+            object.profiles = [];
+        if (options.defaults)
+            object.total = 0;
+        if (message.profiles && message.profiles.length) {
+            object.profiles = [];
+            for (let j = 0; j < message.profiles.length; ++j)
+                object.profiles[j] = $root.DatingProfile.toObject(message.profiles[j], options);
+        }
+        if (message.total != null && message.hasOwnProperty("total"))
+            object.total = message.total;
+        return object;
+    };
+
+    /**
+     * Converts this DataProfilesForYou to JSON.
+     * @function toJSON
+     * @memberof DataProfilesForYou
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    DataProfilesForYou.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for DataProfilesForYou
+     * @function getTypeUrl
+     * @memberof DataProfilesForYou
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    DataProfilesForYou.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/DataProfilesForYou";
+    };
+
+    return DataProfilesForYou;
+})();
+
 export const ServerError = $root.ServerError = (() => {
 
     /**
