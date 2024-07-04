@@ -1020,6 +1020,209 @@ $root.User = (function() {
     return User;
 })();
 
+$root.UserPublicInfo = (function() {
+
+    /**
+     * Properties of a UserPublicInfo.
+     * @exports IUserPublicInfo
+     * @interface IUserPublicInfo
+     * @property {string|null} [first_name] UserPublicInfo first_name
+     */
+
+    /**
+     * Constructs a new UserPublicInfo.
+     * @exports UserPublicInfo
+     * @classdesc Represents a UserPublicInfo.
+     * @implements IUserPublicInfo
+     * @constructor
+     * @param {IUserPublicInfo=} [properties] Properties to set
+     */
+    function UserPublicInfo(properties) {
+        if (properties)
+            for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
+                if (properties[keys[i]] != null)
+                    this[keys[i]] = properties[keys[i]];
+    }
+
+    /**
+     * UserPublicInfo first_name.
+     * @member {string} first_name
+     * @memberof UserPublicInfo
+     * @instance
+     */
+    UserPublicInfo.prototype.first_name = "";
+
+    /**
+     * Creates a new UserPublicInfo instance using the specified properties.
+     * @function create
+     * @memberof UserPublicInfo
+     * @static
+     * @param {IUserPublicInfo=} [properties] Properties to set
+     * @returns {UserPublicInfo} UserPublicInfo instance
+     */
+    UserPublicInfo.create = function create(properties) {
+        return new UserPublicInfo(properties);
+    };
+
+    /**
+     * Encodes the specified UserPublicInfo message. Does not implicitly {@link UserPublicInfo.verify|verify} messages.
+     * @function encode
+     * @memberof UserPublicInfo
+     * @static
+     * @param {IUserPublicInfo} message UserPublicInfo message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    UserPublicInfo.encode = function encode(message, writer) {
+        if (!writer)
+            writer = $Writer.create();
+        if (message.first_name != null && Object.hasOwnProperty.call(message, "first_name"))
+            writer.uint32(/* id 2, wireType 2 =*/18).string(message.first_name);
+        return writer;
+    };
+
+    /**
+     * Encodes the specified UserPublicInfo message, length delimited. Does not implicitly {@link UserPublicInfo.verify|verify} messages.
+     * @function encodeDelimited
+     * @memberof UserPublicInfo
+     * @static
+     * @param {IUserPublicInfo} message UserPublicInfo message or plain object to encode
+     * @param {$protobuf.Writer} [writer] Writer to encode to
+     * @returns {$protobuf.Writer} Writer
+     */
+    UserPublicInfo.encodeDelimited = function encodeDelimited(message, writer) {
+        return this.encode(message, writer).ldelim();
+    };
+
+    /**
+     * Decodes a UserPublicInfo message from the specified reader or buffer.
+     * @function decode
+     * @memberof UserPublicInfo
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @param {number} [length] Message length if known beforehand
+     * @returns {UserPublicInfo} UserPublicInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    UserPublicInfo.decode = function decode(reader, length) {
+        if (!(reader instanceof $Reader))
+            reader = $Reader.create(reader);
+        var end = length === undefined ? reader.len : reader.pos + length, message = new $root.UserPublicInfo();
+        while (reader.pos < end) {
+            var tag = reader.uint32();
+            switch (tag >>> 3) {
+            case 2: {
+                    message.first_name = reader.string();
+                    break;
+                }
+            default:
+                reader.skipType(tag & 7);
+                break;
+            }
+        }
+        return message;
+    };
+
+    /**
+     * Decodes a UserPublicInfo message from the specified reader or buffer, length delimited.
+     * @function decodeDelimited
+     * @memberof UserPublicInfo
+     * @static
+     * @param {$protobuf.Reader|Uint8Array} reader Reader or buffer to decode from
+     * @returns {UserPublicInfo} UserPublicInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    UserPublicInfo.decodeDelimited = function decodeDelimited(reader) {
+        if (!(reader instanceof $Reader))
+            reader = new $Reader(reader);
+        return this.decode(reader, reader.uint32());
+    };
+
+    /**
+     * Verifies a UserPublicInfo message.
+     * @function verify
+     * @memberof UserPublicInfo
+     * @static
+     * @param {Object.<string,*>} message Plain object to verify
+     * @returns {string|null} `null` if valid, otherwise the reason why it is not
+     */
+    UserPublicInfo.verify = function verify(message) {
+        if (typeof message !== "object" || message === null)
+            return "object expected";
+        if (message.first_name != null && message.hasOwnProperty("first_name"))
+            if (!$util.isString(message.first_name))
+                return "first_name: string expected";
+        return null;
+    };
+
+    /**
+     * Creates a UserPublicInfo message from a plain object. Also converts values to their respective internal types.
+     * @function fromObject
+     * @memberof UserPublicInfo
+     * @static
+     * @param {Object.<string,*>} object Plain object
+     * @returns {UserPublicInfo} UserPublicInfo
+     */
+    UserPublicInfo.fromObject = function fromObject(object) {
+        if (object instanceof $root.UserPublicInfo)
+            return object;
+        var message = new $root.UserPublicInfo();
+        if (object.first_name != null)
+            message.first_name = String(object.first_name);
+        return message;
+    };
+
+    /**
+     * Creates a plain object from a UserPublicInfo message. Also converts values to other types if specified.
+     * @function toObject
+     * @memberof UserPublicInfo
+     * @static
+     * @param {UserPublicInfo} message UserPublicInfo
+     * @param {$protobuf.IConversionOptions} [options] Conversion options
+     * @returns {Object.<string,*>} Plain object
+     */
+    UserPublicInfo.toObject = function toObject(message, options) {
+        if (!options)
+            options = {};
+        var object = {};
+        if (options.defaults)
+            object.first_name = "";
+        if (message.first_name != null && message.hasOwnProperty("first_name"))
+            object.first_name = message.first_name;
+        return object;
+    };
+
+    /**
+     * Converts this UserPublicInfo to JSON.
+     * @function toJSON
+     * @memberof UserPublicInfo
+     * @instance
+     * @returns {Object.<string,*>} JSON object
+     */
+    UserPublicInfo.prototype.toJSON = function toJSON() {
+        return this.constructor.toObject(this, $protobuf.util.toJSONOptions);
+    };
+
+    /**
+     * Gets the default type url for UserPublicInfo
+     * @function getTypeUrl
+     * @memberof UserPublicInfo
+     * @static
+     * @param {string} [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns {string} The default type url
+     */
+    UserPublicInfo.getTypeUrl = function getTypeUrl(typeUrlPrefix) {
+        if (typeUrlPrefix === undefined) {
+            typeUrlPrefix = "type.googleapis.com";
+        }
+        return typeUrlPrefix + "/UserPublicInfo";
+    };
+
+    return UserPublicInfo;
+})();
+
 $root.Preferences = (function() {
 
     /**
@@ -1278,7 +1481,7 @@ $root.DatingProfile = (function() {
      * @interface IDatingProfile
      * @property {string|null} [id] DatingProfile id
      * @property {string|null} [owner_id] DatingProfile owner_id
-     * @property {string|null} [birthday] DatingProfile birthday
+     * @property {number|null} [age] DatingProfile age
      * @property {string|null} [gender] DatingProfile gender
      * @property {Array.<string>|null} [fav_vgames] DatingProfile fav_vgames
      * @property {Array.<string>|null} [fav_vgenres] DatingProfile fav_vgenres
@@ -1293,7 +1496,7 @@ $root.DatingProfile = (function() {
      * @property {Array.<string>|null} [prompts] DatingProfile prompts
      * @property {Array.<string>|null} [known_langs] DatingProfile known_langs
      * @property {string|null} [location] DatingProfile location
-     * @property {string|null} [location2] DatingProfile location2
+     * @property {string|null} [dream_job] DatingProfile dream_job
      * @property {string|null} [school] DatingProfile school
      * @property {string|null} [job_title] DatingProfile job_title
      * @property {string|null} [company] DatingProfile company
@@ -1313,15 +1516,19 @@ $root.DatingProfile = (function() {
      * @property {string|null} [cannabis] DatingProfile cannabis
      * @property {boolean|null} [banned] DatingProfile banned
      * @property {boolean|null} [use_smart_photos] DatingProfile use_smart_photos
+     * @property {boolean|null} [dnd_mode] DatingProfile dnd_mode
+     * @property {Array.<string>|null} [wanting] DatingProfile wanting
+     * @property {number|null} [distance] DatingProfile distance
+     * @property {string|null} [birthday] DatingProfile birthday
+     * @property {string|null} [updated_at] DatingProfile updated_at
+     * @property {Array.<string>|null} [interests] DatingProfile interests
      * @property {boolean|null} [hide_distance] DatingProfile hide_distance
      * @property {boolean|null} [hide_age] DatingProfile hide_age
-     * @property {boolean|null} [dnd_mode] DatingProfile dnd_mode
      * @property {boolean|null} [show_sexuality] DatingProfile show_sexuality
      * @property {boolean|null} [show_gender] DatingProfile show_gender
      * @property {boolean|null} [show_pronouns] DatingProfile show_pronouns
-     * @property {Array.<string>|null} [wanting] DatingProfile wanting
-     * @property {string|null} [created_at] DatingProfile created_at
-     * @property {string|null} [updated_at] DatingProfile updated_at
+     * @property {Array.<IMedia>|null} [media] DatingProfile media
+     * @property {IUserPublicInfo|null} [user] DatingProfile user
      */
 
     /**
@@ -1340,6 +1547,8 @@ $root.DatingProfile = (function() {
         this.prompts = [];
         this.known_langs = [];
         this.wanting = [];
+        this.interests = [];
+        this.media = [];
         if (properties)
             for (var keys = Object.keys(properties), i = 0; i < keys.length; ++i)
                 if (properties[keys[i]] != null)
@@ -1363,20 +1572,20 @@ $root.DatingProfile = (function() {
     DatingProfile.prototype.owner_id = "";
 
     /**
-     * DatingProfile birthday.
-     * @member {string} birthday
+     * DatingProfile age.
+     * @member {number|null|undefined} age
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.birthday = "";
+    DatingProfile.prototype.age = null;
 
     /**
      * DatingProfile gender.
-     * @member {string} gender
+     * @member {string|null|undefined} gender
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.gender = "";
+    DatingProfile.prototype.gender = null;
 
     /**
      * DatingProfile fav_vgames.
@@ -1483,12 +1692,12 @@ $root.DatingProfile = (function() {
     DatingProfile.prototype.location = "";
 
     /**
-     * DatingProfile location2.
-     * @member {string} location2
+     * DatingProfile dream_job.
+     * @member {string} dream_job
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.location2 = "";
+    DatingProfile.prototype.dream_job = "";
 
     /**
      * DatingProfile school.
@@ -1532,11 +1741,11 @@ $root.DatingProfile = (function() {
 
     /**
      * DatingProfile pronouns.
-     * @member {string} pronouns
+     * @member {string|null|undefined} pronouns
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.pronouns = "";
+    DatingProfile.prototype.pronouns = null;
 
     /**
      * DatingProfile height_unit.
@@ -1548,11 +1757,11 @@ $root.DatingProfile = (function() {
 
     /**
      * DatingProfile sexuality.
-     * @member {string} sexuality
+     * @member {string|null|undefined} sexuality
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.sexuality = "";
+    DatingProfile.prototype.sexuality = null;
 
     /**
      * DatingProfile education.
@@ -1628,11 +1837,11 @@ $root.DatingProfile = (function() {
 
     /**
      * DatingProfile banned.
-     * @member {boolean} banned
+     * @member {boolean|null|undefined} banned
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.banned = false;
+    DatingProfile.prototype.banned = null;
 
     /**
      * DatingProfile use_smart_photos.
@@ -1643,52 +1852,12 @@ $root.DatingProfile = (function() {
     DatingProfile.prototype.use_smart_photos = false;
 
     /**
-     * DatingProfile hide_distance.
-     * @member {boolean} hide_distance
-     * @memberof DatingProfile
-     * @instance
-     */
-    DatingProfile.prototype.hide_distance = false;
-
-    /**
-     * DatingProfile hide_age.
-     * @member {boolean} hide_age
-     * @memberof DatingProfile
-     * @instance
-     */
-    DatingProfile.prototype.hide_age = false;
-
-    /**
      * DatingProfile dnd_mode.
      * @member {boolean} dnd_mode
      * @memberof DatingProfile
      * @instance
      */
     DatingProfile.prototype.dnd_mode = false;
-
-    /**
-     * DatingProfile show_sexuality.
-     * @member {boolean} show_sexuality
-     * @memberof DatingProfile
-     * @instance
-     */
-    DatingProfile.prototype.show_sexuality = false;
-
-    /**
-     * DatingProfile show_gender.
-     * @member {boolean} show_gender
-     * @memberof DatingProfile
-     * @instance
-     */
-    DatingProfile.prototype.show_gender = false;
-
-    /**
-     * DatingProfile show_pronouns.
-     * @member {boolean} show_pronouns
-     * @memberof DatingProfile
-     * @instance
-     */
-    DatingProfile.prototype.show_pronouns = false;
 
     /**
      * DatingProfile wanting.
@@ -1699,20 +1868,238 @@ $root.DatingProfile = (function() {
     DatingProfile.prototype.wanting = $util.emptyArray;
 
     /**
-     * DatingProfile created_at.
-     * @member {string} created_at
+     * DatingProfile distance.
+     * @member {number|null|undefined} distance
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.created_at = "";
+    DatingProfile.prototype.distance = null;
+
+    /**
+     * DatingProfile birthday.
+     * @member {string|null|undefined} birthday
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.birthday = null;
 
     /**
      * DatingProfile updated_at.
-     * @member {string} updated_at
+     * @member {string|null|undefined} updated_at
      * @memberof DatingProfile
      * @instance
      */
-    DatingProfile.prototype.updated_at = "";
+    DatingProfile.prototype.updated_at = null;
+
+    /**
+     * DatingProfile interests.
+     * @member {Array.<string>} interests
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.interests = $util.emptyArray;
+
+    /**
+     * DatingProfile hide_distance.
+     * @member {boolean|null|undefined} hide_distance
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.hide_distance = null;
+
+    /**
+     * DatingProfile hide_age.
+     * @member {boolean|null|undefined} hide_age
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.hide_age = null;
+
+    /**
+     * DatingProfile show_sexuality.
+     * @member {boolean|null|undefined} show_sexuality
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.show_sexuality = null;
+
+    /**
+     * DatingProfile show_gender.
+     * @member {boolean|null|undefined} show_gender
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.show_gender = null;
+
+    /**
+     * DatingProfile show_pronouns.
+     * @member {boolean|null|undefined} show_pronouns
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.show_pronouns = null;
+
+    /**
+     * DatingProfile media.
+     * @member {Array.<IMedia>} media
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.media = $util.emptyArray;
+
+    /**
+     * DatingProfile user.
+     * @member {IUserPublicInfo|null|undefined} user
+     * @memberof DatingProfile
+     * @instance
+     */
+    DatingProfile.prototype.user = null;
+
+    // OneOf field names bound to virtual getters and setters
+    var $oneOfFields;
+
+    /**
+     * DatingProfile _age.
+     * @member {"age"|undefined} _age
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_age", {
+        get: $util.oneOfGetter($oneOfFields = ["age"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _gender.
+     * @member {"gender"|undefined} _gender
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_gender", {
+        get: $util.oneOfGetter($oneOfFields = ["gender"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _pronouns.
+     * @member {"pronouns"|undefined} _pronouns
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_pronouns", {
+        get: $util.oneOfGetter($oneOfFields = ["pronouns"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _sexuality.
+     * @member {"sexuality"|undefined} _sexuality
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_sexuality", {
+        get: $util.oneOfGetter($oneOfFields = ["sexuality"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _banned.
+     * @member {"banned"|undefined} _banned
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_banned", {
+        get: $util.oneOfGetter($oneOfFields = ["banned"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _distance.
+     * @member {"distance"|undefined} _distance
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_distance", {
+        get: $util.oneOfGetter($oneOfFields = ["distance"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _birthday.
+     * @member {"birthday"|undefined} _birthday
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_birthday", {
+        get: $util.oneOfGetter($oneOfFields = ["birthday"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _updated_at.
+     * @member {"updated_at"|undefined} _updated_at
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_updated_at", {
+        get: $util.oneOfGetter($oneOfFields = ["updated_at"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _hide_distance.
+     * @member {"hide_distance"|undefined} _hide_distance
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_hide_distance", {
+        get: $util.oneOfGetter($oneOfFields = ["hide_distance"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _hide_age.
+     * @member {"hide_age"|undefined} _hide_age
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_hide_age", {
+        get: $util.oneOfGetter($oneOfFields = ["hide_age"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _show_sexuality.
+     * @member {"show_sexuality"|undefined} _show_sexuality
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_show_sexuality", {
+        get: $util.oneOfGetter($oneOfFields = ["show_sexuality"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _show_gender.
+     * @member {"show_gender"|undefined} _show_gender
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_show_gender", {
+        get: $util.oneOfGetter($oneOfFields = ["show_gender"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
+
+    /**
+     * DatingProfile _show_pronouns.
+     * @member {"show_pronouns"|undefined} _show_pronouns
+     * @memberof DatingProfile
+     * @instance
+     */
+    Object.defineProperty(DatingProfile.prototype, "_show_pronouns", {
+        get: $util.oneOfGetter($oneOfFields = ["show_pronouns"]),
+        set: $util.oneOfSetter($oneOfFields)
+    });
 
     /**
      * Creates a new DatingProfile instance using the specified properties.
@@ -1742,8 +2129,8 @@ $root.DatingProfile = (function() {
             writer.uint32(/* id 1, wireType 2 =*/10).string(message.id);
         if (message.owner_id != null && Object.hasOwnProperty.call(message, "owner_id"))
             writer.uint32(/* id 2, wireType 2 =*/18).string(message.owner_id);
-        if (message.birthday != null && Object.hasOwnProperty.call(message, "birthday"))
-            writer.uint32(/* id 3, wireType 2 =*/26).string(message.birthday);
+        if (message.age != null && Object.hasOwnProperty.call(message, "age"))
+            writer.uint32(/* id 3, wireType 0 =*/24).int32(message.age);
         if (message.gender != null && Object.hasOwnProperty.call(message, "gender"))
             writer.uint32(/* id 4, wireType 2 =*/34).string(message.gender);
         if (message.fav_vgames != null && message.fav_vgames.length)
@@ -1778,8 +2165,8 @@ $root.DatingProfile = (function() {
                 writer.uint32(/* id 16, wireType 2 =*/130).string(message.known_langs[i]);
         if (message.location != null && Object.hasOwnProperty.call(message, "location"))
             writer.uint32(/* id 17, wireType 2 =*/138).string(message.location);
-        if (message.location2 != null && Object.hasOwnProperty.call(message, "location2"))
-            writer.uint32(/* id 18, wireType 2 =*/146).string(message.location2);
+        if (message.dream_job != null && Object.hasOwnProperty.call(message, "dream_job"))
+            writer.uint32(/* id 18, wireType 2 =*/146).string(message.dream_job);
         if (message.school != null && Object.hasOwnProperty.call(message, "school"))
             writer.uint32(/* id 19, wireType 2 =*/154).string(message.school);
         if (message.job_title != null && Object.hasOwnProperty.call(message, "job_title"))
@@ -1818,25 +2205,35 @@ $root.DatingProfile = (function() {
             writer.uint32(/* id 36, wireType 0 =*/288).bool(message.banned);
         if (message.use_smart_photos != null && Object.hasOwnProperty.call(message, "use_smart_photos"))
             writer.uint32(/* id 37, wireType 0 =*/296).bool(message.use_smart_photos);
-        if (message.hide_distance != null && Object.hasOwnProperty.call(message, "hide_distance"))
-            writer.uint32(/* id 38, wireType 0 =*/304).bool(message.hide_distance);
-        if (message.hide_age != null && Object.hasOwnProperty.call(message, "hide_age"))
-            writer.uint32(/* id 39, wireType 0 =*/312).bool(message.hide_age);
         if (message.dnd_mode != null && Object.hasOwnProperty.call(message, "dnd_mode"))
-            writer.uint32(/* id 40, wireType 0 =*/320).bool(message.dnd_mode);
-        if (message.show_sexuality != null && Object.hasOwnProperty.call(message, "show_sexuality"))
-            writer.uint32(/* id 41, wireType 0 =*/328).bool(message.show_sexuality);
-        if (message.show_gender != null && Object.hasOwnProperty.call(message, "show_gender"))
-            writer.uint32(/* id 42, wireType 0 =*/336).bool(message.show_gender);
-        if (message.show_pronouns != null && Object.hasOwnProperty.call(message, "show_pronouns"))
-            writer.uint32(/* id 43, wireType 0 =*/344).bool(message.show_pronouns);
+            writer.uint32(/* id 38, wireType 0 =*/304).bool(message.dnd_mode);
         if (message.wanting != null && message.wanting.length)
             for (var i = 0; i < message.wanting.length; ++i)
-                writer.uint32(/* id 44, wireType 2 =*/354).string(message.wanting[i]);
-        if (message.created_at != null && Object.hasOwnProperty.call(message, "created_at"))
-            writer.uint32(/* id 45, wireType 2 =*/362).string(message.created_at);
+                writer.uint32(/* id 39, wireType 2 =*/314).string(message.wanting[i]);
+        if (message.distance != null && Object.hasOwnProperty.call(message, "distance"))
+            writer.uint32(/* id 40, wireType 0 =*/320).int32(message.distance);
+        if (message.birthday != null && Object.hasOwnProperty.call(message, "birthday"))
+            writer.uint32(/* id 41, wireType 2 =*/330).string(message.birthday);
         if (message.updated_at != null && Object.hasOwnProperty.call(message, "updated_at"))
-            writer.uint32(/* id 46, wireType 2 =*/370).string(message.updated_at);
+            writer.uint32(/* id 42, wireType 2 =*/338).string(message.updated_at);
+        if (message.interests != null && message.interests.length)
+            for (var i = 0; i < message.interests.length; ++i)
+                writer.uint32(/* id 43, wireType 2 =*/346).string(message.interests[i]);
+        if (message.hide_distance != null && Object.hasOwnProperty.call(message, "hide_distance"))
+            writer.uint32(/* id 44, wireType 0 =*/352).bool(message.hide_distance);
+        if (message.hide_age != null && Object.hasOwnProperty.call(message, "hide_age"))
+            writer.uint32(/* id 45, wireType 0 =*/360).bool(message.hide_age);
+        if (message.show_sexuality != null && Object.hasOwnProperty.call(message, "show_sexuality"))
+            writer.uint32(/* id 46, wireType 0 =*/368).bool(message.show_sexuality);
+        if (message.show_gender != null && Object.hasOwnProperty.call(message, "show_gender"))
+            writer.uint32(/* id 47, wireType 0 =*/376).bool(message.show_gender);
+        if (message.show_pronouns != null && Object.hasOwnProperty.call(message, "show_pronouns"))
+            writer.uint32(/* id 48, wireType 0 =*/384).bool(message.show_pronouns);
+        if (message.media != null && message.media.length)
+            for (var i = 0; i < message.media.length; ++i)
+                $root.Media.encode(message.media[i], writer.uint32(/* id 49, wireType 2 =*/394).fork()).ldelim();
+        if (message.user != null && Object.hasOwnProperty.call(message, "user"))
+            $root.UserPublicInfo.encode(message.user, writer.uint32(/* id 50, wireType 2 =*/402).fork()).ldelim();
         return writer;
     };
 
@@ -1880,7 +2277,7 @@ $root.DatingProfile = (function() {
                     break;
                 }
             case 3: {
-                    message.birthday = reader.string();
+                    message.age = reader.int32();
                     break;
                 }
             case 4: {
@@ -1952,7 +2349,7 @@ $root.DatingProfile = (function() {
                     break;
                 }
             case 18: {
-                    message.location2 = reader.string();
+                    message.dream_job = reader.string();
                     break;
                 }
             case 19: {
@@ -2032,41 +2429,61 @@ $root.DatingProfile = (function() {
                     break;
                 }
             case 38: {
-                    message.hide_distance = reader.bool();
-                    break;
-                }
-            case 39: {
-                    message.hide_age = reader.bool();
-                    break;
-                }
-            case 40: {
                     message.dnd_mode = reader.bool();
                     break;
                 }
-            case 41: {
-                    message.show_sexuality = reader.bool();
-                    break;
-                }
-            case 42: {
-                    message.show_gender = reader.bool();
-                    break;
-                }
-            case 43: {
-                    message.show_pronouns = reader.bool();
-                    break;
-                }
-            case 44: {
+            case 39: {
                     if (!(message.wanting && message.wanting.length))
                         message.wanting = [];
                     message.wanting.push(reader.string());
                     break;
                 }
+            case 40: {
+                    message.distance = reader.int32();
+                    break;
+                }
+            case 41: {
+                    message.birthday = reader.string();
+                    break;
+                }
+            case 42: {
+                    message.updated_at = reader.string();
+                    break;
+                }
+            case 43: {
+                    if (!(message.interests && message.interests.length))
+                        message.interests = [];
+                    message.interests.push(reader.string());
+                    break;
+                }
+            case 44: {
+                    message.hide_distance = reader.bool();
+                    break;
+                }
             case 45: {
-                    message.created_at = reader.string();
+                    message.hide_age = reader.bool();
                     break;
                 }
             case 46: {
-                    message.updated_at = reader.string();
+                    message.show_sexuality = reader.bool();
+                    break;
+                }
+            case 47: {
+                    message.show_gender = reader.bool();
+                    break;
+                }
+            case 48: {
+                    message.show_pronouns = reader.bool();
+                    break;
+                }
+            case 49: {
+                    if (!(message.media && message.media.length))
+                        message.media = [];
+                    message.media.push($root.Media.decode(reader, reader.uint32()));
+                    break;
+                }
+            case 50: {
+                    message.user = $root.UserPublicInfo.decode(reader, reader.uint32());
                     break;
                 }
             default:
@@ -2104,18 +2521,23 @@ $root.DatingProfile = (function() {
     DatingProfile.verify = function verify(message) {
         if (typeof message !== "object" || message === null)
             return "object expected";
+        var properties = {};
         if (message.id != null && message.hasOwnProperty("id"))
             if (!$util.isString(message.id))
                 return "id: string expected";
         if (message.owner_id != null && message.hasOwnProperty("owner_id"))
             if (!$util.isString(message.owner_id))
                 return "owner_id: string expected";
-        if (message.birthday != null && message.hasOwnProperty("birthday"))
-            if (!$util.isString(message.birthday))
-                return "birthday: string expected";
-        if (message.gender != null && message.hasOwnProperty("gender"))
+        if (message.age != null && message.hasOwnProperty("age")) {
+            properties._age = 1;
+            if (!$util.isInteger(message.age))
+                return "age: integer expected";
+        }
+        if (message.gender != null && message.hasOwnProperty("gender")) {
+            properties._gender = 1;
             if (!$util.isString(message.gender))
                 return "gender: string expected";
+        }
         if (message.fav_vgames != null && message.hasOwnProperty("fav_vgames")) {
             if (!Array.isArray(message.fav_vgames))
                 return "fav_vgames: array expected";
@@ -2179,9 +2601,9 @@ $root.DatingProfile = (function() {
         if (message.location != null && message.hasOwnProperty("location"))
             if (!$util.isString(message.location))
                 return "location: string expected";
-        if (message.location2 != null && message.hasOwnProperty("location2"))
-            if (!$util.isString(message.location2))
-                return "location2: string expected";
+        if (message.dream_job != null && message.hasOwnProperty("dream_job"))
+            if (!$util.isString(message.dream_job))
+                return "dream_job: string expected";
         if (message.school != null && message.hasOwnProperty("school"))
             if (!$util.isString(message.school))
                 return "school: string expected";
@@ -2197,15 +2619,19 @@ $root.DatingProfile = (function() {
         if (message.top_artist != null && message.hasOwnProperty("top_artist"))
             if (!$util.isString(message.top_artist))
                 return "top_artist: string expected";
-        if (message.pronouns != null && message.hasOwnProperty("pronouns"))
+        if (message.pronouns != null && message.hasOwnProperty("pronouns")) {
+            properties._pronouns = 1;
             if (!$util.isString(message.pronouns))
                 return "pronouns: string expected";
+        }
         if (message.height_unit != null && message.hasOwnProperty("height_unit"))
             if (!$util.isString(message.height_unit))
                 return "height_unit: string expected";
-        if (message.sexuality != null && message.hasOwnProperty("sexuality"))
+        if (message.sexuality != null && message.hasOwnProperty("sexuality")) {
+            properties._sexuality = 1;
             if (!$util.isString(message.sexuality))
                 return "sexuality: string expected";
+        }
         if (message.education != null && message.hasOwnProperty("education"))
             if (!$util.isString(message.education))
                 return "education: string expected";
@@ -2233,30 +2659,17 @@ $root.DatingProfile = (function() {
         if (message.cannabis != null && message.hasOwnProperty("cannabis"))
             if (!$util.isString(message.cannabis))
                 return "cannabis: string expected";
-        if (message.banned != null && message.hasOwnProperty("banned"))
+        if (message.banned != null && message.hasOwnProperty("banned")) {
+            properties._banned = 1;
             if (typeof message.banned !== "boolean")
                 return "banned: boolean expected";
+        }
         if (message.use_smart_photos != null && message.hasOwnProperty("use_smart_photos"))
             if (typeof message.use_smart_photos !== "boolean")
                 return "use_smart_photos: boolean expected";
-        if (message.hide_distance != null && message.hasOwnProperty("hide_distance"))
-            if (typeof message.hide_distance !== "boolean")
-                return "hide_distance: boolean expected";
-        if (message.hide_age != null && message.hasOwnProperty("hide_age"))
-            if (typeof message.hide_age !== "boolean")
-                return "hide_age: boolean expected";
         if (message.dnd_mode != null && message.hasOwnProperty("dnd_mode"))
             if (typeof message.dnd_mode !== "boolean")
                 return "dnd_mode: boolean expected";
-        if (message.show_sexuality != null && message.hasOwnProperty("show_sexuality"))
-            if (typeof message.show_sexuality !== "boolean")
-                return "show_sexuality: boolean expected";
-        if (message.show_gender != null && message.hasOwnProperty("show_gender"))
-            if (typeof message.show_gender !== "boolean")
-                return "show_gender: boolean expected";
-        if (message.show_pronouns != null && message.hasOwnProperty("show_pronouns"))
-            if (typeof message.show_pronouns !== "boolean")
-                return "show_pronouns: boolean expected";
         if (message.wanting != null && message.hasOwnProperty("wanting")) {
             if (!Array.isArray(message.wanting))
                 return "wanting: array expected";
@@ -2264,12 +2677,67 @@ $root.DatingProfile = (function() {
                 if (!$util.isString(message.wanting[i]))
                     return "wanting: string[] expected";
         }
-        if (message.created_at != null && message.hasOwnProperty("created_at"))
-            if (!$util.isString(message.created_at))
-                return "created_at: string expected";
-        if (message.updated_at != null && message.hasOwnProperty("updated_at"))
+        if (message.distance != null && message.hasOwnProperty("distance")) {
+            properties._distance = 1;
+            if (!$util.isInteger(message.distance))
+                return "distance: integer expected";
+        }
+        if (message.birthday != null && message.hasOwnProperty("birthday")) {
+            properties._birthday = 1;
+            if (!$util.isString(message.birthday))
+                return "birthday: string expected";
+        }
+        if (message.updated_at != null && message.hasOwnProperty("updated_at")) {
+            properties._updated_at = 1;
             if (!$util.isString(message.updated_at))
                 return "updated_at: string expected";
+        }
+        if (message.interests != null && message.hasOwnProperty("interests")) {
+            if (!Array.isArray(message.interests))
+                return "interests: array expected";
+            for (var i = 0; i < message.interests.length; ++i)
+                if (!$util.isString(message.interests[i]))
+                    return "interests: string[] expected";
+        }
+        if (message.hide_distance != null && message.hasOwnProperty("hide_distance")) {
+            properties._hide_distance = 1;
+            if (typeof message.hide_distance !== "boolean")
+                return "hide_distance: boolean expected";
+        }
+        if (message.hide_age != null && message.hasOwnProperty("hide_age")) {
+            properties._hide_age = 1;
+            if (typeof message.hide_age !== "boolean")
+                return "hide_age: boolean expected";
+        }
+        if (message.show_sexuality != null && message.hasOwnProperty("show_sexuality")) {
+            properties._show_sexuality = 1;
+            if (typeof message.show_sexuality !== "boolean")
+                return "show_sexuality: boolean expected";
+        }
+        if (message.show_gender != null && message.hasOwnProperty("show_gender")) {
+            properties._show_gender = 1;
+            if (typeof message.show_gender !== "boolean")
+                return "show_gender: boolean expected";
+        }
+        if (message.show_pronouns != null && message.hasOwnProperty("show_pronouns")) {
+            properties._show_pronouns = 1;
+            if (typeof message.show_pronouns !== "boolean")
+                return "show_pronouns: boolean expected";
+        }
+        if (message.media != null && message.hasOwnProperty("media")) {
+            if (!Array.isArray(message.media))
+                return "media: array expected";
+            for (var i = 0; i < message.media.length; ++i) {
+                var error = $root.Media.verify(message.media[i]);
+                if (error)
+                    return "media." + error;
+            }
+        }
+        if (message.user != null && message.hasOwnProperty("user")) {
+            var error = $root.UserPublicInfo.verify(message.user);
+            if (error)
+                return "user." + error;
+        }
         return null;
     };
 
@@ -2289,8 +2757,8 @@ $root.DatingProfile = (function() {
             message.id = String(object.id);
         if (object.owner_id != null)
             message.owner_id = String(object.owner_id);
-        if (object.birthday != null)
-            message.birthday = String(object.birthday);
+        if (object.age != null)
+            message.age = object.age | 0;
         if (object.gender != null)
             message.gender = String(object.gender);
         if (object.fav_vgames) {
@@ -2349,8 +2817,8 @@ $root.DatingProfile = (function() {
         }
         if (object.location != null)
             message.location = String(object.location);
-        if (object.location2 != null)
-            message.location2 = String(object.location2);
+        if (object.dream_job != null)
+            message.dream_job = String(object.dream_job);
         if (object.school != null)
             message.school = String(object.school);
         if (object.job_title != null)
@@ -2389,18 +2857,8 @@ $root.DatingProfile = (function() {
             message.banned = Boolean(object.banned);
         if (object.use_smart_photos != null)
             message.use_smart_photos = Boolean(object.use_smart_photos);
-        if (object.hide_distance != null)
-            message.hide_distance = Boolean(object.hide_distance);
-        if (object.hide_age != null)
-            message.hide_age = Boolean(object.hide_age);
         if (object.dnd_mode != null)
             message.dnd_mode = Boolean(object.dnd_mode);
-        if (object.show_sexuality != null)
-            message.show_sexuality = Boolean(object.show_sexuality);
-        if (object.show_gender != null)
-            message.show_gender = Boolean(object.show_gender);
-        if (object.show_pronouns != null)
-            message.show_pronouns = Boolean(object.show_pronouns);
         if (object.wanting) {
             if (!Array.isArray(object.wanting))
                 throw TypeError(".DatingProfile.wanting: array expected");
@@ -2408,10 +2866,44 @@ $root.DatingProfile = (function() {
             for (var i = 0; i < object.wanting.length; ++i)
                 message.wanting[i] = String(object.wanting[i]);
         }
-        if (object.created_at != null)
-            message.created_at = String(object.created_at);
+        if (object.distance != null)
+            message.distance = object.distance | 0;
+        if (object.birthday != null)
+            message.birthday = String(object.birthday);
         if (object.updated_at != null)
             message.updated_at = String(object.updated_at);
+        if (object.interests) {
+            if (!Array.isArray(object.interests))
+                throw TypeError(".DatingProfile.interests: array expected");
+            message.interests = [];
+            for (var i = 0; i < object.interests.length; ++i)
+                message.interests[i] = String(object.interests[i]);
+        }
+        if (object.hide_distance != null)
+            message.hide_distance = Boolean(object.hide_distance);
+        if (object.hide_age != null)
+            message.hide_age = Boolean(object.hide_age);
+        if (object.show_sexuality != null)
+            message.show_sexuality = Boolean(object.show_sexuality);
+        if (object.show_gender != null)
+            message.show_gender = Boolean(object.show_gender);
+        if (object.show_pronouns != null)
+            message.show_pronouns = Boolean(object.show_pronouns);
+        if (object.media) {
+            if (!Array.isArray(object.media))
+                throw TypeError(".DatingProfile.media: array expected");
+            message.media = [];
+            for (var i = 0; i < object.media.length; ++i) {
+                if (typeof object.media[i] !== "object")
+                    throw TypeError(".DatingProfile.media: object expected");
+                message.media[i] = $root.Media.fromObject(object.media[i]);
+            }
+        }
+        if (object.user != null) {
+            if (typeof object.user !== "object")
+                throw TypeError(".DatingProfile.user: object expected");
+            message.user = $root.UserPublicInfo.fromObject(object.user);
+        }
         return message;
     };
 
@@ -2436,12 +2928,12 @@ $root.DatingProfile = (function() {
             object.prompts = [];
             object.known_langs = [];
             object.wanting = [];
+            object.interests = [];
+            object.media = [];
         }
         if (options.defaults) {
             object.id = "";
             object.owner_id = "";
-            object.birthday = "";
-            object.gender = "";
             object.fav_vcharacter = "";
             object.likes_dnd = false;
             object.likes_anime = false;
@@ -2449,15 +2941,13 @@ $root.DatingProfile = (function() {
             object.height = 0;
             object.bio = "";
             object.location = "";
-            object.location2 = "";
+            object.dream_job = "";
             object.school = "";
             object.job_title = "";
             object.company = "";
             object.top_song = "";
             object.top_artist = "";
-            object.pronouns = "";
             object.height_unit = "";
-            object.sexuality = "";
             object.education = "";
             object.looking_for = "";
             object.relationship = "";
@@ -2467,25 +2957,24 @@ $root.DatingProfile = (function() {
             object.smokes = "";
             object.drinks = "";
             object.cannabis = "";
-            object.banned = false;
             object.use_smart_photos = false;
-            object.hide_distance = false;
-            object.hide_age = false;
             object.dnd_mode = false;
-            object.show_sexuality = false;
-            object.show_gender = false;
-            object.show_pronouns = false;
-            object.created_at = "";
-            object.updated_at = "";
+            object.user = null;
         }
         if (message.id != null && message.hasOwnProperty("id"))
             object.id = message.id;
         if (message.owner_id != null && message.hasOwnProperty("owner_id"))
             object.owner_id = message.owner_id;
-        if (message.birthday != null && message.hasOwnProperty("birthday"))
-            object.birthday = message.birthday;
-        if (message.gender != null && message.hasOwnProperty("gender"))
+        if (message.age != null && message.hasOwnProperty("age")) {
+            object.age = message.age;
+            if (options.oneofs)
+                object._age = "age";
+        }
+        if (message.gender != null && message.hasOwnProperty("gender")) {
             object.gender = message.gender;
+            if (options.oneofs)
+                object._gender = "gender";
+        }
         if (message.fav_vgames && message.fav_vgames.length) {
             object.fav_vgames = [];
             for (var j = 0; j < message.fav_vgames.length; ++j)
@@ -2530,8 +3019,8 @@ $root.DatingProfile = (function() {
         }
         if (message.location != null && message.hasOwnProperty("location"))
             object.location = message.location;
-        if (message.location2 != null && message.hasOwnProperty("location2"))
-            object.location2 = message.location2;
+        if (message.dream_job != null && message.hasOwnProperty("dream_job"))
+            object.dream_job = message.dream_job;
         if (message.school != null && message.hasOwnProperty("school"))
             object.school = message.school;
         if (message.job_title != null && message.hasOwnProperty("job_title"))
@@ -2542,12 +3031,18 @@ $root.DatingProfile = (function() {
             object.top_song = message.top_song;
         if (message.top_artist != null && message.hasOwnProperty("top_artist"))
             object.top_artist = message.top_artist;
-        if (message.pronouns != null && message.hasOwnProperty("pronouns"))
+        if (message.pronouns != null && message.hasOwnProperty("pronouns")) {
             object.pronouns = message.pronouns;
+            if (options.oneofs)
+                object._pronouns = "pronouns";
+        }
         if (message.height_unit != null && message.hasOwnProperty("height_unit"))
             object.height_unit = message.height_unit;
-        if (message.sexuality != null && message.hasOwnProperty("sexuality"))
+        if (message.sexuality != null && message.hasOwnProperty("sexuality")) {
             object.sexuality = message.sexuality;
+            if (options.oneofs)
+                object._sexuality = "sexuality";
+        }
         if (message.education != null && message.hasOwnProperty("education"))
             object.education = message.education;
         if (message.looking_for != null && message.hasOwnProperty("looking_for"))
@@ -2566,31 +3061,72 @@ $root.DatingProfile = (function() {
             object.drinks = message.drinks;
         if (message.cannabis != null && message.hasOwnProperty("cannabis"))
             object.cannabis = message.cannabis;
-        if (message.banned != null && message.hasOwnProperty("banned"))
+        if (message.banned != null && message.hasOwnProperty("banned")) {
             object.banned = message.banned;
+            if (options.oneofs)
+                object._banned = "banned";
+        }
         if (message.use_smart_photos != null && message.hasOwnProperty("use_smart_photos"))
             object.use_smart_photos = message.use_smart_photos;
-        if (message.hide_distance != null && message.hasOwnProperty("hide_distance"))
-            object.hide_distance = message.hide_distance;
-        if (message.hide_age != null && message.hasOwnProperty("hide_age"))
-            object.hide_age = message.hide_age;
         if (message.dnd_mode != null && message.hasOwnProperty("dnd_mode"))
             object.dnd_mode = message.dnd_mode;
-        if (message.show_sexuality != null && message.hasOwnProperty("show_sexuality"))
-            object.show_sexuality = message.show_sexuality;
-        if (message.show_gender != null && message.hasOwnProperty("show_gender"))
-            object.show_gender = message.show_gender;
-        if (message.show_pronouns != null && message.hasOwnProperty("show_pronouns"))
-            object.show_pronouns = message.show_pronouns;
         if (message.wanting && message.wanting.length) {
             object.wanting = [];
             for (var j = 0; j < message.wanting.length; ++j)
                 object.wanting[j] = message.wanting[j];
         }
-        if (message.created_at != null && message.hasOwnProperty("created_at"))
-            object.created_at = message.created_at;
-        if (message.updated_at != null && message.hasOwnProperty("updated_at"))
+        if (message.distance != null && message.hasOwnProperty("distance")) {
+            object.distance = message.distance;
+            if (options.oneofs)
+                object._distance = "distance";
+        }
+        if (message.birthday != null && message.hasOwnProperty("birthday")) {
+            object.birthday = message.birthday;
+            if (options.oneofs)
+                object._birthday = "birthday";
+        }
+        if (message.updated_at != null && message.hasOwnProperty("updated_at")) {
             object.updated_at = message.updated_at;
+            if (options.oneofs)
+                object._updated_at = "updated_at";
+        }
+        if (message.interests && message.interests.length) {
+            object.interests = [];
+            for (var j = 0; j < message.interests.length; ++j)
+                object.interests[j] = message.interests[j];
+        }
+        if (message.hide_distance != null && message.hasOwnProperty("hide_distance")) {
+            object.hide_distance = message.hide_distance;
+            if (options.oneofs)
+                object._hide_distance = "hide_distance";
+        }
+        if (message.hide_age != null && message.hasOwnProperty("hide_age")) {
+            object.hide_age = message.hide_age;
+            if (options.oneofs)
+                object._hide_age = "hide_age";
+        }
+        if (message.show_sexuality != null && message.hasOwnProperty("show_sexuality")) {
+            object.show_sexuality = message.show_sexuality;
+            if (options.oneofs)
+                object._show_sexuality = "show_sexuality";
+        }
+        if (message.show_gender != null && message.hasOwnProperty("show_gender")) {
+            object.show_gender = message.show_gender;
+            if (options.oneofs)
+                object._show_gender = "show_gender";
+        }
+        if (message.show_pronouns != null && message.hasOwnProperty("show_pronouns")) {
+            object.show_pronouns = message.show_pronouns;
+            if (options.oneofs)
+                object._show_pronouns = "show_pronouns";
+        }
+        if (message.media && message.media.length) {
+            object.media = [];
+            for (var j = 0; j < message.media.length; ++j)
+                object.media[j] = $root.Media.toObject(message.media[j], options);
+        }
+        if (message.user != null && message.hasOwnProperty("user"))
+            object.user = $root.UserPublicInfo.toObject(message.user, options);
         return object;
     };
 

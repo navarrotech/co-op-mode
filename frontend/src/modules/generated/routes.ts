@@ -7,48 +7,133 @@
 
 // To manage this file, investigate the api/scripts/generate_api_routes.ts file
 
+import type { ProtoBufsTypes } from "../protobuf/ProtoTypes"
+import type { SupportedLanguages } from "../language"
 import { sendProto } from "@/modules/api"
+
+type APIHeaders = {
+	'Content-Type': 'application/x-protobuf' | 'application/json'
+	'X-Protobuf-Struct': keyof ProtoBufsTypes,
+	'Language': SupportedLanguages
+}
+
 
 export type IAuthorizeByPhone = {
 	phone: string
 	OTP?: string
 }
-export function authorizeByPhone(data: IAuthorizeByPhone) {
-    return sendProto("/auth/v1/authorizeByPhone", "AuthorizeByPhoneRequest", data as any, "POST")
+
+type ApiAuthorizeByPhoneResponse<status extends 200 | 204 | 403 | 409 | 500 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IAuthResponse'] :
+		status extends 204 ? ProtoBufsTypes['IAuthResponse'] :
+		status extends 403 ? ProtoBufsTypes['IAuthResponse'] :
+		status extends 409 ? ProtoBufsTypes['IAuthResponse'] :
+		status extends 500 ? ProtoBufsTypes['IAuthResponse'] :
+		null
+	headers: APIHeaders
+	struct: 'AuthResponse' | 'AuthResponse' | 'AuthResponse' | 'AuthResponse' | 'AuthResponse'
 }
 
-export function logout() {
-    return sendProto("/auth/v1/logout", "Blank", { i: 0 }, "POST")
+export function authorizeByPhone(data: IAuthorizeByPhone): Promise<ApiAuthorizeByPhoneResponse> {
+    return sendProto<ApiAuthorizeByPhoneResponse>("/auth/v1/authorizeByPhone", "AuthorizeByPhoneRequest", data as any, "POST")
 }
 
-export function check() {
-    return sendProto("/auth/v1/check", "Blank", { i: 0 }, "GET")
+
+type ApiLogoutResponse<status extends 200 = any> = {
+	status: status,
+	data: null
+	headers: APIHeaders
+	struct: null
 }
 
-export function sync() {
-    return sendProto("/api/v1/sync", "Blank", { i: 0 }, "POST")
+export function logout(): Promise<ApiLogoutResponse> {
+    return sendProto<ApiLogoutResponse>("/auth/v1/logout", "Blank", { i: 0 }, "POST")
+}
+
+
+type ApiCheckResponse<status extends 200 | 401 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IAuthResponse'] :
+		status extends 401 ? ProtoBufsTypes['IAuthResponse'] :
+		null
+	headers: APIHeaders
+	struct: 'AuthResponse' | 'AuthResponse'
+}
+
+export function check(): Promise<ApiCheckResponse> {
+    return sendProto<ApiCheckResponse>("/auth/v1/check", "Blank", { i: 0 }, "GET")
+}
+
+
+type ApiSyncResponse<status extends 200 | 400 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['ISyncResponse'] :
+		status extends 400 ? ProtoBufsTypes['IServerError'] :
+		null
+	headers: APIHeaders
+	struct: 'SyncResponse' | 'ServerError'
+}
+
+export function sync(): Promise<ApiSyncResponse> {
+    return sendProto<ApiSyncResponse>("/api/v1/sync", "Blank", { i: 0 }, "POST")
 }
 
 export type IUpdatePreferences = {
 	language?: string
 }
-export function updatePreferences(data: IUpdatePreferences) {
-    return sendProto("/api/v1/preferences", "Preferences", data as any, "PATCH")
+
+type ApiUpdatePreferencesResponse<status extends 200 | 204 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IPreferences'] :
+		null
+	headers: APIHeaders
+	struct: null
+}
+
+export function updatePreferences(data: IUpdatePreferences): Promise<ApiUpdatePreferencesResponse> {
+    return sendProto<ApiUpdatePreferencesResponse>("/api/v1/preferences", "Preferences", data as any, "PATCH")
 }
 
 export type IStatusActive = {
 	time_active: number
 }
-export function statusActive(data: IStatusActive) {
-    return sendProto("/api/v1/status/active", "EmitStatus", data as any, "PUT")
+
+type ApiStatusActiveResponse<status extends 200 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IStatus'] :
+		null
+	headers: APIHeaders
+	struct: 'Status'
 }
 
-export function exit() {
-    return sendProto("/api/v1/status/exit", "Blank", { i: 0 }, "PUT")
+export function statusActive(data: IStatusActive): Promise<ApiStatusActiveResponse> {
+    return sendProto<ApiStatusActiveResponse>("/api/v1/status/active", "EmitStatus", data as any, "PUT")
 }
 
-export function deleteAccount() {
-    return sendProto("/api/v1/account", "Blank", { i: 0 }, "DELETE")
+
+type ApiExitResponse<status extends 200 = any> = {
+	status: status,
+	data: null
+	headers: APIHeaders
+	struct: null
+}
+
+export function exit(): Promise<ApiExitResponse> {
+    return sendProto<ApiExitResponse>("/api/v1/status/exit", "Blank", { i: 0 }, "PUT")
+}
+
+
+type ApiDeleteAccountResponse<status extends 200 | 400 | 500 = any> = {
+	status: status,
+	data: status extends 500 ? ProtoBufsTypes['IServerError'] :
+		null
+	headers: APIHeaders
+	struct: null
+}
+
+export function deleteAccount(): Promise<ApiDeleteAccountResponse> {
+    return sendProto<ApiDeleteAccountResponse>("/api/v1/account", "Blank", { i: 0 }, "DELETE")
 }
 
 export type IUpdateAccount = {
@@ -56,8 +141,17 @@ export type IUpdateAccount = {
 	first_name?: string
 	last_name?: string
 }
-export function updateAccount(data: IUpdateAccount) {
-    return sendProto("/api/v1/account", "User", data as any, "PATCH")
+
+type ApiUpdateAccountResponse<status extends 200 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IUser'] :
+		null
+	headers: APIHeaders
+	struct: 'User'
+}
+
+export function updateAccount(data: IUpdateAccount): Promise<ApiUpdateAccountResponse> {
+    return sendProto<ApiUpdateAccountResponse>("/api/v1/account", "User", data as any, "PATCH")
 }
 
 export type IUpdateDatingProfile = {
@@ -69,13 +163,14 @@ export type IUpdateDatingProfile = {
 	prompts?: string[]
 	known_langs?: string[]
 	location?: string
-	location2?: string
 	school?: string
 	job_title?: string
 	company?: string
 	top_song?: string
 	top_artist?: string
 	pronouns?: string
+	dream_job?: string
+	interests?: string[]
 	height_unit?: string
 	sexuality?: string
 	education?: string
@@ -96,24 +191,66 @@ export type IUpdateDatingProfile = {
 	show_gender?: boolean
 	show_pronouns?: boolean
 }
-export function updateDatingProfile(data: IUpdateDatingProfile) {
-    return sendProto("/api/v1/dating_profile", "DatingProfile", data as any, "PATCH")
+
+type ApiUpdateDatingProfileResponse<status extends 200 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IDatingProfile'] :
+		null
+	headers: APIHeaders
+	struct: 'DatingProfile'
+}
+
+export function updateDatingProfile(data: IUpdateDatingProfile): Promise<ApiUpdateDatingProfileResponse> {
+    return sendProto<ApiUpdateDatingProfileResponse>("/api/v1/dating_profile", "DatingProfile", data as any, "PATCH")
+}
+
+
+type ApiGetDatingProfilesForYouResponse<status extends 200 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IDataProfilesForYou'] :
+		null
+	headers: APIHeaders
+	struct: 'DataProfilesForYou'
+}
+
+export function getDatingProfilesForYou(): Promise<ApiGetDatingProfilesForYouResponse> {
+    return sendProto<ApiGetDatingProfilesForYouResponse>("/api/v1/datingProfilesForYou", "Blank", { i: 0 }, "GET")
 }
 
 export type INewMessage = {
 	conversation_id: string
 	message: string
 }
-export function newMessage(data: INewMessage) {
-    return sendProto("/api/v1/messages", "Messages", data as any, "POST")
+
+type ApiNewMessageResponse<status extends 201 | 404 = any> = {
+	status: status,
+	data: status extends 201 ? ProtoBufsTypes['IMessages'] :
+		status extends 404 ? ProtoBufsTypes['IServerError'] :
+		null
+	headers: APIHeaders
+	struct: 'Messages' | 'ServerError'
+}
+
+export function newMessage(data: INewMessage): Promise<ApiNewMessageResponse> {
+    return sendProto<ApiNewMessageResponse>("/api/v1/messages", "Messages", data as any, "POST")
 }
 
 export type IUpdateMessage = {
 	id: string
 	content: string
 }
-export function updateMessage(data: IUpdateMessage) {
-    return sendProto("/api/v1/messages", "EditMessage", data as any, "PATCH")
+
+type ApiUpdateMessageResponse<status extends 200 | 404 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IMessages'] :
+		status extends 404 ? ProtoBufsTypes['IServerError'] :
+		null
+	headers: APIHeaders
+	struct: 'Messages' | 'ServerError'
+}
+
+export function updateMessage(data: IUpdateMessage): Promise<ApiUpdateMessageResponse> {
+    return sendProto<ApiUpdateMessageResponse>("/api/v1/messages", "EditMessage", data as any, "PATCH")
 }
 
 export type IListMessages = {
@@ -121,56 +258,133 @@ export type IListMessages = {
 	skip?: number
 	conversation_id: string
 }
-export function listMessages(data: IListMessages) {
-    return sendProto("/api/v1/messages/list", "Messagelist", data as any, "POST")
+
+type ApiListMessagesResponse<status extends 200 | 404 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IMessagelist'] :
+		status extends 404 ? ProtoBufsTypes['IServerError'] :
+		null
+	headers: APIHeaders
+	struct: 'Messagelist' | 'ServerError'
+}
+
+export function listMessages(data: IListMessages): Promise<ApiListMessagesResponse> {
+    return sendProto<ApiListMessagesResponse>("/api/v1/messages/list", "Messagelist", data as any, "POST")
 }
 
 export type IDeleteMessage = {
 	id: string
 }
-export function deleteMessage(data: IDeleteMessage) {
-    return sendProto("/api/v1/messages", "SpecifyRequest", data as any, "DELETE")
+
+type ApiDeleteMessageResponse<status extends 200 | 404 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IMessages'] :
+		status extends 404 ? ProtoBufsTypes['IServerError'] :
+		null
+	headers: APIHeaders
+	struct: 'Messages' | 'ServerError'
+}
+
+export function deleteMessage(data: IDeleteMessage): Promise<ApiDeleteMessageResponse> {
+    return sendProto<ApiDeleteMessageResponse>("/api/v1/messages", "SpecifyRequest", data as any, "DELETE")
 }
 
 export type IMarkRead = {
 	id: string
 }
-export function markRead(data: IMarkRead) {
-    return sendProto("/api/v1/messages/markAsRead", "SpecifyRequest", data as any, "POST")
+
+type ApiMarkReadResponse<status extends 201 | 404 = any> = {
+	status: status,
+	data: status extends 201 ? ProtoBufsTypes['IMessages'] :
+		status extends 404 ? ProtoBufsTypes['IServerError'] :
+		null
+	headers: APIHeaders
+	struct: 'Messages' | 'ServerError'
+}
+
+export function markRead(data: IMarkRead): Promise<ApiMarkReadResponse> {
+    return sendProto<ApiMarkReadResponse>("/api/v1/messages/markAsRead", "SpecifyRequest", data as any, "POST")
 }
 
 export type IMarkReceived = {
 	id: string
 }
-export function markReceived(data: IMarkReceived) {
-    return sendProto("/api/v1/messages/markAsReceived", "SpecifyRequest", data as any, "POST")
+
+type ApiMarkReceivedResponse<status extends 201 | 404 = any> = {
+	status: status,
+	data: status extends 201 ? ProtoBufsTypes['IMessages'] :
+		status extends 404 ? ProtoBufsTypes['IServerError'] :
+		null
+	headers: APIHeaders
+	struct: 'Messages' | 'ServerError'
+}
+
+export function markReceived(data: IMarkReceived): Promise<ApiMarkReceivedResponse> {
+    return sendProto<ApiMarkReceivedResponse>("/api/v1/messages/markAsReceived", "SpecifyRequest", data as any, "POST")
 }
 
 export type IListConversations = {
 	take?: number
 	skip?: number
 }
-export function listConversations(data: IListConversations) {
-    return sendProto("/api/v1/conversations/list", "ConversationList", data as any, "POST")
+
+type ApiListConversationsResponse<status extends 200 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IConversationList'] :
+		null
+	headers: APIHeaders
+	struct: 'ConversationList'
+}
+
+export function listConversations(data: IListConversations): Promise<ApiListConversationsResponse> {
+    return sendProto<ApiListConversationsResponse>("/api/v1/conversations/list", "ConversationList", data as any, "POST")
 }
 
 export type IMatchLike = {
 	target_id: string
 	is_super: boolean
 }
-export function matchLike(data: IMatchLike) {
-    return sendProto("/api/v1/matching/like", "Likes", data as any, "POST")
+
+type ApiMatchLikeResponse<status extends 200 | 201 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['ILikes'] :
+		status extends 201 ? ProtoBufsTypes['ILikes'] :
+		null
+	headers: APIHeaders
+	struct: 'Likes' | 'Likes'
+}
+
+export function matchLike(data: IMatchLike): Promise<ApiMatchLikeResponse> {
+    return sendProto<ApiMatchLikeResponse>("/api/v1/matching/like", "Likes", data as any, "POST")
 }
 
 export type IMatchDislike = {
 	target_id: string
 }
-export function matchDislike(data: IMatchDislike) {
-    return sendProto("/api/v1/matching/like", "Dislikes", data as any, "POST")
+
+type ApiMatchDislikeResponse<status extends 200 | 201 = any> = {
+	status: status,
+	data: status extends 200 ? ProtoBufsTypes['IDislikes'] :
+		status extends 201 ? ProtoBufsTypes['IDislikes'] :
+		null
+	headers: APIHeaders
+	struct: 'Dislikes' | 'Dislikes'
 }
 
-export function test() {
-    return sendProto("/test", "Blank", { i: 0 }, "GET")
+export function matchDislike(data: IMatchDislike): Promise<ApiMatchDislikeResponse> {
+    return sendProto<ApiMatchDislikeResponse>("/api/v1/matching/like", "Dislikes", data as any, "POST")
+}
+
+
+type ApiTestResponse<status extends 200 = any> = {
+	status: status,
+	data: null
+	headers: APIHeaders
+	struct: null
+}
+
+export function test(): Promise<ApiTestResponse> {
+    return sendProto<ApiTestResponse>("/test", "Blank", { i: 0 }, "GET")
 }
 
 export type Types = {
@@ -201,6 +415,7 @@ export const Routes = {
 	deleteAccount,
 	updateAccount,
 	updateDatingProfile,
+	getDatingProfilesForYou,
 	newMessage,
 	updateMessage,
 	listMessages,

@@ -7,14 +7,16 @@ export const supportedLanguages = [
   'es',
   'fr',
   'ja'
-]
+] as const
+
+export type SupportedLanguages = typeof supportedLanguages[number]
 
 export const languageToFlag: Record<LanguageRecordKey, string> = {
   'en': 'US',
   'es': 'ES',
   'fr': 'FR',
   'ja': 'JP'
-}
+} as const
 
 export const languageRecord: Record<string, string> = {
   en: 'English',

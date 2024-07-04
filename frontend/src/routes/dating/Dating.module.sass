@@ -1,0 +1,193 @@
+// Copyright © 2024 Navarrotech
+
+.datingProfile
+  position: relative
+  height: 100%
+  z-index: 100
+
+  .primaryPhoto
+    position: relative
+
+    .photo
+      height: calc(80vh - $bottombarHeight - $topbarHeight)
+      background-size: cover
+      background-position: center
+      background-repeat: no-repeat
+
+  .details
+    padding: 0.5em 0.5em 18em
+
+  .photo
+    width: 100%
+
+  .attributes
+    display: block
+    border-radius: 4px
+    padding: 0.5em
+
+    &:not(:last-child)
+      margin-bottom: 0.5em
+
+    .attributeTitle
+      font-size: 0.9rem
+      font-weight: bold
+      opacity: 0.7
+
+    .attribute
+
+      .label
+        font-size: 0.9rem
+        font-weight: bold
+
+    .text
+      font-size: 0.9rem
+      font-weight: light
+
+      &.larger
+        font-size: 1.15rem
+
+    .attributeTitleGroup
+      display: flex
+      align-items: center
+      justify-content: flex-start
+      flex-direction: row
+      gap: 0.4em
+
+      > svg
+        opacity: 0.5
+
+.controls
+  position: fixed
+  bottom: calc($bottombarHeight + 1em)
+  left: 0
+  right: 0
+  width: 100vw
+  z-index: 501
+
+  display: flex
+  justify-content: space-between
+  align-items: center
+  
+  padding: 0 2em
+
+  .controlButton
+    border-radius: 50%
+    border-width: 3px
+    $bkgTransparency: -0.7%
+    $iconLightness: 0%
+
+    &.undoButton
+      font-size: 1rem
+      color: color.scale($warning, $lightness: $iconLightness)
+      border-color: $warning
+      background: color.adjust($warning, $alpha: $bkgTransparency)
+      box-shadow: 0 0 12px 2px color.scale($warning, $alpha: $bkgTransparency)
+
+    &.dislikeButton
+      font-size: 1.4rem
+      color: color.scale($danger, $lightness: $iconLightness)
+      border-color: $danger
+      background: color.adjust($danger, $alpha: $bkgTransparency)
+      box-shadow: 0 0 12px 2px color.scale($danger, $alpha: $bkgTransparency)
+
+    &.superlikeButton
+      font-size: 1rem
+      color: color.scale($primary, $lightness: $iconLightness)
+      border-color: $primary
+      background: color.adjust($primary, $alpha: $bkgTransparency)
+      box-shadow: 0 0 12px 2px color.scale($primary, $alpha: $bkgTransparency)
+
+      // Disabled for MVP
+      display: none
+
+    &.likeButton
+      font-size: 1.4rem
+      color: color.scale($success, $lightness: $iconLightness)
+      border-color: $success
+      background: color.adjust($success, $alpha: $bkgTransparency)
+      box-shadow: 0 0 12px 2px color.scale($success, $alpha: $bkgTransparency)
+
+    &.messageButton
+      font-size: 1rem
+      color: color.scale($info, $lightness: $iconLightness)
+      border-color: $info
+      background: color.adjust($info, $alpha: $bkgTransparency)
+      box-shadow: 0 0 12px 2px color.scale($info, $alpha: $bkgTransparency)
+
+    :global(.icon)
+      position: relative
+
+    &::before
+      content: ' '
+      position: absolute
+      display: block
+      margin: auto
+      background: black
+      opacity: 0.3
+      top: 25%
+      left: 0
+      right: 0
+      width: 50%
+      height: 50%
+      border-radius: 50%
+      filter: blur(10px)
+
+.slideshow
+  position: relative
+  width: 100%
+  height: 100%
+
+  .progressBar
+    display: flex
+    height: 0.3em
+    margin-bottom: 0.5em
+    gap: 0.3em
+
+    .progressBarChunk
+      flex: 1
+      background-color: lightgray
+      opacity: 0.3
+      border-radius: 4px
+      transition: background-color 200ms
+
+      &.active
+        opacity: 1
+        background-color: $primary
+
+  .slideshowContent
+    position: relative
+    width: 100%
+    height: calc(100% - 15px)
+    overflow: hidden
+    border-radius: 7px
+    display: flex
+    justify-content: center
+    align-items: center
+
+  .gridView
+    display: grid
+    grid-template-columns: repeat(2, 1fr)
+    grid-template-rows: repeat(2, 1fr)
+    width: 100%
+    height: 100%
+
+  .gridItem,
+  .fullScreenImage
+    width: 100vw
+    height: 100%
+    background-size: cover
+    background-position: center
+    transition: transform 0.5s ease-in-out
+
+  .gridItem
+    width: 50vw
+
+:global(.theme-light)
+  .attributes
+    background-color: $light
+    color: $dark
+  
+:global(.theme-dark)
+  .attributes
+    background-color: $darker
+    color: $light

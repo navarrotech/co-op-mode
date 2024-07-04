@@ -38,7 +38,6 @@ const slice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<IUser>) => {
       state.current = action.payload
-      state.loading = false
       state.authorized = !!action.payload?.phone
       if (action.payload?.preferences) {
         // @ts-ignore

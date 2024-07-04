@@ -47,18 +47,21 @@ export default function Router() {
         <Route path={urls.buildProfile} element={<ProfileBuilder />} />
 
         {/* This route ensures that the user's profile is fully completed before letting users access these nested routes */}
-        <Route path={urls.app} element={<ProfileCompletionOutlet />}>
+        <Route path={urls.dashboard} element={<ProfileCompletionOutlet />}>
           <Route path={urls.matching} element={<MatchingPage />} />
           <Route path={urls.discover} element={<DiscoverPage />} />
           <Route path={urls.likes} element={<MatchesPage />} />
           <Route path={urls.messages} element={<ConversationsPage />} />
           <Route path={urls.profile} element={<AccountPage />} />
         </Route>
+
+        <Route path={urls.dashboard} element={<Navigate to={urls.matching} />} />
+        <Route path={urls.app} element={<Navigate to={urls.matching} />} />
       </Route>
 
       {/* Misc */}
-      <Route path={urls.termsOfService} element={<h1>Terms of Service</h1>} />
-      <Route path={urls.privacyPolicy} element={<h1>Privacy Policy</h1>} />
+      <Route path={urls.termsOfService} element={<h1></h1>} />
+      <Route path={urls.privacyPolicy} element={<h1></h1>} />
 
       {/* Catch-all 404 */}
       <Route path="*" element={<Navigate to={urls.welcome} />} />

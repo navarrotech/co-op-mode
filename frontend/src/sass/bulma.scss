@@ -111,6 +111,10 @@ $family-primary: "Montserrat", Arial, sans-serif;
   }
 }
 
+.navbar {
+  height: $topbarHeight;
+}
+
 .useTitleFont {
     font-family: $family-titles;
 }

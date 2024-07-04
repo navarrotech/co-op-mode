@@ -98,25 +98,26 @@ model dating_profile {
   prompts      String[] @default([])
 
   known_langs  String[] @default([]) @db.VarChar(2)  // Short codes for languages
-  location     String   @default("") @db.VarChar(32) // City or zip code only
-  location2    String   @default("") @db.VarChar(32) // State if needed
+  location     String   @default("") @db.VarChar(64) // City name + state
+  dream_job    String   @default("") @db.VarChar(64) // Dream job
   school       String   @default("") @db.VarChar(64) // School name
   job_title    String   @default("") @db.VarChar(64) // Job title
   company      String   @default("") @db.VarChar(64) // Company name
   top_song     String   @default("") @db.VarChar(32) // Favorite song
   top_artist   String   @default("") @db.VarChar(32) // Favorite artist
   pronouns     String?  @default("") @db.VarChar(16) // He/Him, She/Her, They/Them, etc
+  interests    String[] @default([]) @db.VarChar(120) // Hobbies, interests, etc
 
   height_unit  UnitPreference  @default(Imperial) // imperial vs metric
-  sexuality    Sexuality?      @default(Unknown)  // Straight vs gay vs bi vs pan vs etc
-  education    Education?      @default(Unknown)  // High school, college, in college, etc
-  looking_for  Seeking?        @default(Unknown)  // Friends, Long term, short term, etc
-  family_plans Family?         @default(Unknown)  // Wants kids, doesn't want kids, etc
-  workout      Workout?        @default(Unknown)  // How often they workout
-  personality  Personality?    @default(Unknown)  // INFJ, ENTP, etc
-  smokes       Smokes?         @default(Unknown)
-  drinks       Drinks?         @default(Unknown)
-  cannabis     Stoner?         @default(Unknown)
+  sexuality    Sexuality?      // Straight vs gay vs bi vs pan vs etc
+  education    Education?      // High school, college, in college, etc
+  looking_for  Seeking?        // Friends, Long term, short term, etc
+  family_plans Family?         // Wants kids, doesn't want kids, etc
+  workout      Workout?        // How often they workout
+  personality  Personality?    // INFJ, ENTP, etc
+  smokes       Smokes?
+  drinks       Drinks?
+  cannabis     Stoner?
 
   // Flags
   banned           Boolean @default(false)
@@ -288,7 +289,6 @@ model video_games {
 }
 
 enum Platforms {
-  Unknown
   PC
   PlayStation
   Xbox
@@ -298,7 +298,6 @@ enum Platforms {
 }
 
 enum Provider {
-  Unknown
   Discord
   Steam
   EpicGames
@@ -307,13 +306,11 @@ enum Provider {
 }
 
 enum UnitPreference {
-  Unknown
   Imperial
   Metric
 }
 
 enum Sexuality {
-  Unknown
   Straight
   Gay
   Lesbian
@@ -332,7 +329,6 @@ enum Gender {
 }
 
 enum Seeking { 
-  Unknown
   LongTermRelationship
   ShortTermRelationship
   LongTermOpenToShort
@@ -342,7 +338,6 @@ enum Seeking {
 }
 
 enum Relationship { 
-  Unknown
   Monogomy
   EthicalNonMonogomy
   OpenRelationship
@@ -351,7 +346,6 @@ enum Relationship {
 }
 
 enum Family { 
-  Unknown
   WantsChildren
   DoesntWantChildren
   HaveChildrenWantMore
@@ -360,7 +354,6 @@ enum Family {
 }
 
 enum Workout { 
-  Unknown
   Everyday
   Often
   Sometimes
@@ -368,7 +361,6 @@ enum Workout {
 }
 
 enum Personality { 
-  Unknown
   INTJ
   INTP
   ENTJ
@@ -387,7 +379,6 @@ enum Personality {
 }
 
 enum Education {
-  Unknown
   Bachelors
   InCollege
   HighSchool
@@ -398,7 +389,6 @@ enum Education {
 }
 
 enum Smokes {
-  Unknown
   YesSmokes
   OccassionallySmokes
   SociallySmokes
@@ -407,7 +397,6 @@ enum Smokes {
 }
 
 enum Drinks {
-  Unknown
   NotForMe
   Sober
   OnSpecialOccasions
@@ -416,7 +405,6 @@ enum Drinks {
 }
 
 enum Stoner {
-  Unknown
   YesSmokes
   OccassionallySmokes
   SociallySmokes
@@ -425,7 +413,6 @@ enum Stoner {
 }
 
 enum Pets {
-  Unknown
   HasPets
   WantsPets
   LikesPets

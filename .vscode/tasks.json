@@ -1,0 +1,94 @@
+{
+	"version": "2.0.0",
+	"type": "shell",
+	"presentation": {
+		"echo": true,
+		"reveal": "always",
+		"focus": true,
+		"clear": true,
+		"close": false,
+		"panel": "dedicated",
+		"showReuseMessage": false,
+		"revealProblems": "never",
+	},
+	"tasks": [
+		// Start Vite:
+		{
+			"label": "Start Vite",
+			"detail": "Installs and starts Vite",
+			"icon": {
+				"id": "layout",
+				"color": "terminal.ansiGreen",
+			},
+
+			"presentation": {
+				"group": "Frontend",
+        "reveal": "silent"
+			},
+
+			"command": "yarn && yarn dev",
+			"group": "build",
+		},
+    // Docker compose up
+    {
+      "label": "Docker Compose Up",
+      "detail": "Docker compose up",
+      "icon": {
+        "id": "server",
+        "color": "terminal.ansiGreen",
+      },
+      "presentation": {
+        "group": "Backend",
+        "reveal": "silent"
+      },
+      "command": "docker compose up",
+      "group": "build"
+    },
+    // Start docker compose
+    {
+      "label": "Start Docker Compose",
+      "detail": "Docker compose start",
+      "icon": {
+        "id": "server",
+        "color": "terminal.ansiGreen",
+      },
+      "presentation": {
+        "group": "Backend",
+        "reveal": "silent"
+      },
+      "command": "docker compose start",
+      "group": "build"
+    },
+
+    // Generate frontend API
+    {
+      "label": "Build Frontend API",
+      "detail": "Generates the API for the frontend",
+      "icon": {
+        "id": "package",
+        "color": "terminal.ansiMagenta",
+      },
+      "presentation": {
+        "group": "generate",
+        "reveal": "silent"
+      },
+      "command": "cd api && yarn frontend_api",
+      "group": "build"
+    },
+    // Watch
+    {
+      "label": "Start watching for changes",
+      "detail": "scripts/watch.sh",
+      "icon": {
+        "id": "eye",
+        "color": "terminal.ansiYellow",
+      },
+      "presentation": {
+        "group": "watch",
+        "reveal": "silent"
+      },
+      "command": "./watch.sh",
+      "group": "build"
+    },
+	]
+}

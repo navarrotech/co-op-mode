@@ -35,7 +35,7 @@ type NonFunctionProperties<T> = {
 
 type NonFunction<T> = Pick<T, NonFunctionProperties<T>>;
 
-export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>, method = 'POST'): Promise<ProtoResponse<K>> {
+export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>, method = 'POST'): Promise<K> {
   const Construct = ProtoBufs[struct]
   const buffer = Construct.fromObject(data)
 
@@ -62,13 +62,15 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
   const headers = response.headers
   if (headers.get('content-type') !== 'application/x-protobuf') {
     console.log('Invalid content type, returning undefined: ', headers.get('content-type'))
+
+    // @ts-ignore
     return {
       status: response.status,
       headers: response.headers,
       // @ts-ignore
       data: undefined,
       struct: 'Blank'
-    }
+    } as ProtoResponse
   }
 
   // Next we'll try to decode the response
@@ -81,13 +83,15 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
 
   if (!returnConstruct) {
     console.error('Invalid return struct: ', returnStruct, !!returnConstruct, ProtoBufs)
+
+    // @ts-ignore
     return {
       status: response.status,
       headers: response.headers,
       // @ts-ignore
       data: undefined,
       struct: 'Blank'
-    }
+    } as ProtoResponse
   }
     
   try {
@@ -97,25 +101,28 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
 
     const data = body.toJSON()
     if (NODE_ENV === 'development') {
-      console.log(response.status + ', Decoded data: ' + returnStruct, data)
+      console.log(returnStruct, data)
     }
 
+    // @ts-ignore
     return {
       data,
       status: response.status,
       headers: response.headers,
       struct: returnStruct
-    } as ProtoResponse<K>
+    } as ProtoResponse
   }
   catch (error: any){
     console.log(error)
+
+    // @ts-ignore
     return {
       status: response.status,
       headers: response.headers,
       // @ts-ignore
       data: undefined,
       struct: 'Blank'
-    }
+    } as ProtoResponse
   }
 }
 

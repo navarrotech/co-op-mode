@@ -1,9 +1,10 @@
 // Copyright © 2024 Navarrotech
 
+import styles from '@/sass/loader.module.scss'
 import { useTranslation } from 'react-i18next'
 
 export default function Loader() {
-  return <div className="customLoader" />
+  return <div className={styles.loader} />
 }
 
 export function LoaderLayout() {

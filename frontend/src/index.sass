@@ -35,6 +35,20 @@ body
   > .container
     height: 100%
 
+.dashboard
+  position: relative
+
+  .dashboard-content
+    height: calc(100vh - $topbarHeight - $bottombarHeight)
+    overflow-y: auto
+
+  .centered-content
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    height: 100%
+
 .container,
 .section
   &.is-stacked
@@ -54,5 +68,3 @@ body
 
   .dropdown-item:not(:last-child)
     border-bottom: 1px solid rgba(238, 238, 238, 0.2)
-
-

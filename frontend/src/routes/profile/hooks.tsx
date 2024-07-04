@@ -27,6 +27,7 @@ export function ProfileCompletionOutlet() {
       return
     }
     if (!isProfileComplete(user!, datingProfile!)) {
+      console.log('Redirecting to buildProfile: The profile is not complete')
       navigate(urls.buildProfile)
     }
   }, [ user, datingProfile ])
@@ -39,4 +40,3 @@ export function ProfileCompletionOutlet() {
     <BottomBar />
   </div>
 } 
-

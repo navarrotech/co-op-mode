@@ -26,6 +26,10 @@ message User {
     repeated Dislikes dislikes = 12;
 }
 
+message UserPublicInfo {
+    string first_name = 2;
+}
+
 message Preferences {
     string id = 1;
     string owner_id = 2;
@@ -35,8 +39,8 @@ message Preferences {
 message DatingProfile {
     string id = 1;
     string owner_id = 2;
-    string birthday = 3;
-    string gender = 4;
+    optional int32 age = 3;
+    optional string gender = 4;
     repeated string fav_vgames = 5;
     repeated string fav_vgenres = 6;
     repeated string fav_vplatforms = 7;
@@ -50,15 +54,15 @@ message DatingProfile {
     repeated string prompts = 15;
     repeated string known_langs = 16;
     string location = 17;
-    string location2 = 18;
+    string dream_job = 18;
     string school = 19;
     string job_title = 20;
     string company = 21;
     string top_song = 22;
     string top_artist = 23;
-    string pronouns = 24;
+    optional string pronouns = 24;
     string height_unit = 25;
-    string sexuality = 26;
+    optional string sexuality = 26;
     string education = 27;
     string looking_for = 28;
     string relationship = 29;
@@ -68,17 +72,21 @@ message DatingProfile {
     string smokes = 33;
     string drinks = 34;
     string cannabis = 35;
-    bool banned = 36;
+    optional bool banned = 36;
     bool use_smart_photos = 37;
-    bool hide_distance = 38;
-    bool hide_age = 39;
-    bool dnd_mode = 40;
-    bool show_sexuality = 41;
-    bool show_gender = 42;
-    bool show_pronouns = 43;
-    repeated string wanting = 44;
-    string created_at = 45;
-    string updated_at = 46;
+    bool dnd_mode = 38;
+    repeated string wanting = 39;
+    optional int32 distance = 40;
+    optional string birthday = 41;
+    optional string updated_at = 42;
+    repeated string interests = 43;
+    optional bool hide_distance = 44;
+    optional bool hide_age = 45;
+    optional bool show_sexuality = 46;
+    optional bool show_gender = 47;
+    optional bool show_pronouns = 48;
+    repeated Media media = 49;
+    UserPublicInfo user = 50;
 }
 
 message Status {

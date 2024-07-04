@@ -80,7 +80,7 @@ const route: Route = {
         daily: sanitize(daily_limits)
       },
       // @ts-ignore
-      user: sanitize(user)
+      user: sanitize(coreUser)
     })
 
     request.session.user = coreUser
@@ -90,4 +90,3 @@ const route: Route = {
 }
 
 export default route
-

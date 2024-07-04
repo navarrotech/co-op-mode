@@ -8,7 +8,7 @@ export default function AccountPage() {
   return <section className="section">
     <div className="container is-max-fullhd">
       <div className="block has-text-centered">
-        <h1 className="title">Edit Account</h1>
+        <h1 className="title"></h1>
       </div>
     </div>
   </section>

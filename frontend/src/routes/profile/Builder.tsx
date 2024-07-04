@@ -385,12 +385,38 @@ export default function ProfileBuilder() {
 }
 
 export function isProfileComplete(user: IUser, datingProfile: IDatingProfile) {
-  return user
-    && user.first_name
-    && user.last_name
-    && datingProfile
-    && datingProfile.gender
-    && datingProfile.birthday
-    && datingProfile.looking_for?.length
-    // && user.media?.length // TODO: Media!
+  if (!user) {
+    console.warn('Profile check: User data not found')
+    return false
+  }
+  if (!user.first_name) {
+    console.warn('Profile check: First name not found')
+    return false
+  }
+  if (!user.last_name) {
+    console.warn('Profile check: Last name not found')
+    return false
+  }
+  if (!datingProfile) {
+    console.warn('Profile check: Dating profile not found')
+    return false
+  }
+  if (!datingProfile.gender) {
+    console.warn('Profile check: Gender on profile not found')
+    return false
+  }
+  if (!datingProfile.birthday) {
+    console.warn('Profile check: Birthday on profile not found')
+    return false
+  }
+  if (!datingProfile.wanting?.length) {
+    console.warn('Profile check: \'Looking for\' value on profile not found')
+    return false
+  }
+  // if (!user.media?.length) {
+  //   console.warn('Profile check: Media on profile not found')
+  //   return false
+  // }
+
+  return true
 }

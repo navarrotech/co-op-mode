@@ -156,7 +156,7 @@ type Analyzed = {
 }
 
 // This is so hacky lol
-function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
+export function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
   const stringified = func.toString()
 
   let results: Analyzed[] = []
@@ -203,10 +203,10 @@ function staticCodeAnalysis(func: Function, url: string): Analyzed[] {
       })
     }
 
-    const proto = lines[index + 1].match(/response\.sendProto\("(\w+)",/)?.[1]
+    const proto = lines[index + 1].match(/response\.sendProto\('(\w+)',/)?.[1]
 
     if (proto === undefined) {
-      console.warn('Found no proto in static code analysis of line for route: ', url, lines[index + 1])
+      console.warn('Found no proto in static code analysis of line for route: ', url, '\n' + lines[index + 1].trim())
       continue
     }
     results.push({

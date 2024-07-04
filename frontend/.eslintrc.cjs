@@ -26,7 +26,8 @@ module.exports = {
   plugins: [
     'react-refresh',
     'header',
-    '@stylistic/js'
+    '@stylistic/js',
+    'i18next'
   ],
   rules: {
     'react-refresh/only-export-components': [
@@ -45,6 +46,12 @@ module.exports = {
     '@typescript-eslint/ban-types': 'off',
 
     //////////////////////////////////////////
+    // Enforcing internationalization
+    
+    // No literal strings https://www.npmjs.com/package/eslint-plugin-i18next
+    'i18next/no-literal-string': 'error',
+
+    //////////////////////////////////////////
     // Enforcing consistency
 
     // Enforce single quotes https://eslint.org/docs/latest/rules/quotes
@@ -56,9 +63,9 @@ module.exports = {
     // Camel case! https://eslint.org/docs/latest/rules/camelcase
     camelcase: 'off',
     // No unused vars https://eslint.org/docs/latest/rules/no-unused-vars
-    "no-unused-vars": "off",
+    'no-unused-vars': 'off',
     // https://stackoverflow.com/a/61555310/9951599
-    "@typescript-eslint/no-unused-vars": ["error"],
+    '@typescript-eslint/no-unused-vars': ['error'],
     // No useless escape https://eslint.org/docs/latest/rules/no-useless-escape
     'no-useless-escape': 'error',
     // Disable vars https://eslint.org/docs/latest/rules/no-var
@@ -68,9 +75,9 @@ module.exports = {
     // Disable semi colons https://eslint.org/docs/latest/rules/semi
     semi: ['error', 'never'],
     // Ensure that we're using curly braces for all lines https://eslint.org/docs/latest/rules/curly
-    "curly": ["error", "all"],
+    'curly': ['error', 'all'],
     // No single-line magic: https://eslint.org/docs/latest/rules/brace-style
-    "brace-style": ["error", "stroustrup", { "allowSingleLine": false }],
+    'brace-style': ['error', 'stroustrup', { 'allowSingleLine': false }],
     // End of line https://eslint.style/packages/js
     // Depreciated original package: (https://eslint.org/docs/latest/rules/eol-last)
     '@stylistic/js/eol-last': ['error', 'always'],

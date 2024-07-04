@@ -2,21 +2,23 @@
 
 // React.js
 import { useState } from 'react'
-import { NavLink } from 'react-router-dom'
+// import { NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 
 // Iconography
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faUser } from '@fortawesome/free-solid-svg-icons'
 
 // Redux
 import { useSelector } from '@/store'
 
 // Components
-import Dropdown from '../../elements/Dropdown'
+// import Dropdown from '../../elements/Dropdown'
 
 export default function Topbar() {
   const [ showMobileMenu, setShowMobileMenu ] = useState<boolean>(false)
   const user = useSelector(state => state.user.current)
+  const { t } = useTranslation()
 
   if (!user) {
     return <></>
@@ -27,7 +29,7 @@ export default function Topbar() {
       <div className="navbar-brand">
         <div className="navbar-item">
           <img src="/logo.png" width="28" height="28" alt="Navarrotech" />
-          <h1 className="title is-5 ml-3">Co-Op Mode</h1>
+          <h1 className="title is-5 ml-3">{ t('brand_name') }</h1>
         </div>
         <div
           role="button"
@@ -46,16 +48,16 @@ export default function Topbar() {
       <div className={'navbar-menu' + (showMobileMenu ? ' is-active' : '')}>
         <div className="navbar-start">
           <hr className="navbar-divider is-hidden-desktop" />
-          <NavLink
+          {/* <NavLink
             to="/logout"
             className="navbar-item is-hidden-desktop"
             onClick={() => setShowMobileMenu(false)}
-          >Logout</NavLink>
+          >Logout</NavLink> */}
         </div>
 
         <div className="navbar-end is-hidden-touch">
           <div className="navbar-item">
-            <Dropdown
+            {/* <Dropdown
               isTriggerRounded
               className="is-right"
               trigger={<div className="icon">
@@ -65,7 +67,7 @@ export default function Topbar() {
               <NavLink to="/account" className="dropdown-item">Account (Coming soon)</NavLink>
               <hr className="dropdown-divider" />
               <NavLink to="/logout" className="dropdown-item">Logout</NavLink>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
       </div>

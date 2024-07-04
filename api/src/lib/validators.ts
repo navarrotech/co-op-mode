@@ -164,13 +164,7 @@ export const datingProfileValidator = (setRequired: boolean = false) => yup.obje
     .string()
     .typeError('')
     .trim()
-    .max(32)
-    .optional(),
-  location2: yup
-    .string()
-    .typeError('')
-    .trim()
-    .max(32)
+    .max(64)
     .optional(),
   school: yup
     .string()
@@ -207,6 +201,20 @@ export const datingProfileValidator = (setRequired: boolean = false) => yup.obje
     .typeError('')
     .trim()
     .max(16)
+    .optional(),
+  dream_job: yup
+    .string()
+    .typeError('')
+    .trim()
+    .max(64)
+    .optional(),
+  interests: yup
+    .array()
+    .typeError('')
+    .of(
+      yup.string().trim().max(12)
+    )
+    .max(10)
     .optional(),
   height_unit: yup
     .string()

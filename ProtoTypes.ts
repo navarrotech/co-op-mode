@@ -31,4 +31,37 @@ const {
     ...ProtoBufs
 } = ProtoBufLibrary
 
+export type ProtoBufsTypes = {
+    IFormInvalid: ProtoBufLibrary.IFormInvalid
+    IFormsInvalid: ProtoBufLibrary.IFormsInvalid
+    IUser: ProtoBufLibrary.IUser
+    IPreferences: ProtoBufLibrary.IPreferences
+    IDatingProfile: ProtoBufLibrary.IDatingProfile
+    IStatus: ProtoBufLibrary.IStatus
+    IEmitStatus: ProtoBufLibrary.IEmitStatus
+    ILimits: ProtoBufLibrary.ILimits
+    IPermanentLimits: ProtoBufLibrary.IPermanentLimits
+    IDailyLimits: ProtoBufLibrary.IDailyLimits
+    IMonthlyLimits: ProtoBufLibrary.IMonthlyLimits
+    IMedia: ProtoBufLibrary.IMedia
+    ILikes: ProtoBufLibrary.ILikes
+    IDislikes: ProtoBufLibrary.IDislikes
+    IConversations: ProtoBufLibrary.IConversations
+    IConversationList: ProtoBufLibrary.IConversationList
+    IMessages: ProtoBufLibrary.IMessages
+    IEditMessage: ProtoBufLibrary.IEditMessage
+    IEditHistory: ProtoBufLibrary.IEditHistory
+    IMessagelist: ProtoBufLibrary.IMessagelist
+    IVideoGames: ProtoBufLibrary.IVideoGames
+    IAuthorizeByPhoneRequest: ProtoBufLibrary.IAuthorizeByPhoneRequest
+    IAuthResponse: ProtoBufLibrary.IAuthResponse
+    ISyncResponse: ProtoBufLibrary.ISyncResponse
+    IDataProfilesForYou: ProtoBufLibrary.IDataProfilesForYou
+    IServerError: ProtoBufLibrary.IServerError
+    IClientError: ProtoBufLibrary.IClientError
+    ISpecifyRequest: ProtoBufLibrary.ISpecifyRequest
+    IBlank: ProtoBufLibrary.IBlank
+    IChangeEvent: ProtoBufLibrary.IChangeEvent
+}
+
 export default ProtoBufs

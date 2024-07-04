@@ -3,6 +3,8 @@
 import { initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
 
+import { NODE_ENV } from './env'
+
 const firebaseConfig = {
   apiKey: 'AIzaSyAssDkkAL8o09daKhAfcFHTJ9n7yKSwUe4',
   authDomain: 'navarrotech-co-op-mode.firebaseapp.com',
@@ -13,4 +15,6 @@ const firebaseConfig = {
 }
 
 export const firebaseApp = initializeApp(firebaseConfig)
-export const firebaseAnalytics = getAnalytics(firebaseApp)
+export const firebaseAnalytics = NODE_ENV === 'development'
+  ? null 
+  : getAnalytics(firebaseApp)

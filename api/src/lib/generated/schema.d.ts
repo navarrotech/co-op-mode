@@ -369,6 +369,103 @@ export class User implements IUser {
     public static getTypeUrl(typeUrlPrefix?: string): string;
 }
 
+/** Properties of a UserPublicInfo. */
+export interface IUserPublicInfo {
+
+    /** UserPublicInfo first_name */
+    first_name?: (string|null);
+}
+
+/** Represents a UserPublicInfo. */
+export class UserPublicInfo implements IUserPublicInfo {
+
+    /**
+     * Constructs a new UserPublicInfo.
+     * @param [properties] Properties to set
+     */
+    constructor(properties?: IUserPublicInfo);
+
+    /** UserPublicInfo first_name. */
+    public first_name: string;
+
+    /**
+     * Creates a new UserPublicInfo instance using the specified properties.
+     * @param [properties] Properties to set
+     * @returns UserPublicInfo instance
+     */
+    public static create(properties?: IUserPublicInfo): UserPublicInfo;
+
+    /**
+     * Encodes the specified UserPublicInfo message. Does not implicitly {@link UserPublicInfo.verify|verify} messages.
+     * @param message UserPublicInfo message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encode(message: IUserPublicInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Encodes the specified UserPublicInfo message, length delimited. Does not implicitly {@link UserPublicInfo.verify|verify} messages.
+     * @param message UserPublicInfo message or plain object to encode
+     * @param [writer] Writer to encode to
+     * @returns Writer
+     */
+    public static encodeDelimited(message: IUserPublicInfo, writer?: $protobuf.Writer): $protobuf.Writer;
+
+    /**
+     * Decodes a UserPublicInfo message from the specified reader or buffer.
+     * @param reader Reader or buffer to decode from
+     * @param [length] Message length if known beforehand
+     * @returns UserPublicInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decode(reader: ($protobuf.Reader|Uint8Array), length?: number): UserPublicInfo;
+
+    /**
+     * Decodes a UserPublicInfo message from the specified reader or buffer, length delimited.
+     * @param reader Reader or buffer to decode from
+     * @returns UserPublicInfo
+     * @throws {Error} If the payload is not a reader or valid buffer
+     * @throws {$protobuf.util.ProtocolError} If required fields are missing
+     */
+    public static decodeDelimited(reader: ($protobuf.Reader|Uint8Array)): UserPublicInfo;
+
+    /**
+     * Verifies a UserPublicInfo message.
+     * @param message Plain object to verify
+     * @returns `null` if valid, otherwise the reason why it is not
+     */
+    public static verify(message: { [k: string]: any }): (string|null);
+
+    /**
+     * Creates a UserPublicInfo message from a plain object. Also converts values to their respective internal types.
+     * @param object Plain object
+     * @returns UserPublicInfo
+     */
+    public static fromObject(object: { [k: string]: any }): UserPublicInfo;
+
+    /**
+     * Creates a plain object from a UserPublicInfo message. Also converts values to other types if specified.
+     * @param message UserPublicInfo
+     * @param [options] Conversion options
+     * @returns Plain object
+     */
+    public static toObject(message: UserPublicInfo, options?: $protobuf.IConversionOptions): { [k: string]: any };
+
+    /**
+     * Converts this UserPublicInfo to JSON.
+     * @returns JSON object
+     */
+    public toJSON(): { [k: string]: any };
+
+    /**
+     * Gets the default type url for UserPublicInfo
+     * @param [typeUrlPrefix] your custom typeUrlPrefix(default "type.googleapis.com")
+     * @returns The default type url
+     */
+    public static getTypeUrl(typeUrlPrefix?: string): string;
+}
+
 /** Properties of a Preferences. */
 export interface IPreferences {
 
@@ -487,8 +584,8 @@ export interface IDatingProfile {
     /** DatingProfile owner_id */
     owner_id?: (string|null);
 
-    /** DatingProfile birthday */
-    birthday?: (string|null);
+    /** DatingProfile age */
+    age?: (number|null);
 
     /** DatingProfile gender */
     gender?: (string|null);
@@ -532,8 +629,8 @@ export interface IDatingProfile {
     /** DatingProfile location */
     location?: (string|null);
 
-    /** DatingProfile location2 */
-    location2?: (string|null);
+    /** DatingProfile dream_job */
+    dream_job?: (string|null);
 
     /** DatingProfile school */
     school?: (string|null);
@@ -592,14 +689,29 @@ export interface IDatingProfile {
     /** DatingProfile use_smart_photos */
     use_smart_photos?: (boolean|null);
 
+    /** DatingProfile dnd_mode */
+    dnd_mode?: (boolean|null);
+
+    /** DatingProfile wanting */
+    wanting?: (string[]|null);
+
+    /** DatingProfile distance */
+    distance?: (number|null);
+
+    /** DatingProfile birthday */
+    birthday?: (string|null);
+
+    /** DatingProfile updated_at */
+    updated_at?: (string|null);
+
+    /** DatingProfile interests */
+    interests?: (string[]|null);
+
     /** DatingProfile hide_distance */
     hide_distance?: (boolean|null);
 
     /** DatingProfile hide_age */
     hide_age?: (boolean|null);
-
-    /** DatingProfile dnd_mode */
-    dnd_mode?: (boolean|null);
 
     /** DatingProfile show_sexuality */
     show_sexuality?: (boolean|null);
@@ -610,14 +722,11 @@ export interface IDatingProfile {
     /** DatingProfile show_pronouns */
     show_pronouns?: (boolean|null);
 
-    /** DatingProfile wanting */
-    wanting?: (string[]|null);
+    /** DatingProfile media */
+    media?: (IMedia[]|null);
 
-    /** DatingProfile created_at */
-    created_at?: (string|null);
-
-    /** DatingProfile updated_at */
-    updated_at?: (string|null);
+    /** DatingProfile user */
+    user?: (IUserPublicInfo|null);
 }
 
 /** Represents a DatingProfile. */
@@ -635,11 +744,11 @@ export class DatingProfile implements IDatingProfile {
     /** DatingProfile owner_id. */
     public owner_id: string;
 
-    /** DatingProfile birthday. */
-    public birthday: string;
+    /** DatingProfile age. */
+    public age?: (number|null);
 
     /** DatingProfile gender. */
-    public gender: string;
+    public gender?: (string|null);
 
     /** DatingProfile fav_vgames. */
     public fav_vgames: string[];
@@ -680,8 +789,8 @@ export class DatingProfile implements IDatingProfile {
     /** DatingProfile location. */
     public location: string;
 
-    /** DatingProfile location2. */
-    public location2: string;
+    /** DatingProfile dream_job. */
+    public dream_job: string;
 
     /** DatingProfile school. */
     public school: string;
@@ -699,13 +808,13 @@ export class DatingProfile implements IDatingProfile {
     public top_artist: string;
 
     /** DatingProfile pronouns. */
-    public pronouns: string;
+    public pronouns?: (string|null);
 
     /** DatingProfile height_unit. */
     public height_unit: string;
 
     /** DatingProfile sexuality. */
-    public sexuality: string;
+    public sexuality?: (string|null);
 
     /** DatingProfile education. */
     public education: string;
@@ -735,37 +844,88 @@ export class DatingProfile implements IDatingProfile {
     public cannabis: string;
 
     /** DatingProfile banned. */
-    public banned: boolean;
+    public banned?: (boolean|null);
 
     /** DatingProfile use_smart_photos. */
     public use_smart_photos: boolean;
 
-    /** DatingProfile hide_distance. */
-    public hide_distance: boolean;
-
-    /** DatingProfile hide_age. */
-    public hide_age: boolean;
-
     /** DatingProfile dnd_mode. */
     public dnd_mode: boolean;
-
-    /** DatingProfile show_sexuality. */
-    public show_sexuality: boolean;
-
-    /** DatingProfile show_gender. */
-    public show_gender: boolean;
-
-    /** DatingProfile show_pronouns. */
-    public show_pronouns: boolean;
 
     /** DatingProfile wanting. */
     public wanting: string[];
 
-    /** DatingProfile created_at. */
-    public created_at: string;
+    /** DatingProfile distance. */
+    public distance?: (number|null);
+
+    /** DatingProfile birthday. */
+    public birthday?: (string|null);
 
     /** DatingProfile updated_at. */
-    public updated_at: string;
+    public updated_at?: (string|null);
+
+    /** DatingProfile interests. */
+    public interests: string[];
+
+    /** DatingProfile hide_distance. */
+    public hide_distance?: (boolean|null);
+
+    /** DatingProfile hide_age. */
+    public hide_age?: (boolean|null);
+
+    /** DatingProfile show_sexuality. */
+    public show_sexuality?: (boolean|null);
+
+    /** DatingProfile show_gender. */
+    public show_gender?: (boolean|null);
+
+    /** DatingProfile show_pronouns. */
+    public show_pronouns?: (boolean|null);
+
+    /** DatingProfile media. */
+    public media: IMedia[];
+
+    /** DatingProfile user. */
+    public user?: (IUserPublicInfo|null);
+
+    /** DatingProfile _age. */
+    public _age?: "age";
+
+    /** DatingProfile _gender. */
+    public _gender?: "gender";
+
+    /** DatingProfile _pronouns. */
+    public _pronouns?: "pronouns";
+
+    /** DatingProfile _sexuality. */
+    public _sexuality?: "sexuality";
+
+    /** DatingProfile _banned. */
+    public _banned?: "banned";
+
+    /** DatingProfile _distance. */
+    public _distance?: "distance";
+
+    /** DatingProfile _birthday. */
+    public _birthday?: "birthday";
+
+    /** DatingProfile _updated_at. */
+    public _updated_at?: "updated_at";
+
+    /** DatingProfile _hide_distance. */
+    public _hide_distance?: "hide_distance";
+
+    /** DatingProfile _hide_age. */
+    public _hide_age?: "hide_age";
+
+    /** DatingProfile _show_sexuality. */
+    public _show_sexuality?: "show_sexuality";
+
+    /** DatingProfile _show_gender. */
+    public _show_gender?: "show_gender";
+
+    /** DatingProfile _show_pronouns. */
+    public _show_pronouns?: "show_pronouns";
 
     /**
      * Creates a new DatingProfile instance using the specified properties.
