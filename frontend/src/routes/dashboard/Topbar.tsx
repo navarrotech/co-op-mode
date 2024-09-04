@@ -15,7 +15,7 @@ import { useSelector } from '@/store'
 // Components
 // import Dropdown from '../../elements/Dropdown'
 
-export default function Topbar() {
+export function Topbar() {
   const [ showMobileMenu, setShowMobileMenu ] = useState<boolean>(false)
   const user = useSelector(state => state.user.current)
   const { t } = useTranslation()

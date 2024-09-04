@@ -13,7 +13,7 @@ type Props = {
     className?: string
 } & React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
 
-export default function ToggleSwitch(props: Props) {
+export function ToggleSwitch(props: Props) {
   const { color = 'primary', checked, onChange, rounded, label, disabled, className='', ...rest } = props
 
   const classes = [

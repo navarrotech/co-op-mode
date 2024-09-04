@@ -19,12 +19,12 @@ import {
 } from '@fortawesome/free-regular-svg-icons'
 
 // Misc
-import urls from '../urls'
+import { urls } from '../urls'
 import styles from './Navigation.module.sass'
 
 const fasSize: SizeProp = 'xl'
 
-export default function BottomBar() {
+export function BottomBar() {
   const { t } = useTranslation()
 
   return <div className={styles.BottomBar}>
@@ -33,35 +33,35 @@ export default function BottomBar() {
         <FontAwesomeIcon icon={faHeartRegular} size={fasSize} className={styles.regular} />
         <FontAwesomeIcon icon={faHeart} size={fasSize} className={styles.solid} />
       </div>
-      <span>{ t('navigation_matching') }</span>
+      {/* <span>{ t('navigation_matching') }</span> */}
     </NavLink>
     <NavLink to={urls.discover} className={({ isActive }) => styles.bottomItem + ' ' + (isActive ? styles.isActive : '')}>
       <div className={styles.iconBox}>
         <FontAwesomeIcon icon={faMapRegular} size={fasSize} className={styles.regular} />
         <FontAwesomeIcon icon={faMap} size={fasSize} className={styles.solid} />
       </div>
-      <span>{ t('navigation_discover') }</span>
+      {/* <span>{ t('navigation_discover') }</span> */}
     </NavLink>
     <NavLink to={urls.likes} className={({ isActive }) => styles.bottomItem + ' ' + (isActive ? styles.isActive : '')}>
       <div className={styles.iconBox}>
         <FontAwesomeIcon icon={faStarRegular} size={fasSize} className={styles.regular} />
         <FontAwesomeIcon icon={faStar} size={fasSize} className={styles.solid} />
       </div>
-      <span>{ t('navigation_likes') }</span>
+      {/* <span>{ t('navigation_likes') }</span> */}
     </NavLink>
     <NavLink to={urls.messages} className={({ isActive }) => styles.bottomItem + ' ' + (isActive ? styles.isActive : '')}>
       <div className={styles.iconBox}>
         <FontAwesomeIcon icon={faMessageRegular} size={fasSize} className={styles.regular} />
         <FontAwesomeIcon icon={faMessage} size={fasSize} className={styles.solid} />
       </div>
-      <span>{ t('navigation_messages') }</span>
+      {/* <span>{ t('navigation_messages') }</span> */}
     </NavLink>
     <NavLink to={urls.profile} className={({ isActive }) => styles.bottomItem + ' ' + (isActive ? styles.isActive : '')}>
       <div className={styles.iconBox}>
         <FontAwesomeIcon icon={faUserRegular} size={fasSize} className={styles.regular} />
         <FontAwesomeIcon icon={faUser} size={fasSize} className={styles.solid} />
       </div>
-      <span>{ t('navigation_profile') }</span>
+      {/* <span>{ t('navigation_profile') }</span> */}
     </NavLink>
   </div>
 }

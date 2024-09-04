@@ -16,7 +16,7 @@ type Props = {
   nextText: string
 }
 
-export default function BuilderTemplate({ title, onNext, nextText, errors, disabled, children }: Props) {
+export function BuilderTemplate({ title, onNext, nextText, errors, disabled, children }: Props) {
 
   useEffect(() => {
     const keyListener = (e: KeyboardEvent) => {

@@ -64,4 +64,6 @@ export type ProtoBufsTypes = {
     IChangeEvent: ProtoBufLibrary.IChangeEvent
 }
 
-export default ProtoBufs
+export {
+    ProtoBufs
+}

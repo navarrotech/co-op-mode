@@ -9,7 +9,7 @@ type Props = {
   className?: string
 }
 
-export default function Meme({ imageUrl, className, topText, bottomText }: Props) {
+export function Meme({ imageUrl, className, topText, bottomText }: Props) {
   return <div className={`${styles.meme} ${className}`}>
     <figure className="image is-fluid">
       <img src={imageUrl} alt="Meme" />

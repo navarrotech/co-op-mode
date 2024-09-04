@@ -3,34 +3,28 @@
   "brand_subtitle": "Dating For Gamers",
   "brand_slogan": "Find your player 2",
   "brand_slogan_2": "A new way to find a partner to play games with",
-  
   "terms_agreement": "By signing in, you are agreeing to our <0>Terms</0> and <1>Privacy Policy</1>.",
   "terms_of_service": "Terms",
   "privacy_policy": "Privacy Policy",
-  
   "sign_in_with_phone": "Sign in with a phone number",
   "sign_in_with_discord": "Sign in with Discord",
   "sign_in_with_google": "Sign in with Google",
-
   "enter_phone": "Enter your phone number",
   "phone_help": "A code will be sent to verify that it's really you. Message and data rates may apply.",
   "phone_changed": "Click here if you changed your phone number.",
   "enter_code": "Enter the code sent to your phone",
   "resend_code_wait": "You can resend the code in {{seconds}} seconds",
   "resend_code": "Didn't receive it? Click here to resend the code",
-
   "profile_builder_first_name": "Let's find your player 2. What's your first name?",
   "profile_builder_welcome_first_name": "Welcome! Nice to meet you {{first_name}}.",
   "profile_builder_patrick_meme_1": "Is this the Krusty Krab?",
   "profile_builder_patrick_meme_2": "No this is {{first_name}}",
   "first_name_placeholder": "Anakin",
-
   "profile_builder_last_name": "What's your last name?",
   "profile_builder_last_name_disclosuer": "Your last name will not be shown to other people.",
   "profile_builder_sideous_meme_1": "From now on you shall be known",
   "profile_builder_sideous_meme_2": "As {{first_name}} {{last_name}}",
   "last_name_placeholder": "Skywalker",
-
   "gender_title": "What do you identify as?",
   "gender_male": "Male",
   "gender_male_plural": "Males",
@@ -38,33 +32,26 @@
   "gender_female_plural": "Females",
   "gender_non_binary": "Non-Binary",
   "gender_non_binary_plural": "Non-Binaries",
-
   "who_do_you_want_to_date": "Who do you want to date?",
   "birthday_title": "When is your birthday?",
   "birthday_placeholder": "May 19th, 2005",
   "confirm_birthday": "Are you {{age_years}} years old?",
   "confirm_birthday_warning": "We're just making sure this is correct, because you cannot change this later.",
-
   "location_access_title": "We need location access to find your player 2",
   "notification_access_title": "Enable notifications so you don't miss messages from other people",
-  
   "add_profile_picture": "Add some profile photos",
   "add_profile_picture_disclosure": "Add some photos to show off your personality, make sure your face is fully visible!",
   "add_more_profile_pictures": "Add more profile photos",
   "add_more_profile_pictures_help": "Keep going! Add more photos to show off your personality. You can add up to 9 photos",
-
   "section_title_looking": "I'm looking for",
   "section_title_about": "About me",
   "section_title_who": "Who I am",
   "section_title_lifestyle": "Lifestyle",
   "section_title_career": "My career",
   "section_title_music": "Music I like",
-
   "distance_away_miles": "{{ miles }} miles away",
   "distance_away_kilometers": "{{ kilometers }} kilometers away",
-
   "not_sure_yet": "🤔 I'm not sure yet",
-
   "PC": "PC",
   "PlayStation": "PlayStation",
   "Xbox": "Xbox",
@@ -148,7 +135,6 @@
   "LikesPets": "LikesPets",
   "DislikesPets": "DislikesPets",
   "NoPets": "NoPets",
-
   "next": "Next",
   "continue": "Continue",
   "select": "Select",
@@ -168,16 +154,38 @@
   "yes": "Yes",
   "no": "No",
   "confirm": "Confirm",
-
   "navigation_matching": "Matching",
   "navigation_discover": "Discover",
   "navigation_likes": "Likes",
   "navigation_messages": "Messages",
   "navigation_profile": "Profile",
-
   "something_went_wrong": "Something went wrong.",
   "failed_to_connect_to_api": "Failed to connect to the server. Automatically retrying...",
-
-  "generic_error":  "Something went wrong. Please try again.",
+  "actions": {
+    "save": "Save",
+    "save-continue": "Save & Continue",
+    "cancel": "Cancel",
+    "close": "Close",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "edit": "Edit",
+    "add": "Add",
+    "search": "Search",
+    "clear": "Clear",
+    "reset": "Reset",
+    "apply": "Apply",
+    "submit": "Submit",
+    "refresh": "Refresh",
+    "view": "View",
+    "copy": "Copy",
+    "paste": "Paste",
+    "download": "Download",
+    "upload": "Upload",
+    "export": "Export",
+    "import": "Import",
+    "exit": "Exit",
+    "save-exit": "Save & exit"
+  },
+  "generic_error": "Something went wrong. Please try again.",
   "choose_language": "Select your language"
 }

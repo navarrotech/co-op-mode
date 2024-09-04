@@ -145,8 +145,6 @@ export const Routes = {
 } as const
 
 export type RouteNames = keyof typeof Routes
-
-export default Routes
 `
 
 const outputDir = path.join(__dirname, '../../../frontend/src/modules/generated')

@@ -4,15 +4,15 @@
 import { type ThunkAction, configureStore, Action } from '@reduxjs/toolkit'
 
 // Reducers
-import user from '@/modules/auth/reducer'
-import core from '@/modules/core/reducer'
-import messages from '@/modules/messages/reducer'
-import dating from '@/modules/dating/reducer'
+import { slice as user } from '@/modules/auth/reducer'
+import { slice as core } from '@/modules/core/reducer'
+import { slice as messages } from '@/modules/messages/reducer'
+import { slice as dating } from '@/modules/dating/reducer'
 
 // Environment
 import { NODE_ENV } from '@/env'
 
-const store = configureStore({
+export const store = configureStore({
   reducer: {
     core: core.reducer,
     dating: dating.reducer,
@@ -36,5 +36,3 @@ export type RootState = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
 
 export type Thunk = ThunkAction<void, RootState, unknown, Action>
-
-export default store

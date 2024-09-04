@@ -17,7 +17,7 @@ const initialState: State = {
   status: undefined
 }
 
-const slice = createSlice({
+export const slice = createSlice({
   name: 'dating',
   initialState,
   reducers: {
@@ -67,5 +67,3 @@ export const {
   updateMedia,
   deleteMedia
 } = slice.actions
-
-export default slice

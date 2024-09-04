@@ -23,7 +23,7 @@ const initialState: State = {
 
 applyTheme(initialState.theme)
 
-const slice = createSlice({
+export const slice = createSlice({
   name: 'core',
   initialState,
   reducers: {
@@ -44,5 +44,3 @@ export const {
   setTheme,
   setLanguage
 } = slice.actions
-
-export default slice

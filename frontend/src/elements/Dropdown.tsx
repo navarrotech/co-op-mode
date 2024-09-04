@@ -9,7 +9,7 @@ type Props = {
     isTriggerRounded?: boolean
 }
 
-export default function Dropdown({ children, trigger, className = '', ...props }: Props) {
+export function Dropdown({ children, trigger, className = '', ...props }: Props) {
   const [ isOpen, setIsOpen ] = useState<boolean>(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 

@@ -82,5 +82,3 @@
 //   updateDislike,
 //   deleteDislike,
 // } = slice.actions
-
-// export default slice

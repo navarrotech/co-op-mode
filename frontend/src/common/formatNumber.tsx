@@ -14,7 +14,7 @@ type Props = {
     phone: string
 }
 
-export default function FormatNumber({ phone }: Props) {
+export function FormatNumber({ phone }: Props) {
   return <>{ formatNumber(phone) }</>
 }
 

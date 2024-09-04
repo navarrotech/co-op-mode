@@ -15,7 +15,7 @@ import { faSun, faMoon, faDesktop, faPalette, type IconDefinition } from '@forta
 import Dropdown from '@/elements/Dropdown'
 import Button from '@/elements/Button'
 
-export default function ThemeButton() {
+export function ThemeButton() {
   const theme = useSelector(state => state.core.theme)
 
   const Trigger = <Button>

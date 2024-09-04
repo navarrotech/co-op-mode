@@ -12,7 +12,7 @@ type Props = {
   noText?: string
 }
 
-export default function Confirm({ title, onYes, onNo, onCancel, children, ...props }: Props) {
+export function Confirm({ title, onYes, onNo, onCancel, children, ...props }: Props) {
   const { t } = useTranslation()
 
   return <div className="modal is-active is-confirmator">

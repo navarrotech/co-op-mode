@@ -32,7 +32,7 @@ type ModalProps = {
 
 const modalsElement = document.getElementById('modals') as HTMLDivElement
 
-export default function Modal(props: ModalProps) {
+export function Modal(props: ModalProps) {
   if (!props.show) {
     return <></>
   }

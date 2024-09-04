@@ -1,6 +1,6 @@
 // Copyright © 2024 Navarrotech
 
-const urls = {
+export const urls = {
   index: '/',
 
   // Auth
@@ -33,5 +33,3 @@ const urls = {
 export const externalUrls = {
   myPhoneNumberChanged: 'TODO'
 }
-
-export default urls

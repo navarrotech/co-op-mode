@@ -4,7 +4,7 @@ import type { IChangeEvent } from './protobuf/schema'
 
 // Lib
 import socketio from 'socket.io-client'
-import ProtoBufs from './protobuf'
+import { ProtoBufs } from './protobuf'
 
 // Redux
 import { dispatch } from '@/store'

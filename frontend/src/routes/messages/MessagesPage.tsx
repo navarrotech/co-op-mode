@@ -1,5 +1,5 @@
 // Copyright © 2024 Navarrotech
 
-export default function MessagesPage() {
+export function MessagesPage() {
   return <></>
 }

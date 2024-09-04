@@ -15,7 +15,7 @@ import { setProfile } from '@/modules/dating/reducer'
 
 // API
 import { updateAccount, updateDatingProfile } from '@/modules/generated/routes'
-import urls from '../urls'
+import { urls } from '../urls'
 
 // UI
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -24,16 +24,16 @@ import { useTranslation } from 'react-i18next'
 import moment from 'moment'
 
 // Components
-import BuilderTemplate from './BuilderTemplate'
+import { Confirm } from '@/elements/Confirm'
+import { BuilderTemplate } from './BuilderTemplate'
 import { Button } from '@/elements/Button'
-import Meme from '@/elements/Meme'
+import { Meme } from '@/elements/Meme'
 // import UploadMedia from './UploadMedia'
 
 // Misc
 import memeStyles from '@/elements/Meme.module.sass'
-import Confirm from '@/elements/Confirm'
 
-export default function ProfileBuilder() {
+export function ProfileBuilder() {
   const { t } = useTranslation()
 
   const [ firstNameMeme, setFirstNameMeme ] = useState<boolean>(true)

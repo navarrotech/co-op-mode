@@ -3,7 +3,7 @@
 import styles from '@/sass/loader.module.scss'
 import { useTranslation } from 'react-i18next'
 
-export default function Loader() {
+export function Loader() {
   return <div className={styles.loader} />
 }
 

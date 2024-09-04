@@ -1,6 +1,6 @@
 // Copyright © 2024 Navarrotech
 
-import ProtoBufs, { type ProtoBufMessages } from '@/modules/protobuf'
+import { ProtoBufs, type ProtoBufMessages } from '@/modules/protobuf'
 import { defaultLanguage } from './language'
 import { API_URL, NODE_ENV } from '@/env'
 
@@ -23,7 +23,7 @@ export function setApiDefault(key: string, value: string) {
 
 export type ProtoResponse<T = any> = {
     data: T
-    status: number
+  status: number
     headers: any
     struct: keyof typeof ProtoBufs
 }

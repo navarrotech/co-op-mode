@@ -12,16 +12,16 @@ import { init } from '@/store/Initialization'
 // UI
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
-import FormatNumber from '@/common/formatNumber'
+import { FormatNumber } from '@/common/formatNumber'
 import { Button } from '@/elements/Button'
 
 // Misc
-import urls from '../urls'
+import { urls } from '../urls'
 
 import { authorizeByPhone } from '@/modules/generated/routes'
 import { useTranslation } from 'react-i18next'
 
-export default function VerifyPhoneNumber() {
+export function VerifyPhoneNumber() {
   const phoneNumber = useSelector(state => state.user.current?.phone)
   const navigate = useNavigate()
 
@@ -51,7 +51,7 @@ export default function VerifyPhoneNumber() {
     if (status === 200 && data?.authorized === true) {
       const user = struct === 'AuthResponse' ? data?.user : {}
       dispatch(
-        setUser(user)
+        setUser(user!)
       )
       await init()
       navigate(urls.buildProfile)

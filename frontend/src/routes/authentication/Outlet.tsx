@@ -7,7 +7,7 @@ import { LoaderLayout } from '@/elements/Loader'
 
 // Actions
 import { useSelector } from '@/store'
-import urls from '../urls'
+import { urls } from '../urls'
 
 export function AuthorizedOutlet() {
   const authorized = useSelector(state => state.user.authorized)

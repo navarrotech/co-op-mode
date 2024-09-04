@@ -11,11 +11,11 @@ import { getDatingProfilesForYou } from '@/modules/generated/routes'
 import { useTranslation } from 'react-i18next'
 
 // Components
-import Loader from '@/elements/Loader'
-import DatingProfile from './DatingProfile'
+import { Loader } from '@/elements/Loader'
+import { DatingProfile } from './DatingProfile'
 import { Button } from '@/elements/Button'
 
-export default function MatchingPage() {
+export function MatchingPage() {
   const [ inInitializing, setInitializing ] = useState<boolean>(true)
   const [ profilesForYou, setProfilesForYou ] = useState<IDatingProfile[]>([])
 

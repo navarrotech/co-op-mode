@@ -12,9 +12,9 @@ import { logout as apiLogout } from '@/modules/generated/routes'
 import { LoaderLayout } from '@/elements/Loader'
 
 // Constants
-import urls from '../urls'
+import { urls } from '../urls'
 
-export default function Logout() {
+export function Logout() {
   const [ isFinished, setFinished ] = useState<boolean>(false)
 
   console.log('Logging out!')

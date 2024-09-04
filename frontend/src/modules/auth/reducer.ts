@@ -32,7 +32,7 @@ const initialState: State = {
   }
 }
 
-const slice = createSlice({
+export const slice = createSlice({
   name: 'users',
   initialState,
   reducers: {
@@ -92,5 +92,3 @@ export const {
   setGatewayConnected,
   finishInit
 } = slice.actions
-
-export default slice

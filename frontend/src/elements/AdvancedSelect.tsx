@@ -24,7 +24,7 @@ type Props = {
   children: React.ReactNode // Dropdown trigger content
 }
 
-export default function AdvancedSelect({ options, onSelect, isMulti, value = [], children, ...props }: Props) {
+export function AdvancedSelect({ options, onSelect, isMulti, value = [], children, ...props }: Props) {
   const [ selectedIndex, setSelectedIndex ] = useState<number>(0)
   const [ searchTerm, setSearchTerm ] = useState('')
   const [ selectedValues, setSelectedValues ] = useState<string[]>(Array.isArray(value) ? value : [ value ])

@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 
 // Smart components
-import Help from '@/elements/Help'
-import AdvancedSelect from '@/elements/AdvancedSelect'
+import { Help } from '@/elements/Help'
+import { AdvancedSelect } from '@/elements/AdvancedSelect'
 import { Button } from '@/elements/Button'
 
 // Redux
@@ -15,7 +15,7 @@ import { dispatch } from '@/store'
 
 // Utility
 import { phoneValidator } from '@/modules/validators'
-import urls, { externalUrls } from '../urls'
+import { urls, externalUrls } from '../urls'
 
 // Iconography
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -25,7 +25,7 @@ import { useTranslation } from 'react-i18next'
 
 const validator = phoneValidator()
 
-export default function WithPhoneNumber() {
+export function WithPhoneNumber() {
   const navigate = useNavigate()
 
   const [ countryCode, setCountryCode ] = useState<string>('US +1')

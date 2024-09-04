@@ -429,5 +429,3 @@ export const Routes = {
 } as const
 
 export type RouteNames = keyof typeof Routes
-
-export default Routes

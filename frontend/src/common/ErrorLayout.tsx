@@ -6,7 +6,7 @@ type Props = {
   message: string
 }
 
-export default function ErrorLayout({ message }: Props) {
+export function ErrorLayout({ message }: Props) {
   const { t } = useTranslation()
 
   return <section className="section is-danger">

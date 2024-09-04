@@ -8,27 +8,36 @@ import type { MouseEventHandler, ReactNode } from 'react'
 import type { BulmaColor } from '@/types'
 
 export type ButtonProps = {
-    primary?: boolean
-    secondary?: boolean
-    ghost?: boolean
-    warning?: boolean
-    error?: boolean
-    success?: boolean
-    info?: boolean
-    link?: boolean
+  id?: string
 
-    inverted?: boolean
+  primary?: boolean
+  secondary?: boolean
+  ghost?: boolean
+  warning?: boolean
+  danger?: boolean
+  success?: boolean
+  info?: boolean
+  link?: boolean
 
-    onClick?: MouseEventHandler<HTMLButtonElement>
+  small?: boolean
+  medium?: boolean
+  large?: boolean
 
-    color?: BulmaColor
-    children: ReactNode
-    className?: string
-    fullwidth?: boolean
-    disabled?: boolean
-    loading?: boolean
-    light?: boolean
-    dark?: boolean
+  title?: string
+  inverted?: boolean
+  rounded?: boolean
+
+  disableFocusing?: boolean
+  onClick?: MouseEventHandler<HTMLButtonElement>
+
+  color?: BulmaColor
+  children: ReactNode
+  className?: string
+  fullwidth?: boolean
+  disabled?: boolean
+  loading?: boolean
+  light?: boolean
+  dark?: boolean
 } & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 export function Button(props: ButtonProps) {
@@ -37,14 +46,20 @@ export function Button(props: ButtonProps) {
     secondary,
     ghost,
     warning,
-    error,
+    danger,
     success,
     info,
     link,
     dark,
     light,
 
+    small,
+    medium,
+    large,
+
+    disableFocusing = false,
     inverted,
+    rounded,
 
     className,
     children,
@@ -59,22 +74,26 @@ export function Button(props: ButtonProps) {
     primary && 'is-primary',
     secondary && 'is-secondary',
     warning && 'is-warning',
-    error && 'is-error',
+    danger && 'is-danger',
     success && 'is-success',
     info && 'is-info',
     link && 'is-link',
 
     inverted && 'is-inverted',
+    rounded && 'is-rounded',
+
+    small && 'is-small',
+    medium && 'is-medium',
+    large && 'is-large',
 
     ghost && 'is-ghost',
     disabled && 'is-disabled',
     loading && 'is-loading',
     dark && 'is-dark',
-    light && 'is-light',
+    light && 'is-light'
   ].filter(Boolean).join(' ')
 
-  // On click middleware to ensure the JS protections
-  // follow the CSS protections
+  // On click middleware to ensure the JS protections match the CSS protections
   const onClick: MouseEventHandler<HTMLButtonElement> = (...event) => {
     if (!rest.onClick || disabled || loading) {
       return
@@ -90,10 +109,17 @@ export function Button(props: ButtonProps) {
 
   return (
     <button
-      type="button"
+      type='button'
       className={classes}
       disabled={disabled || loading}
       {...rest}
+      onMouseDown={(event) => {
+        // On click middleware
+        if (disableFocusing) {
+          event.preventDefault()
+        }
+        props.onMouseDown?.(event)
+      }}
       onClick={onClick}
     >
       {children}

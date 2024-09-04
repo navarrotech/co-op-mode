@@ -14,7 +14,7 @@ type Props = {
   className?: string
 }
 
-export default function Slideshow({ media, className = '' }: Props) {
+export function Slideshow({ media, className = '' }: Props) {
   const [ index, setIndex ] = useState<number>(0)
 
   media = [ ...media, ...media, ...media ]

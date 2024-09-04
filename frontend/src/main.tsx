@@ -4,17 +4,15 @@
 import { createRoot } from 'react-dom/client'
 
 // Application
-import Initialization from './store/Initialization'
-import ApplicationRouter from './routes/Router'
-
-// Firebase
-import './firebase'
+import { Initialization } from './store/Initialization'
+import { Router } from './routes/Router'
 
 // Redux
 import { Provider as ReduxProvider } from 'react-redux'
-import store from './store/store'
+import { store } from './store/store'
 
 // i18n
+import './firebase'
 import '@/modules/i18n'
 
 // Core CSS packages
@@ -26,7 +24,7 @@ const root = createRoot(container)
 root.render(
   <ReduxProvider store={store}>
     <Initialization>
-      <ApplicationRouter />
+      <Router />
     </Initialization>
   </ReduxProvider>
 )

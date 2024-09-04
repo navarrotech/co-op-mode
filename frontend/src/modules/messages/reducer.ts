@@ -15,7 +15,7 @@ const initialState: State = {
   conversations: []
 }
 
-const slice = createSlice({
+export const slice = createSlice({
   name: 'messages',
   initialState,
   reducers: {
@@ -84,5 +84,3 @@ export const {
   updateConversation,
   deleteConversation
 } = slice.actions
-
-export default slice

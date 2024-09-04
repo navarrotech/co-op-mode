@@ -8,12 +8,12 @@ import { Outlet, useNavigate } from 'react-router'
 import { useSelector } from '@/store'
 
 // Utility
-import urls from '../urls'
+import { urls } from '../urls'
 import { isProfileComplete } from './Builder'
 
 // Components
-import Topbar from '@/routes/dashboard/Topbar'
-import BottomBar from '../dashboard/BottomBar'
+import { Topbar } from '@/routes/dashboard/Topbar'
+import { BottomBar } from '@/routes/dashboard/BottomBar'
 
 export function ProfileCompletionOutlet() {
   const user = useSelector(state => state.user.current)

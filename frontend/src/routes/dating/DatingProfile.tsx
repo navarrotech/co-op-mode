@@ -4,9 +4,9 @@
 import type { IDatingProfile, IMedia } from '@/modules/protobuf/schema'
 
 // UI
-import styles from './Dating.module.sass'
-import Slideshow from './Slideshow'
 import { Button } from '@/elements/Button'
+import { Slideshow } from './Slideshow'
+import styles from './Dating.module.sass'
 
 // Utility
 import { useTranslation } from 'react-i18next'
@@ -36,7 +36,7 @@ const superlikeButtonStyle = styles.controlButton + ' ' + styles.superlikeButton
 const likeButtonStyle = styles.controlButton + ' ' + styles.likeButton
 const messageButtonStyle = styles.controlButton + ' ' + styles.messageButton
 
-export default function DatingProfile({ profile }: Props) {
+export function DatingProfile({ profile }: Props) {
   const { t } = useTranslation()
 
   const { first_name } = profile?.user || { first_name: '' }

@@ -10,7 +10,7 @@ import { setMedia, setProfile } from '@/modules/dating/reducer'
 import { setConversations } from '@/modules/messages/reducer'
 
 // Components
-import ErrorLayout from '@/common/ErrorLayout'
+import { ErrorLayout } from '@/common/ErrorLayout'
 import { LoaderLayout } from '@/elements/Loader'
 
 // Utility + Environment
@@ -105,7 +105,7 @@ export async function init() {
 
 let isInProgress = false
 
-export default function Initialization({ children }: Props) {
+export function Initialization({ children }: Props) {
   const [ error, setError ] = useState<string>('')
   const { t } = useTranslation()
 

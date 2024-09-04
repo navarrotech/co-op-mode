@@ -8,27 +8,27 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthorizedOutlet } from '@/routes/authentication/Outlet'
 
 // Constants
-import urls from './urls'
+import { urls } from './urls'
 
 // Pages
-import Welcome from './authentication/Welcome'
-import WithPhoneNumber from './authentication/WithPhoneNumber'
-import VerifyPhoneNumber from './authentication/VerifyPhoneNumber'
-import ProfileBuilder from './profile/Builder'
-import Logout from './authentication/Logout'
+import { Welcome } from './authentication/Welcome'
+import { WithPhoneNumber } from './authentication/WithPhoneNumber'
+import { VerifyPhoneNumber } from './authentication/VerifyPhoneNumber'
+import { ProfileBuilder } from './profile/Builder'
+import { Logout } from './authentication/Logout'
 import { ProfileCompletionOutlet } from './profile/hooks'
-import MatchingPage from './dating/MatchingPage'
-import DiscoverPage from './dating/DiscoverPage'
-import MatchesPage from './dating/MatchesPage'
-import ConversationsPage from './messages/ConversationsPage'
-import AccountPage from './profile/AccountPage'
+import { MatchingPage } from './dating/MatchingPage'
+import { DiscoverPage } from './dating/DiscoverPage'
+import { MatchesPage } from './dating/MatchesPage'
+import { ConversationsPage } from './messages/ConversationsPage'
+import { AccountPage } from './profile/AccountPage'
 
 /*
  * Homepage and marketing should be in a separate repository!
  * This repository only focuses on the application, not marketing.
  */
 
-export default function Router() {
+export function Router() {
   return <BrowserRouter>
     <Routes>
       {/* Index */}
