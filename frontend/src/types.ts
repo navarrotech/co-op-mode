@@ -5,4 +5,14 @@ export type FormInvalid = {
   message: string,
 }[]
 
-export type BulmaColor = 'primary' | 'secondary' | 'link' | 'info' | 'success' | 'warning' | 'danger' | 'white' | 'black' | 'text' | 'ghost'
+export type BulmaColor = 'primary'
+  | 'secondary'
+  | 'link'
+  | 'info'
+  | 'success'
+  | 'warning'
+  | 'danger'
+  | 'white'
+  | 'black'
+  | 'text'
+  | 'ghost'

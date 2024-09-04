@@ -4,10 +4,10 @@
 // https://bulma.io/documentation/elements/button/
 
 // Typescript
-import type { ReactNode } from 'react'
+import type { MouseEventHandler, ReactNode } from 'react'
 import type { BulmaColor } from '@/types'
 
-type Props = {
+export type ButtonProps = {
     primary?: boolean
     secondary?: boolean
     ghost?: boolean
@@ -19,6 +19,8 @@ type Props = {
 
     inverted?: boolean
 
+    onClick?: MouseEventHandler<HTMLButtonElement>
+
     color?: BulmaColor
     children: ReactNode
     className?: string
@@ -29,7 +31,7 @@ type Props = {
     dark?: boolean
 } & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
-export default function Button(props: Props){
+export function Button(props: ButtonProps) {
   const {
     primary,
     secondary,
@@ -43,7 +45,7 @@ export default function Button(props: Props){
     light,
 
     inverted,
-        
+
     className,
     children,
     disabled,
@@ -62,14 +64,24 @@ export default function Button(props: Props){
     info && 'is-info',
     link && 'is-link',
 
-    inverted && 'is-inverted', 
-        
+    inverted && 'is-inverted',
+
     ghost && 'is-ghost',
     disabled && 'is-disabled',
     loading && 'is-loading',
     dark && 'is-dark',
-    light && 'is-light'
+    light && 'is-light',
   ].filter(Boolean).join(' ')
+
+  // On click middleware to ensure the JS protections
+  // follow the CSS protections
+  const onClick: MouseEventHandler<HTMLButtonElement> = (...event) => {
+    if (!rest.onClick || disabled || loading) {
+      return
+    }
+
+    rest.onClick(...event)
+  }
 
   const colorClass = color ? `is-${color}` : ''
   const sizeClass = fullwidth ? 'is-fullwidth' : ''
@@ -82,6 +94,7 @@ export default function Button(props: Props){
       className={classes}
       disabled={disabled || loading}
       {...rest}
+      onClick={onClick}
     >
       {children}
     </button>

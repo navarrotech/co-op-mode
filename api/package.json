@@ -9,6 +9,8 @@
   },
   "license": "MIT",
   "scripts": {
+    "postinstall": "prisma generate",
+    "prestart": "prisma generate",
     "start": "prisma migrate deploy && ts-node -r tsconfig-paths/register ./index.ts",
     "dev::migrate": "prisma generate && prisma db push",
     "dev": "yarn install && nodemon --legacy-watch --exec 'ts-node -r tsconfig-paths/register' ./index.ts",

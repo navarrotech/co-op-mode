@@ -14,8 +14,8 @@ import { startCase } from 'lodash'
 import { NODE_ENV } from '@/env'
 
 type SuccessObject = {
-    body: Record<string, any>
-    query: Record<string, any>
+  body: Record<string, any>
+  query: Record<string, any>
 }
 
 const languageSchema = languageValidator()
@@ -72,7 +72,7 @@ export default async function validateMiddleware(
           else if (type === 'optionality') {
             message = request.__('validator_required', { what })
           }
-          else if (type === 'oneOf'){
+          else if (type === 'oneOf') {
             message = request.__('validator_oneof', { what, values: error.params.values as string })
           }
           else if (type === 'matches' && defaultLanguageJson[error.params.message as string]) {

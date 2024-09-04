@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router'
 // Smart components
 import Help from '@/elements/Help'
 import AdvancedSelect from '@/elements/AdvancedSelect'
-import Button from '@/elements/Button'
+import { Button } from '@/elements/Button'
 
 // Redux
 import { setUser } from '@/modules/auth/reducer'

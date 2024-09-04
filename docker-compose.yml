@@ -31,6 +31,38 @@ services:
     networks:
       - default
 
+  # api_v2:
+  #   build:
+  #     context: .
+  #     dockerfile: ./api_v2/Dockerfile
+  #   container_name: co-op-mode-api-v2
+  #   restart: unless-stopped
+  #   environment:
+  #     DOMAIN: localhost
+  #     DATABASE_URL: postgres://postgres:postgres@co-op-mode-postgres:5432/postgres
+  #     REDIS_URL: redis://co-op-mode-redis:6379
+  #     PLIVO_AUTH_ID: ${PLIVO_AUTH_ID}
+  #     PLIVO_TOKEN: ${PLIVO_TOKEN}
+  #     PLIVO_APP_UUID: ${PLIVO_APP_UUID}
+  #     JWT_SECRET: ${JWT_SECRET}
+  #     API_PORT: 8100
+  #   depends_on:
+  #     - database
+  #     - redis
+  #     - rabbitmq
+  #   volumes:
+  #     - type: bind
+  #       source: "./api_v2"
+  #       target: "/app"
+  #     - type: bind
+  #       source: "./schema.proto"
+  #       target: "/app/schema.proto"
+  #   command: cargo watch -x run
+  #   ports:
+  #     - 8100:8100
+  #   networks:
+      # - default
+
   routines:
     build:
       context: ./routines
@@ -172,6 +204,8 @@ volumes:
   redis-data:
   pgadmin-data:
   insight-data:
- 
+  db:
+  app_network:
+
 networks:
   default:

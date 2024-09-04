@@ -18,6 +18,9 @@
     "gruntfuggly.todo-tree",
     "prisma.prisma",
     "skyran.js-jsx-snippets",
-    "ms-vscode.vscode-typescript-next"
+    "ms-vscode.vscode-typescript-next",
+    "jackie-onai.i18next",
+    "guestline.react-i18next-translation-on-hover",
+    "plex.vscode-protolint"
   ]
 }

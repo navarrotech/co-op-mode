@@ -6,7 +6,7 @@ import type { IDatingProfile, IMedia } from '@/modules/protobuf/schema'
 // UI
 import styles from './Dating.module.sass'
 import Slideshow from './Slideshow'
-import Button from '@/elements/Button'
+import { Button } from '@/elements/Button'
 
 // Utility
 import { useTranslation } from 'react-i18next'

@@ -5,7 +5,7 @@ import type { FormInvalid } from '@/types'
 
 // React.js
 import { useEffect } from 'react'
-import Button from '@/elements/Button'
+import { Button } from '@/elements/Button'
 
 type Props = {
   disabled?: boolean

@@ -13,7 +13,7 @@ import { init } from '@/store/Initialization'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import FormatNumber from '@/common/formatNumber'
-import Button from '@/elements/Button'
+import { Button } from '@/elements/Button'
 
 // Misc
 import urls from '../urls'

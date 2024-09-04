@@ -15,6 +15,5 @@ WORKDIR /app
 # Bundle app source
 COPY . .
 RUN yarn install
-RUN yarn prisma generate
 
 CMD [ "yarn", "run", "start" ]

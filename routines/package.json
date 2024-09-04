@@ -6,6 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "postinstall": "prisma generate",
+    "prestart": "prisma generate",
     "start": "ts-node ./index.ts",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "dev": "yarn install && nodemon --legacy-watch --exec 'ts-node' ./index.ts"

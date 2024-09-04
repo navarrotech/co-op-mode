@@ -25,7 +25,7 @@ import moment from 'moment'
 
 // Components
 import BuilderTemplate from './BuilderTemplate'
-import Button from '@/elements/Button'
+import { Button } from '@/elements/Button'
 import Meme from '@/elements/Meme'
 // import UploadMedia from './UploadMedia'
 

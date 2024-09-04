@@ -11,7 +11,7 @@ export default function ErrorLayout({ message }: Props) {
 
   return <section className="section is-danger">
     <div className="hero is-fullheight">
-      <div className="hero-body p-0">
+      <div className="hero-body p-0 is-justify-content-center">
         <div>
           <figure className="block image is-128x128 is-centered">
             <img src="/logo.png" alt={ t('brand_name') } />
