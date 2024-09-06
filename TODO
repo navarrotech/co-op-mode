@@ -3,8 +3,15 @@ verify email
 verify face/account
 preference: incoming profanity filter
 auto generate frontend types/api-functions from backend data
-eula
 services should be able to wait for postgres/redis to be ready
 services should reconnect to postgres/redis if connection is lost
 Add google eslint rules https://www.npmjs.com/package/eslint-config-google
 How does a user logout during the setup profile step?
+
+FRONTEND
+- EULA
+- Privacy policy
+- Terms of service
+- Community guidelines
+- Help & Support
+- Delete account

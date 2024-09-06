@@ -4,4 +4,4 @@ import { ProtoBufs } from './ProtoTypes'
 
 export type ProtoBufMessages = keyof typeof ProtoBufs
 
-export { ProtoBufs }
+export { ProtoBufs, }

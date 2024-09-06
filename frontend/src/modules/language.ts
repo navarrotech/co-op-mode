@@ -6,7 +6,7 @@ export const supportedLanguages = [
   'en',
   'es',
   'fr',
-  'ja'
+  'ja',
 ] as const
 
 export type SupportedLanguages = typeof supportedLanguages[number]
@@ -15,7 +15,7 @@ export const languageToFlag: Record<LanguageRecordKey, string> = {
   'en': 'US',
   'es': 'ES',
   'fr': 'FR',
-  'ja': 'JP'
+  'ja': 'JP',
 } as const
 
 export const languageRecord: Record<string, string> = {
@@ -82,7 +82,7 @@ export const languageRecord: Record<string, string> = {
   my: 'Burmese',
   km: 'Khmer',
   lo: 'Lao',
-  si: 'Sinhala'
+  si: 'Sinhala',
 } as const
 
 export const languageLocalizedRecord: Record<string, string> = {
@@ -149,7 +149,7 @@ export const languageLocalizedRecord: Record<string, string> = {
   my: 'မြန်မာဘာသာ',
   km: 'ខ្មែរ',
   lo: 'ລາວ',
-  si: 'සිංහල'
+  si: 'සිංහල',
 } as const
 
 type LanguageRecordKey = keyof typeof languageRecord

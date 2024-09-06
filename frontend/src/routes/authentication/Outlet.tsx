@@ -17,9 +17,9 @@ export function AuthorizedOutlet() {
     if (!authorized) {
       console.log('Unauthorized, redirecting to login')
       navigate(urls.welcome)
-      return
+      
     }
-  }, [ authorized ])
+  }, [ authorized, ])
 
   if (!authorized){
     return <LoaderLayout />

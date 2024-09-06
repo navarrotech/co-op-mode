@@ -4,18 +4,21 @@
   position: relative
   height: 100%
   z-index: 100
+  transform-origin: bottom center
+  background: $darker
 
   .primaryPhoto
     position: relative
 
     .photo
-      height: calc(80vh - $bottombarHeight - $topbarHeight)
+      height: calc(88vh - $bottombarHeight - $topbarHeight)
       background-size: cover
       background-position: center
       background-repeat: no-repeat
 
   .details
-    padding: 0.5em 0.5em 18em
+    background: $black
+    padding: 0.6em 0.6em 10em
 
   .photo
     width: 100%
@@ -56,9 +59,78 @@
       > svg
         opacity: 0.5
 
+  .titles
+    position: absolute
+    bottom: 0
+    right: 0
+    left: 0
+    width: 100vw
+    padding: 0.75em
+
+    &::before
+      content: ' '
+      position: absolute
+      left: 0
+      right: 0
+      width: 100vw
+      height: calc($bottombarHeight * 2)
+      bottom: 0
+      background: linear-gradient(to bottom, transparent, $black)
+
+  &.disabled
+    position: fixed
+    top: $topbarHeight
+    left: 0
+    right: 0
+    bottom: 0
+    z-index: 10
+    transform-origin: center
+
+.likePreview
+  z-index: 9999
+  position: fixed
+  pointer-events: none
+  right: 0
+  top: 0
+  bottom: 0
+  height: 100vh
+  width: 15vw
+  background: linear-gradient(to left, $success 20%, transparent)
+
+  > h3
+    position: absolute
+    font-size: 2rem
+    color: $success
+    font-weight: bold
+    text-shadow: -1px -1px 0 $white, 1px -1px 0 $white, -1px 1px 0 $white, 1px 1px 0 $white
+    top: 23%
+    right: 1.5em
+    transform: rotate(-5deg)
+
+.passPreview
+  z-index: 9999
+  position: fixed
+  pointer-events: none
+  left: 0
+  top: 0
+  bottom: 0
+  width: 15vw
+  background: linear-gradient(to right, $danger 20%, transparent)
+
+  > h3
+    position: absolute
+    font-size: 2rem
+    color: $danger
+    font-weight: bold
+    text-shadow: -1px -1px 0 $white, 1px -1px 0 $white, -1px 1px 0 $white, 1px 1px 0 $white
+    top: 23%
+    left: 1.5em
+    transform: rotate(5deg)
+  
+
 .controls
   position: fixed
-  bottom: calc($bottombarHeight + 1em)
+  bottom: calc($bottombarHeight + 0.75em)
   left: 0
   right: 0
   width: 100vw
@@ -77,89 +149,103 @@
     $iconLightness: 0%
 
     &.undoButton
-      font-size: 1rem
       color: color.scale($warning, $lightness: $iconLightness)
-      border-color: $warning
-      background: color.adjust($warning, $alpha: $bkgTransparency)
-      box-shadow: 0 0 12px 2px color.scale($warning, $alpha: $bkgTransparency)
+      background: $darkish
+      border: none
+      width: 3em
+      height: 3em
+
+      span
+        position: relative
+        font-size: 1.5rem
 
     &.dislikeButton
-      font-size: 1.4rem
       color: color.scale($danger, $lightness: $iconLightness)
-      border-color: $danger
-      background: color.adjust($danger, $alpha: $bkgTransparency)
-      box-shadow: 0 0 12px 2px color.scale($danger, $alpha: $bkgTransparency)
+      background: $darkish
+      border: none
+      width: 4em
+      height: 4em
+
+      span
+        position: relative
+        font-size: 3rem
 
     &.superlikeButton
-      font-size: 1rem
       color: color.scale($primary, $lightness: $iconLightness)
-      border-color: $primary
-      background: color.adjust($primary, $alpha: $bkgTransparency)
-      box-shadow: 0 0 12px 2px color.scale($primary, $alpha: $bkgTransparency)
+      background: $darkish
+      border: none
 
       // Disabled for MVP
       display: none
 
     &.likeButton
-      font-size: 1.4rem
       color: color.scale($success, $lightness: $iconLightness)
-      border-color: $success
-      background: color.adjust($success, $alpha: $bkgTransparency)
-      box-shadow: 0 0 12px 2px color.scale($success, $alpha: $bkgTransparency)
+      background: $darkish
+      border: none
+      width: 4em
+      height: 4em
+
+      span
+        position: relative
+        font-size: 2.6rem
 
     &.messageButton
-      font-size: 1rem
       color: color.scale($info, $lightness: $iconLightness)
-      border-color: $info
-      background: color.adjust($info, $alpha: $bkgTransparency)
-      box-shadow: 0 0 12px 2px color.scale($info, $alpha: $bkgTransparency)
+      background: $darkish
+      border: none
+      width: 3em
+      height: 3em
 
-    :global(.icon)
-      position: relative
+      span
+        position: relative
+        font-size: 1.5rem
 
-    &::before
-      content: ' '
-      position: absolute
-      display: block
-      margin: auto
-      background: black
-      opacity: 0.3
-      top: 25%
-      left: 0
-      right: 0
-      width: 50%
-      height: 50%
-      border-radius: 50%
-      filter: blur(10px)
-
+  &::before
+    content: ' '
+    position: fixed
+    left: 0
+    right: 0
+    width: 100vw
+    height: calc($bottombarHeight * 2)
+    bottom: $bottombarHeight
+    background: linear-gradient(to bottom, transparent, $black)
+    
 .slideshow
   position: relative
   width: 100%
   height: 100%
 
   .progressBar
+    position: absolute
+    left: 0.25em
+    right: 0.25em
+    top: 0.25em
+    width: calc(100vw - 0.75em)
+    height: 10px
     display: flex
-    height: 0.3em
+    height: 0.2em
     margin-bottom: 0.5em
-    gap: 0.3em
+    gap: 0.25em
 
     .progressBarChunk
       flex: 1
-      background-color: lightgray
-      opacity: 0.3
+      background-color: black
+      opacity: 0.5
       border-radius: 4px
       transition: background-color 200ms
 
       &.active
         opacity: 1
-        background-color: $primary
+        background-color: $white
+
+      &.previous
+        background-color: $white
 
   .slideshowContent
     position: relative
     width: 100%
-    height: calc(100% - 15px)
+    height: 100%
     overflow: hidden
-    border-radius: 7px
     display: flex
     justify-content: center
     align-items: center

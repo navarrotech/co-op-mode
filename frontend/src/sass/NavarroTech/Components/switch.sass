@@ -1,15 +1,22 @@
-$switch-background-color: #ccc !default
+// Copyright © 2024 Navarrotech
 
 .switch
     position: relative
     display: inline-block
-    width: 48px
-    height: 26px
+    width: 3.8em
+    height: 2em
     cursor: pointer
+    font-size: 0.9rem
+
+    &.is-small
+        font-size: 0.7rem
+
+    &.is-large
+        font-size: 1.1rem
 
     &.is-rounded
         .slider
-            border-radius: 34px
+            border-radius: 1em
             &:before
                 border-radius: 50%
 
@@ -19,9 +26,9 @@ $switch-background-color: #ccc !default
         height: 0
 
         &:checked  + .slider:before
-            -webkit-transform: translateX(22px)
-            -ms-transform: translateX(22px)
-            transform: translateX(22px)
+            -webkit-transform: translateX(1.7em)
+            -ms-transform: translateX(1.7em)
+            transform: translateX(1.7em)
 
     @each $name, $pair in $colors
         $color: nth($pair, 1)
@@ -40,7 +47,7 @@ $switch-background-color: #ccc !default
         left: 0
         right: 0
         bottom: 0
-        background-color: $switch-background-color
+        background-color: $darkish
         -webkit-transition: 300ms
         transition: 300ms
         box-shadow: 0 0 2px 1px rgb(0 0 0 / 11%)
@@ -48,11 +55,11 @@ $switch-background-color: #ccc !default
         &:before
             position: absolute
             content: ""
-            height: 22px
-            width: 22px
-            left: 2px
-            bottom: 2px
-            background-color: white
+            height: 1.6em
+            width: 1.6em
+            left: 0.2em
+            bottom: 0.15em
+            background-color: $light
             -webkit-transition: 400ms
             transition: 400ms
 

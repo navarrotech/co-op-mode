@@ -59,6 +59,7 @@ model preferences {
   user         users  @relation(fields: [owner_id], references: [id])
 
   language     String @default("en")
+  timezone     String @default("")
 }
 
 model status {

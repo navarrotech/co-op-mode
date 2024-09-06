@@ -9,26 +9,40 @@ import { setLanguage } from '@/modules/core/reducer'
 import { useTranslation } from 'react-i18next'
 import { updatePreferences } from '@/modules/generated/routes'
 import { setPreferences } from '@/modules/auth/reducer'
+import { Button } from './Button'
 
-export function LanguageChooser() {
+type Props = {
+  button?: boolean
+}
+
+export function LanguageChooser({ button = false, }: Props) {
   const authorized = useSelector(state => state.user.authorized)
   const language = useSelector(state => state.core.language)
-  const { t, i18n } = useTranslation()
+  const { t, i18n, } = useTranslation()
   
+  const children = <>
+    <span className='icon'>
+      <FontAwesomeIcon icon={faGlobeAmericas} />
+    </span>
+    <span>{
+      languageLocalizedRecord[language]
+    }</span>
+  </>
+
   return <AdvancedSelect
-    title={t('choose_language')}
+    title={t('chooseLanguage')}
     onSelect={(value) => {
       dispatch(setLanguage(value))
       i18n.changeLanguage(value)
 
       if (authorized) {
         updatePreferences({
-          language: value
+          language: value,
         })
-          .then(({ data, status, struct }) => {
+          .then(({ data, status, struct, }) => {
             if (status === 200 && struct === 'Preferences') {
               dispatch(
-                setPreferences(data as any)
+                setPreferences(data as any),
               )
             }
           })
@@ -41,14 +55,14 @@ export function LanguageChooser() {
           key,
           value: key,
           text: languageLocalizedRecord[key],
-          icon: `https://flagsapi.com/${languageToFlag[key]}/flat/64.png` 
+          icon: `https://flagsapi.com/${languageToFlag[key]}/flat/64.png`, 
         }))
     }
     value={language}
   >
-    <span className="icon">
-      <FontAwesomeIcon icon={faGlobeAmericas} />
-    </span>
-    <span>{ languageLocalizedRecord[language] }</span>
+    { button
+      ? <Button>{ children }</Button>
+      : children
+    }
   </AdvancedSelect>
 }

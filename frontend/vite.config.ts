@@ -7,8 +7,12 @@ import path from 'path'
 
 // Plugins
 import react from '@vitejs/plugin-react-swc'
-import tsconfigPaths from 'vite-tsconfig-paths' // https://www.npmjs.com/package/vite-tsconfig-paths
-import svgr from 'vite-plugin-svgr' // https://www.npmjs.com/package/vite-plugin-svgr
+// https://www.npmjs.com/package/vite-tsconfig-paths
+import tsconfigPaths from 'vite-tsconfig-paths'
+// https://www.npmjs.com/package/vite-plugin-svgr
+import svgr from 'vite-plugin-svgr'
+// https://www.npmjs.com/package/vite-plugin-live-reload
+import liveReload from 'vite-plugin-live-reload'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -18,7 +22,9 @@ export default defineConfig({
     // Preact language + JSX:
     react(),
     // Svgs:
-    svgr()
+    svgr(),
+    // Live reload when the translation file changes:
+    liveReload('./public/locales/en/translation.json')
   ],
   css: {
     preprocessorOptions: {
@@ -38,6 +44,7 @@ export default defineConfig({
   },
   resolve: {
     alias: {
+      // Root imports
       '@': path.resolve(__dirname, 'src')
     }
   }

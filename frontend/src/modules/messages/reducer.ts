@@ -12,7 +12,7 @@ export type State = {
 
 const initialState: State = {
   last100UnreadMessages: [],
-  conversations: []
+  conversations: [],
 }
 
 export const slice = createSlice({
@@ -24,7 +24,8 @@ export const slice = createSlice({
       return state
     },
     upsertMessage(state, action: PayloadAction<IMessages>) {
-      const index = state.last100UnreadMessages.findIndex(message => message.id === action.payload.id)
+      const index = state.last100UnreadMessages
+        .findIndex(message => message.id === action.payload.id)
       if (index !== -1) {
         state.last100UnreadMessages[index] = action.payload
       }
@@ -34,14 +35,16 @@ export const slice = createSlice({
       return state
     },
     updateMessage(state, action: PayloadAction<IMessages>) {
-      const index = state.last100UnreadMessages.findIndex(message => message.id === action.payload.id)
+      const index = state.last100UnreadMessages
+        .findIndex(message => message.id === action.payload.id)
       if (index !== -1) {
         state.last100UnreadMessages[index] = action.payload
       }
       return state
     },
     deleteMessage(state, action: PayloadAction<IMessages>) {
-      state.last100UnreadMessages = state.last100UnreadMessages.filter(message => message.id !== action.payload.id)
+      state.last100UnreadMessages = state.last100UnreadMessages
+        .filter(message => message.id !== action.payload.id)
       return state
     },
 
@@ -50,7 +53,8 @@ export const slice = createSlice({
       return state
     },
     upsertConversation(state, action: PayloadAction<IConversations>) {
-      const index = state.conversations.findIndex(conversation => conversation.id === action.payload.id)
+      const index = state.conversations
+        .findIndex(conversation => conversation.id === action.payload.id)
       if (index !== -1) {
         state.conversations[index] = action.payload
       }
@@ -60,17 +64,19 @@ export const slice = createSlice({
       return state
     },
     updateConversation(state, action: PayloadAction<IConversations>) {
-      const index = state.conversations.findIndex(conversation => conversation.id === action.payload.id)
+      const index = state.conversations
+        .findIndex(conversation => conversation.id === action.payload.id)
       if (index !== -1) {
         state.conversations[index] = action.payload
       }
       return state
     },
     deleteConversation(state, action: PayloadAction<IConversations>) {
-      state.conversations = state.conversations.filter(conversation => conversation.id !== action.payload.id)
+      state.conversations = state.conversations
+        .filter(conversation => conversation.id !== action.payload.id)
       return state
-    }
-  }
+    },
+  },
 })
 
 export const {
@@ -82,5 +88,5 @@ export const {
   setConversations,
   upsertConversation,
   updateConversation,
-  deleteConversation
+  deleteConversation,
 } = slice.actions

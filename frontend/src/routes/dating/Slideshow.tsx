@@ -14,10 +14,10 @@ type Props = {
   className?: string
 }
 
-export function Slideshow({ media, className = '' }: Props) {
-  const [ index, setIndex ] = useState<number>(0)
+export function Slideshow({ media, className = '', }: Props) {
+  const [ index, setIndex, ] = useState<number>(0)
 
-  media = [ ...media, ...media, ...media ]
+  media = [ ...media, ...media, ...media, ]
 
   function next() {
     if (index > media.length - 1) {
@@ -33,23 +33,12 @@ export function Slideshow({ media, className = '' }: Props) {
     setIndex(index - 1)
   }
 
-  function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    const rect = event.currentTarget.getBoundingClientRect()
-    const x = event.clientX - rect.left
-    if (x < rect.width / 2) {
-      prev()
-    }
-    else {
-      next()
-    }
-  }
-
   const imagesToShow = media.map((item, i) => {
     return (
       <div
         key={i}
         className={styles.fullScreenImage}
-        style={{ backgroundImage: `url(${item.url})` }}
+        style={{ backgroundImage: `url(${item.url})`, }}
       />
     )
   })
@@ -61,29 +50,46 @@ export function Slideshow({ media, className = '' }: Props) {
           <div
             key={i}
             className={`${styles.gridItem}`}
-            style={{ backgroundImage: `url(${item.url})` }}
+            style={{ backgroundImage: `url(${item.url})`, }}
           />
         ))}
-      </div>
+      </div>,
     )
   }
 
   return (
     <div className={`${styles.slideshow} ${className}`}>
+      <div
+        className={styles.slideshowContent}
+        onClick={(event) => {
+          const rect = event.currentTarget.getBoundingClientRect()
+          const x = event.clientX - rect.left
+          if (x < rect.width / 2) {
+            prev()
+          }
+          else {
+            next()
+          }
+        }}
+      >
+        { imagesToShow[index] }
+      </div>
       <div className={styles.progressBar}>{
         imagesToShow.map((_, i) => (
           <div
             key={i}
-            className={`${styles.progressBarChunk} ${i <= index ? styles.active : ''}`}
+            className={`${
+              styles.progressBarChunk
+            } ${
+              i < index
+                ? styles.previous 
+                : i === index
+                  ? styles.active
+                  : ''
+            }`}
           />
         ))
       }</div>
-      <div
-        className={styles.slideshowContent}
-        onClick={handleClick}
-      >
-        { imagesToShow[index] }
-      </div>
     </div>
   )
 }

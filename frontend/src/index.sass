@@ -9,8 +9,15 @@ body
 
     &.theme-dark
       background: #0A0A0A
+      
+      .navbar *
+        color: $white
+        
     &.theme-light
       background: #f0f5fa
+
+      .navbar *
+        color: $dark
 
 *
   -webkit-tap-highlight-color: transparent
@@ -40,7 +47,11 @@ body
 
   .dashboard-content
     height: calc(100vh - $topbarHeight - $bottombarHeight)
+    max-height: calc(100vh - $topbarHeight - $bottombarHeight)
     overflow-y: auto
+
+    &:not(.no-padding)
+      padding: 1.5em 0.75em 35vh
 
   .centered-content
     display: flex

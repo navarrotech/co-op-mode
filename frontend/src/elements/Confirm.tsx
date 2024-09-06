@@ -13,22 +13,22 @@ type Props = {
 }
 
 export function Confirm({ title, onYes, onNo, onCancel, children, ...props }: Props) {
-  const { t } = useTranslation()
+  const { t, } = useTranslation()
 
-  return <div className="modal is-active is-confirmator">
-    <div className="modal-background" onClick={onCancel}></div>
-    <div className="modal-card">
-      <header className="modal-card-head">
-        <p className="modal-card-title">{ title }</p>
+  return <div className='modal is-active is-confirmator'>
+    <div className='modal-background' onClick={onCancel}></div>
+    <div className='modal-card'>
+      <header className='modal-card-head'>
+        <p className='modal-card-title'>{ title }</p>
       </header>
-      <section className="modal-card-body">{
+      <section className='modal-card-body'>{
         children
       }</section>
-      <footer className="modal-card-foot buttons is-right">
-        <button className="button is-danger" type="button" onClick={onNo || onCancel}>
+      <footer className='modal-card-foot buttons is-right'>
+        <button className='button is-danger' type='button' onClick={onNo || onCancel}>
           <span>{ props.noText || t('no') }</span>
         </button>
-        <button className="button is-success" type="button" onClick={onYes}>
+        <button className='button is-success' type='button' onClick={onYes}>
           <span>{ props.yesText ||  t('yes') }</span>
         </button>
       </footer>

@@ -6,7 +6,7 @@ import { isEqual } from 'lodash-es'
 import type { IconProp } from '@fortawesome/fontawesome-svg-core'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 
-type Option = {
+export type AdvancedOption = {
   id?: string
   icon?: IconProp | string
   key: string
@@ -15,7 +15,7 @@ type Option = {
 }
 
 type Props = {
-  options: string[] | Option[]
+  options: string[] | AdvancedOption[]
   onSelect: (value: string) => void
   isMulti?: boolean
   title?: string
@@ -24,28 +24,35 @@ type Props = {
   children: React.ReactNode // Dropdown trigger content
 }
 
-export function AdvancedSelect({ options, onSelect, isMulti, value = [], children, ...props }: Props) {
-  const [ selectedIndex, setSelectedIndex ] = useState<number>(0)
-  const [ searchTerm, setSearchTerm ] = useState('')
-  const [ selectedValues, setSelectedValues ] = useState<string[]>(Array.isArray(value) ? value : [ value ])
-  const [ isActive, setIsActive ] = useState(false)
+export function AdvancedSelect(originalProps: Props) {
+  const { options, onSelect, isMulti, value = [], children, ...props } = originalProps
+
+  const [ selectedIndex, setSelectedIndex, ] = useState<number>(0)
+  const [ searchTerm, setSearchTerm, ] = useState('')
+  const [ selectedValues, setSelectedValues, ] = useState<string[]>(
+    Array.isArray(value) ? value : [ value, ],
+  )
+  const [ isActive, setIsActive, ] = useState(false)
 
   const dropdownRef = useRef<HTMLDivElement>(null)
   const searchRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     setSelectedIndex(0)
-  }, [ searchTerm ])
+  }, [ searchTerm, ])
 
   useEffect(() => {
     if (!isEqual(value, selectedValues)) {
-      setSelectedValues(Array.isArray(value) ? value : [ value ])
+      setSelectedValues(Array.isArray(value) ? value : [ value, ])
     }
-  }, [ value ])
+  }, [ value, ])
 
   useEffect(() => {
     searchRef.current?.focus()
-  }, [ isActive ])
+    if (!isActive && searchTerm) {
+      setSearchTerm('')
+    }
+  }, [ isActive, ])
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value)
@@ -56,14 +63,15 @@ export function AdvancedSelect({ options, onSelect, isMulti, value = [], childre
       setSelectedValues((prevValues) =>
         prevValues.includes(val)
           ? prevValues.filter((value) => value !== val)
-          : [ ...prevValues, val ]
+          : [ ...prevValues, val, ],
       )
       onSelect(val)
     }
     else {
-      setSelectedValues([ val ])
+      setSelectedValues([ val, ])
       onSelect(val)
-      setIsActive(false) // Close the dropdown on single select
+      // Close the dropdown on single select
+      setIsActive(false) 
     }
   }
 
@@ -74,7 +82,7 @@ export function AdvancedSelect({ options, onSelect, isMulti, value = [], childre
   const filteredOptions = options.filter((option) =>
     (typeof option === 'string' ? option : option.text)
       .toLowerCase()
-      .includes(searchTerm.toLowerCase())
+      .includes(searchTerm.toLowerCase()),
   )
 
   useEffect(() => {
@@ -87,7 +95,7 @@ export function AdvancedSelect({ options, onSelect, isMulti, value = [], childre
     const handleArrowKeys = (event: KeyboardEvent) => {
       if (event.key === 'ArrowDown') {
         setSelectedIndex((prevIndex) =>
-          Math.min(prevIndex + 1, filteredOptions.length - 1)
+          Math.min(prevIndex + 1, filteredOptions.length - 1),
         )
       }
       else if (event.key === 'ArrowUp') {
@@ -110,31 +118,31 @@ export function AdvancedSelect({ options, onSelect, isMulti, value = [], childre
       document.removeEventListener('click', handleClickOutside)
       document.removeEventListener('keydown', handleArrowKeys)
     }
-  }, [ dropdownRef.current, filteredOptions, selectedIndex ])
+  }, [ dropdownRef.current, filteredOptions, selectedIndex, ])
 
   return (
     <div className={`dropdown ${isActive ? 'is-active' : ''}`} ref={dropdownRef}>
-      <div className="dropdown-trigger" onClick={handleDropdownClick}>
+      <div className='dropdown-trigger' onClick={handleDropdownClick}>
         { children }
       </div>
-      <div className="dropdown-menu">
-        <div className="dropdown-content">
+      <div className='dropdown-menu'>
+        <div className='dropdown-content'>
           {
-            props.title && <div className="dropdown-item">
-              { props.icon && <span className="icon">
+            props.title && <div className='dropdown-item'>
+              { props.icon && <span className='icon'>
                 <FontAwesomeIcon icon={props.icon} />
               </span> }
-              <h3 className="title is-size-4">{props.title}</h3>
+              <h3 className='title is-size-4'>{props.title}</h3>
             </div>
           }
-          <div className="dropdown-item">
-            <div className="field">
-              <div className="control has-icons-left">
+          <div className='dropdown-item'>
+            <div className='field'>
+              <div className='control has-icons-left'>
                 <input
                   ref={searchRef}
-                  className="input is-small dropdown-search"
-                  type="text"
-                  placeholder="Search..."
+                  className='input is-small dropdown-search'
+                  type='text'
+                  placeholder='Search...'
                   value={searchTerm}
                   onChange={handleSearch}
                   onKeyDown={(event) => {
@@ -148,14 +156,15 @@ export function AdvancedSelect({ options, onSelect, isMulti, value = [], childre
                     }
                   }}
                 />
-                <span className="icon is-left">
+                <span className='icon is-left'>
                   <FontAwesomeIcon icon={faSearch} />
                 </span>
               </div>
             </div>
           </div>
-          <div className="dropdown-wrapper">
+          <div className='dropdown-wrapper'>
             {filteredOptions.map((option, index) => {
+              const id = typeof option === 'string' ? option : option.id
               const key = typeof option === 'string' ? option : option.key
               const val = typeof option === 'string' ? option : option.value
               const text = typeof option === 'string' ? option : option.text
@@ -166,22 +175,25 @@ export function AdvancedSelect({ options, onSelect, isMulti, value = [], childre
 
               return (
                 <a
-                  className={`dropdown-item is-clickable ${highlighted ? 'is-highlighted' : ''} ${selected ? 'is-active' : ''}`}
+                  id={id || key}
+                  className={`dropdown-item is-clickable ${
+                    highlighted ? 'is-highlighted' : ''
+                  } ${selected ? 'is-active' : ''}`}
                   key={key}
                   onClick={() => handleSelect(val)}
                 >
                   {isMulti && (
                     <input
-                      type="checkbox"
+                      type='checkbox'
                       checked={selectedValues.includes(val)}
                       onChange={() => handleSelect(val)}
                     />
                   )}
                   {icon 
-                    ? <span className="icon">{
+                    ? <span className='icon'>{
                       typeof icon === 'string'
                         ? <img src={icon} alt={val} />
-                        : <FontAwesomeIcon icon={icon} className="mr-2" />
+                        : <FontAwesomeIcon icon={icon} className='mr-2' />
                     }</span>
                     : <></>
                   }

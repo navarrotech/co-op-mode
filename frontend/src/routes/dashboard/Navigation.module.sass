@@ -4,7 +4,7 @@
   position: fixed
   background: white
   width: 100vw
-  z-index: 500
+  z-index: 39
   bottom: 0
   left: 0
   right: 0
@@ -14,61 +14,91 @@
   flex-direction: row
   height: $bottombarHeight
 
+  .bottomHighlighter
+    position: absolute
+    background: $primary
+    top: 0
+    width: calc(1/3 * 100vw)
+    height: 2px
+    z-index: 39
+    transition: left 200ms ease
+    
   .bottomItem
-    display: flex
-    align-items: center
-    justify-content: center
-    flex-direction: column
-    flex-grow: 1
-    padding-top: 0.5em
-    padding-bottom: 0.5em
     gap: 0.25em
+    outline: none
 
     span
       font-size: 0.7rem
       color: #4a4a4a
-  
-    .iconBox
-      transform: scale(0.9)
-      // transition: transform 200ms ease
-  
-  .solid
-    display: none
-
-  .regular
-    display: block
-
-  .isActive
-    // flex-grow: 1.1
-
-    span
-      color: $primary
-      font-weight: bold
 
     .iconBox
-      transform: scale(1.2)
+      position: relative
+      width: calc(1/3 * 100vw)
+      height: $bottombarHeight
 
-    svg
-      color: $primary
+      .regular,
+      .solid,
+      .cover
+        font-size: 1.5rem
+        position: absolute
+        top: 0.6em
+        left: 0
+        right: 0
+        margin-left: auto
+        margin-right: auto
 
-    .solid
-      display: block
+      .cover
+        top: 1.25em
+        font-size: 1rem
+        transform: translateX(0)
 
-    .regular
+      .coverHeart
+        display: block !important
+        top: 1.5em
+        font-size: 1rem
+        opacity: 0
+        transform: translate(12px, 3px) rotate(90deg)
+        transition: transform 200ms ease, opacity 200ms ease
+
+    &.isActive .coverHeart
+      opacity: 1
+      transform: translate(7px, 0px) rotate(0deg)
+
+    &.isActive .regular,
+    &:not(.isActive) .solid,
+    &:not(.isActive) .cover
       display: none
 
 :global(.theme-dark)
   .BottomBar
-    background: #0A0A0A
-    color: white
+    background: $darker
+    color: $white
 
     .bottomItem
       span
-        color: white
+        color: $white
 
-    svg
-      color: white
+      svg
+        color: $white
 
     .isActive
+      .solid,
+      .regular
+        color: $primary
+
+:global(.theme-light)
+  .BottomBar
+    background: $lighter
+    color: $black
+
+    .bottomItem
+      span
+        color: $dark
+
       svg
+        color: $dark
+
+    .isActive
+      .solid,
+      .regular
         color: $primary

@@ -25,11 +25,11 @@ export function VerifyPhoneNumber() {
   const phoneNumber = useSelector(state => state.user.current?.phone)
   const navigate = useNavigate()
 
-  const [ error, setError ] = useState<string>('')
-  const [ code, setCode ] = useState<string>('')
-  const [ isLoading, setIsLoading ] = useState<boolean>(false)
+  const [ error, setError, ] = useState<string>('')
+  const [ code, setCode, ] = useState<string>('')
+  const [ isLoading, setIsLoading, ] = useState<boolean>(false)
 
-  const { t } = useTranslation()
+  const { t, } = useTranslation()
   const isValid = code.length === 6
 
   async function submit() {
@@ -40,9 +40,9 @@ export function VerifyPhoneNumber() {
     setError('')
     setIsLoading(true)
 
-    const { data, struct, status } = await authorizeByPhone({
+    const { data, struct, status, } = await authorizeByPhone({
       phone: phoneNumber,
-      OTP: code
+      OTP: code,
     })
 
     setIsLoading(false)
@@ -51,7 +51,7 @@ export function VerifyPhoneNumber() {
     if (status === 200 && data?.authorized === true) {
       const user = struct === 'AuthResponse' ? data?.user : {}
       dispatch(
-        setUser(user!)
+        setUser(user!),
       )
       await init()
       navigate(urls.buildProfile)
@@ -98,37 +98,37 @@ export function VerifyPhoneNumber() {
     if (code.length === 6 && !isLoading) {
       submit()
     }
-  }, [ code ])
+  }, [ code, ])
 
   if (!phoneNumber) {
     return <Navigate to={urls.phoneStart} />
   }
 
-  return <section className="section is-stacked">
-    <div className="block">
+  return <section className='section is-stacked'>
+    <div className='block'>
       <Button ghost onClick={() => history.back()}>
-        <span className="icon">
+        <span className='icon'>
           <FontAwesomeIcon icon={faArrowLeft} />
         </span>
       </Button>
     </div>
-    <div className="field">
-      <h1 className="title">{ t('enter_code') }</h1>
+    <div className='field'>
+      <h1 className='title'>{ t('enter_code') }</h1>
     </div>
-    <div className="block">
+    <div className='block'>
       <p>
         <FormatNumber phone={phoneNumber} />
       </p>
     </div>
-    <div className="block">
-      <div className="field">
-        <div className="control">
+    <div className='block'>
+      <div className='field'>
+        <div className='control'>
           <input
             autoFocus
-            className="input"
-            type="text"
+            className='input'
+            type='text'
             autoComplete='one-time-code'
-            placeholder="6 digit code"
+            placeholder='6 digit code'
             disabled={isLoading}
             value={code}
             onChange={e => setCode(e.target.value.trim().replaceAll(/\D/gmi, ''))}
@@ -142,12 +142,12 @@ export function VerifyPhoneNumber() {
         </div>
       </div>
     </div>
-    <div className="block">
+    <div className='block'>
       <ResendCode />
     </div>
-    { error && <div className="block notification is-danger is-size-7">{ error }</div> }
-    <div className="block v-spacer" />
-    <div className="block buttons is-centered">
+    { error && <div className='block notification is-danger is-size-7'>{ error }</div> }
+    <div className='block v-spacer' />
+    <div className='block buttons is-centered'>
       <Button
         fullwidth
         primary={isValid}
@@ -163,9 +163,9 @@ export function VerifyPhoneNumber() {
 }
 
 function ResendCode() {
-  const { t } = useTranslation()
+  const { t, } = useTranslation()
   const phoneNumber = useSelector(state => state.user.current?.phone)
-  const [ seconds, setTimeLeft ] = useState<number>(60)
+  const [ seconds, setTimeLeft, ] = useState<number>(60)
 
   async function resendCode() {
     if (!phoneNumber) {
@@ -173,7 +173,7 @@ function ResendCode() {
     }
 
     await authorizeByPhone({
-      phone: phoneNumber
+      phone: phoneNumber,
     })
   }
   
@@ -186,8 +186,8 @@ function ResendCode() {
   }, [])
 
   if (seconds > 0) {
-    return <p>{ t('resend_code_wait', { seconds }) }</p>
+    return <p>{ t('resend_code_wait', { seconds, }) }</p>
   }
 
-  return <p onClick={resendCode}>{ t('resend_code', { seconds }) }</p>
+  return <p onClick={resendCode}>{ t('resend_code', { seconds, }) }</p>
 }

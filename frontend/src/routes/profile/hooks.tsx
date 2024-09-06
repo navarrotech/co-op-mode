@@ -12,7 +12,6 @@ import { urls } from '../urls'
 import { isProfileComplete } from './Builder'
 
 // Components
-import { Topbar } from '@/routes/dashboard/Topbar'
 import { BottomBar } from '@/routes/dashboard/BottomBar'
 
 export function ProfileCompletionOutlet() {
@@ -30,13 +29,10 @@ export function ProfileCompletionOutlet() {
       console.log('Redirecting to buildProfile: The profile is not complete')
       navigate(urls.buildProfile)
     }
-  }, [ user, datingProfile ])
+  }, [ user, datingProfile, ])
 
-  return <div className="dashboard">
-    <Topbar />
-    <div className="dashboard-content">
-      <Outlet />
-    </div>
+  return <div className='dashboard'>
+    <Outlet />
     <BottomBar />
   </div>
 } 

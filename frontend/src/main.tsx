@@ -26,5 +26,5 @@ root.render(
     <Initialization>
       <Router />
     </Initialization>
-  </ReduxProvider>
+  </ReduxProvider>,
 )

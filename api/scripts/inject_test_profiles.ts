@@ -1,6 +1,6 @@
 // Copyright © 2024 Navarrotech
 
-import type{ Gender } from '@prisma/client'
+import type{ Gender, Relationship } from '@prisma/client'
 import database from '../src/lib/database'
 import Fakerator from 'fakerator'
 
@@ -109,8 +109,7 @@ async function main() {
         birthday: faker.date.past(80, new Date(2000, 0, 1)),
         gender,
         wanting,
-        relationship: faker.random.arrayElement([
-          'Unknown',
+        relationship: faker.random.arrayElement<Relationship>([
           'Monogomy',
           'EthicalNonMonogomy',
           'OpenRelationship',

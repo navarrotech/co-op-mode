@@ -4,7 +4,14 @@ import { useEffect, useState, type ReactNode } from 'react'
 
 // Redux
 import { dispatch, getState, useSelector } from '@/store'
-import { finishInit, setDailyLimits, setMonthlyLimits, setPermanentLimits, setPreferences, setUser } from '@/modules/auth/reducer'
+import {
+  finishInit,
+  setDailyLimits,
+  setMonthlyLimits,
+  setPermanentLimits,
+  setPreferences,
+  setUser,
+} from '@/modules/auth/reducer'
 import { check, sync } from '@/modules/generated/routes'
 import { setMedia, setProfile } from '@/modules/dating/reducer'
 import { setConversations } from '@/modules/messages/reducer'
@@ -31,25 +38,25 @@ export async function init() {
     if (!checkData?.data?.user) {
       if (checkData.data?.authorized === false) {
         dispatch(
-          finishInit()
+          finishInit(),
         )
         return true
       }
       console.error('Failed to check user auth state from API', {
-        checkData: checkData?.data
+        checkData: checkData?.data,
       })
       return null
     }
   
     dispatch(
-      setUser(checkData.data.user)
+      setUser(checkData.data.user),
     )
   
     const syncData = await sync()
   
     if (syncData?.status !== 200) {
       console.error('Failed to sync data from API', {
-        syncData: syncData?.data
+        syncData: syncData?.data,
       })
       return null
     }
@@ -60,13 +67,13 @@ export async function init() {
         limits: {
           daily,
           monthly,
-          permanent
+          permanent,
         },
         preferences,
         user,
         media=[],
-        conversations=[]
-      }
+        conversations=[],
+      },
     } = syncData
   
     dispatch( setUser(user) )
@@ -82,18 +89,19 @@ export async function init() {
   
     if (NODE_ENV === 'development') {
       console.log(
-        getState()
+        getState(),
       )
     }
   
     dispatch(
-      finishInit()
+      finishInit(),
     )
 
     return true
   }
   catch (error: any) {
-    // TODO: I think this should be occuring in the api/proto layer, and the error state saved to Redux
+    // TODO: I think this should be occuring in the api/proto layer,
+    // and the error state saved to Redux
     // That way we don't have to re-write it for all these other functions
     if (error?.message === 'Failed to fetch') {
       console.error('Failed to connect to API')
@@ -101,13 +109,15 @@ export async function init() {
     }
     console.error('Uncaught initialization error: ', error)
   }
+
+  return null
 } 
 
 let isInProgress = false
 
-export function Initialization({ children }: Props) {
-  const [ error, setError ] = useState<string>('')
-  const { t } = useTranslation()
+export function Initialization({ children, }: Props) {
+  const [ error, setError, ] = useState<string>('')
+  const { t, } = useTranslation()
 
   const isLoading = useSelector(state => state.user.loading)
 
@@ -136,7 +146,7 @@ export function Initialization({ children }: Props) {
 
       if (initResult === null) {
         setTimeout(() => attemptConnection(), 1_500)
-        return
+        
       }
     }
 

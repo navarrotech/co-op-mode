@@ -11,7 +11,7 @@ const firebaseConfig = {
   projectId: 'navarrotech-co-op-mode',
   messagingSenderId: '814067540159',
   appId: '1:814067540159:web:764107e6dc83942c77a60a',
-  measurementId: 'G-1E7TNESQW6'
+  measurementId: 'G-1E7TNESQW6',
 }
 
 export const firebaseApp = initializeApp(firebaseConfig)

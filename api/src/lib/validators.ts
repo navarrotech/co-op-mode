@@ -4,6 +4,9 @@ import { defaultLanguage, supportedLanguages } from './language'
 
 import * as yup from 'yup'
 
+export type Yup = typeof yup
+export type Validator = (yup: Yup) => yup.AnyObjectSchema
+
 export const color = () =>yup
   .string()
   .typeError('')

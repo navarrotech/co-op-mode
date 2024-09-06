@@ -28,12 +28,12 @@ const validator = phoneValidator()
 export function WithPhoneNumber() {
   const navigate = useNavigate()
 
-  const [ countryCode, setCountryCode ] = useState<string>('US +1')
-  const [ error, setError ] = useState<string>('')
-  const [ phoneNumber, setPhoneNumber ] = useState<string>('')
-  const [ isLoading, setIsLoading ] = useState<boolean>(false)
+  const [ countryCode, setCountryCode, ] = useState<string>('US +1')
+  const [ error, setError, ] = useState<string>('')
+  const [ phoneNumber, setPhoneNumber, ] = useState<string>('')
+  const [ isLoading, setIsLoading, ] = useState<boolean>(false)
 
-  const { t } = useTranslation()
+  const { t, } = useTranslation()
 
   // @ts-ignore
   const fullNumber = `+${countryCodesToValues[countryCode]||'1'}${phoneNumber}`
@@ -54,8 +54,8 @@ export function WithPhoneNumber() {
     setError('')
     setIsLoading(true)
 
-    const { data, struct, status } = await authorizeByPhone({
-      phone: fullNumber
+    const { data, struct, status, } = await authorizeByPhone({
+      phone: fullNumber,
     })
 
     setIsLoading(false)
@@ -66,8 +66,8 @@ export function WithPhoneNumber() {
         // @ts-ignore
         setUser({
           ...user,
-          phone: fullNumber
-        })
+          phone: fullNumber,
+        }),
       )
       navigate(urls.phoneVerify)
       return
@@ -94,43 +94,44 @@ export function WithPhoneNumber() {
     return () => {
       document.removeEventListener('keydown', handleKeyDown)
     }
-  }, [ submit ])
+  }, [ submit, ])
     
-  return <section className="section is-stacked">
-    <div className="block">
+  return <section className='section is-stacked'>
+    <div className='block'>
       <Button ghost onClick={() => history.back()}>
-        <span className="icon">
+        <span className='icon'>
           <FontAwesomeIcon icon={faArrowLeft} />
         </span>
       </Button>
     </div>
-    <div className="block">
-      <h1 className="title">{ t('enter_phone') }</h1>
+    <div className='block'>
+      <h1 className='title'>{ t('enter_phone') }</h1>
     </div>
-    <div className="block">
-      <div className="field has-addons">
-        <div className="control">
+    <div className='block'>
+      <div className='field has-addons'>
+        <div className='control'>
           <AdvancedSelect
+          // TODO: Internationlize
             title='Select Country Code'
             options={countryCodes}
             value={countryCode}
             onSelect={(value) => setCountryCode(value)}
           >
-            <button className="button is-select-prompt" type="button">
+            <Button className='is-select-prompt'>
               <span>{ countryCode }</span>
-              <span className="icon">
+              <span className='icon'>
                 <FontAwesomeIcon icon={faCaretDown} />
               </span>
-            </button>
+            </Button>
           </AdvancedSelect>
         </div>
-        <div className="control is-fullwidth">
+        <div className='control is-fullwidth'>
           <input
             autoFocus
-            className="input"
-            type="text"
+            className='input'
+            type='text'
             autoComplete='tel'
-            placeholder="Phone Number"
+            placeholder='Phone Number'
             value={phoneNumber}
             onChange={(e) => setPhoneNumber(e.target.value.replaceAll(/\D/g, ''))}
             onKeyDown={(e) => {
@@ -144,14 +145,14 @@ export function WithPhoneNumber() {
       </div>
       <p>{ t('phone_help') }</p>
     </div>
-    { error && <div className="block notification is-danger is-size-7">{ error }</div> }
-    <div className="block">
+    { error && <div className='block notification is-danger is-size-7'>{ error }</div> }
+    <div className='block'>
       <Help url={externalUrls.myPhoneNumberChanged}>
         <strong>{ t('phone_changed') }</strong>
       </Help>
     </div>
-    <div className="block v-spacer" />
-    <div className="block buttons is-centered">
+    <div className='block v-spacer' />
+    <div className='block buttons is-centered'>
       <Button
         fullwidth
         primary={isValid}
@@ -167,38 +168,38 @@ export function WithPhoneNumber() {
 }
 
 const countryCodes = [
-  { key: 'US +1', value: 'US +1', text: '+1 United States' },
-  { key: 'CA +1', value: 'CA +1', text: '+1 Canada' },
-  { key: 'GB +44', value: 'GB +44', text: '+44 United Kingdom' },
-  { key: 'AU +61', value: 'AU +61', text: '+61 Australia' },
-  { key: 'IN +91', value: 'IN +91', text: '+91 India' },
-  { key: 'JP +81', value: 'JP +81', text: '+81 Japan' },
-  { key: 'DE +49', value: 'DE +49', text: '+49 Germany' },
-  { key: 'FR +33', value: 'FR +33', text: '+33 France' },
-  { key: 'BR +55', value: 'BR +55', text: '+55 Brazil' },
-  { key: 'CN +86', value: 'CN +86', text: '+86 China' },
-  { key: 'SE +46', value: 'SE +46', text: '+46 Sweden' },
-  { key: 'NO +47', value: 'NO +47', text: '+47 Norway' },
-  { key: 'DK +45', value: 'DK +45', text: '+45 Denmark' },
-  { key: 'FI +358', value: 'FI +358', text: '+358 Finland' },
-  { key: 'IS +354', value: 'IS +354', text: '+354 Iceland' },
-  { key: 'NL +31', value: 'NL +31', text: '+31 Netherlands' },
-  { key: 'CH +41', value: 'CH +41', text: '+41 Switzerland' },
-  { key: 'IE +353', value: 'IE +353', text: '+353 Ireland' },
-  { key: 'AT +43', value: 'AT +43', text: '+43 Austria' },
-  { key: 'BE +32', value: 'BE +32', text: '+32 Belgium' },
-  { key: 'NZ +64', value: 'NZ +64', text: '+64 New Zealand' },
-  { key: 'SG +65', value: 'SG +65', text: '+65 Singapore' },
-  { key: 'KR +82', value: 'KR +82', text: '+82 South Korea' },
-  { key: 'IT +39', value: 'IT +39', text: '+39 Italy' },
-  { key: 'ES +34', value: 'ES +34', text: '+34 Spain' },
-  { key: 'PT +351', value: 'PT +351', text: '+351 Portugal' },
-  { key: 'GR +30', value: 'GR +30', text: '+30 Greece' },
-  { key: 'IL +972', value: 'IL +972', text: '+972 Israel' },
-  { key: 'LU +352', value: 'LU +352', text: '+352 Luxembourg' },
-  { key: 'CY +357', value: 'CY +357', text: '+357 Cyprus' },
-  { key: 'MT +356', value: 'MT +356', text: '+356 Malta' },
-  { key: 'Other', value: 'Other', text: 'Other' }
+  { key: 'US +1', value: 'US +1', text: '+1 United States', },
+  { key: 'CA +1', value: 'CA +1', text: '+1 Canada', },
+  { key: 'GB +44', value: 'GB +44', text: '+44 United Kingdom', },
+  { key: 'AU +61', value: 'AU +61', text: '+61 Australia', },
+  { key: 'IN +91', value: 'IN +91', text: '+91 India', },
+  { key: 'JP +81', value: 'JP +81', text: '+81 Japan', },
+  { key: 'DE +49', value: 'DE +49', text: '+49 Germany', },
+  { key: 'FR +33', value: 'FR +33', text: '+33 France', },
+  { key: 'BR +55', value: 'BR +55', text: '+55 Brazil', },
+  { key: 'CN +86', value: 'CN +86', text: '+86 China', },
+  { key: 'SE +46', value: 'SE +46', text: '+46 Sweden', },
+  { key: 'NO +47', value: 'NO +47', text: '+47 Norway', },
+  { key: 'DK +45', value: 'DK +45', text: '+45 Denmark', },
+  { key: 'FI +358', value: 'FI +358', text: '+358 Finland', },
+  { key: 'IS +354', value: 'IS +354', text: '+354 Iceland', },
+  { key: 'NL +31', value: 'NL +31', text: '+31 Netherlands', },
+  { key: 'CH +41', value: 'CH +41', text: '+41 Switzerland', },
+  { key: 'IE +353', value: 'IE +353', text: '+353 Ireland', },
+  { key: 'AT +43', value: 'AT +43', text: '+43 Austria', },
+  { key: 'BE +32', value: 'BE +32', text: '+32 Belgium', },
+  { key: 'NZ +64', value: 'NZ +64', text: '+64 New Zealand', },
+  { key: 'SG +65', value: 'SG +65', text: '+65 Singapore', },
+  { key: 'KR +82', value: 'KR +82', text: '+82 South Korea', },
+  { key: 'IT +39', value: 'IT +39', text: '+39 Italy', },
+  { key: 'ES +34', value: 'ES +34', text: '+34 Spain', },
+  { key: 'PT +351', value: 'PT +351', text: '+351 Portugal', },
+  { key: 'GR +30', value: 'GR +30', text: '+30 Greece', },
+  { key: 'IL +972', value: 'IL +972', text: '+972 Israel', },
+  { key: 'LU +352', value: 'LU +352', text: '+352 Luxembourg', },
+  { key: 'CY +357', value: 'CY +357', text: '+357 Cyprus', },
+  { key: 'MT +356', value: 'MT +356', text: '+356 Malta', },
+  { key: 'Other', value: 'Other', text: 'Other', },
 ]
 
 const countryCodesToValues = {
@@ -233,5 +234,5 @@ const countryCodesToValues = {
   'LU +352': '352',
   'CY +357': '357',
   'MT +356': '356',
-  'Other': ''
+  'Other': '',
 }

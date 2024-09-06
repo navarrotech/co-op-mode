@@ -21,7 +21,7 @@ import { urls } from '../urls'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faChevronRight, faMars, faPlus, faVenus } from '@fortawesome/free-solid-svg-icons'
 import { useTranslation } from 'react-i18next'
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 // Components
 import { Confirm } from '@/elements/Confirm'
@@ -34,14 +34,14 @@ import { Meme } from '@/elements/Meme'
 import memeStyles from '@/elements/Meme.module.sass'
 
 export function ProfileBuilder() {
-  const { t } = useTranslation()
+  const { t, } = useTranslation()
 
-  const [ firstNameMeme, setFirstNameMeme ] = useState<boolean>(true)
-  const [ lastNameMeme, setLastNameMeme ] = useState<boolean>(true)
-  const [ errors, setErrors ] = useState<FormInvalid>([])
-  const [ draft, setDraft ] = useState<string>('')
-  const [ draftArr, setDraftArr ] = useState<string[]>([])
-  const [ confirm, setConfirm ] = useState<boolean>(false)
+  const [ firstNameMeme, setFirstNameMeme, ] = useState<boolean>(true)
+  const [ lastNameMeme, setLastNameMeme, ] = useState<boolean>(true)
+  const [ errors, setErrors, ] = useState<FormInvalid>([])
+  const [ draft, setDraft, ] = useState<string>('')
+  const [ draftArr, setDraftArr, ] = useState<string[]>([])
+  const [ confirm, setConfirm, ] = useState<boolean>(false)
   const user = useSelector(state => state.user.current)!
   const datingProfile = useSelector(state => state.dating.profile)
 
@@ -58,11 +58,11 @@ export function ProfileBuilder() {
       nextText={t('next')}
       errors={errors}
       onNext={async () => {
-        const { status, struct, data } = await updateAccount({ first_name: draft })
+        const { status, struct, data, } = await updateAccount({ first_name: draft, })
         if (status === 200) {
           if (data?.id){
             dispatch(
-              setUser(data)
+              setUser(data),
             )
           }
           setErrors([])
@@ -72,21 +72,21 @@ export function ProfileBuilder() {
           setErrors(data.invalid)
         }
         if (data?.message) {
-          setErrors([ data.message ])
+          setErrors([ data.message, ])
         }
       }}
     >
-      <div className="field">
-        <div className="control has-icons-left">
+      <div className='field'>
+        <div className='control has-icons-left'>
           <input
             autoFocus
-            className="input"
-            type="text"
+            className='input'
+            type='text'
             placeholder={t('first_name_placeholder')}
             value={draft}
             onChange={e => setDraft(e.target.value)}
           />
-          <span className="icon is-left">
+          <span className='icon is-left'>
             <FontAwesomeIcon icon={faChevronRight} />
           </span>
         </div>
@@ -96,7 +96,7 @@ export function ProfileBuilder() {
 
   if (!firstNameMeme) {
     return <BuilderTemplate
-      title={t('profile_builder_welcome_first_name', { first_name: user.first_name })}
+      title={t('profile_builder_welcome_first_name', { first_name: user.first_name, })}
       nextText={t('nice')}
       errors={errors}
       onNext={() => {
@@ -104,9 +104,9 @@ export function ProfileBuilder() {
       }}
     >
       <Meme
-        imageUrl="/images/patrick.jpg"
+        imageUrl='/images/patrick.jpg'
         topText={t('profile_builder_patrick_meme_1')}
-        bottomText={t('profile_builder_patrick_meme_2', { first_name: user.first_name })}
+        bottomText={t('profile_builder_patrick_meme_2', { first_name: user.first_name, })}
       />
     </BuilderTemplate>
   }
@@ -124,11 +124,11 @@ export function ProfileBuilder() {
       nextText={t('next')}
       errors={errors}
       onNext={async () => {
-        const { status, struct, data } = await updateAccount({ last_name: draft })
+        const { status, struct, data, } = await updateAccount({ last_name: draft, })
         if (status === 200) {
           if (data?.id){
             dispatch(
-              setUser(data)
+              setUser(data),
             )
           }
           setErrors([])
@@ -138,26 +138,26 @@ export function ProfileBuilder() {
           setErrors(data.invalid)
         }
         if (data?.message) {
-          setErrors([ data.message ])
+          setErrors([ data.message, ])
         }
       }}
     >
-      <div className="field">
-        <div className="control has-icons-left">
+      <div className='field'>
+        <div className='control has-icons-left'>
           <input
             autoFocus
-            className="input"
-            type="text"
+            className='input'
+            type='text'
             placeholder={t('last_name_placeholder')}
             value={draft}
             onChange={e => setDraft(e.target.value)}
           />
-          <span className="icon is-left">
+          <span className='icon is-left'>
             <FontAwesomeIcon icon={faChevronRight} />
           </span>
         </div>
       </div>
-      <div className="field">
+      <div className='field'>
         <p className='is-size-7'>{ t('profile_builder_last_name_disclosuer') }</p>
       </div>
     </BuilderTemplate>
@@ -173,9 +173,14 @@ export function ProfileBuilder() {
       }}
     >
       <Meme
-        imageUrl="/images/darth-vader.jpg"
+        imageUrl='/images/darth-vader.jpg'
         topText={t('profile_builder_sideous_meme_1')}
-        bottomText={t('profile_builder_sideous_meme_2', { first_name: user.first_name, last_name: user.last_name })}
+        bottomText={
+          t('profile_builder_sideous_meme_2', {
+            first_name: user.first_name,
+            last_name: user.last_name,
+          })
+        }
         className={memeStyles.sideous}
       />
     </BuilderTemplate>
@@ -191,18 +196,18 @@ export function ProfileBuilder() {
         if (!draft) {
           return
         }
-        const { status, struct, data } = await updateDatingProfile({
-          gender: draft
+        const { status, struct, data, } = await updateDatingProfile({
+          gender: draft,
         })
         if (status === 200 && struct === 'DatingProfile') {
           dispatch(
-            setProfile(data)
+            setProfile(data),
           )
           setDraft('')
         }
       }}
     >
-      <div className="block buttons is-centered">
+      <div className='block buttons is-centered'>
         <Button
           info
           fullwidth
@@ -210,7 +215,7 @@ export function ProfileBuilder() {
           inverted={draft !== 'Male'}
           onClick={() => setDraft('Male')}
         >
-          <span className="icon">
+          <span className='icon'>
             <FontAwesomeIcon icon={faMars} />
           </span>
           <span>{ t('gender_male') }</span>
@@ -222,7 +227,7 @@ export function ProfileBuilder() {
           inverted={draft !== 'Female'}
           onClick={() => setDraft('Female')}
         >
-          <span className="icon">
+          <span className='icon'>
             <FontAwesomeIcon icon={faVenus} />
           </span>
           <span>{ t('gender_female') }</span>
@@ -234,7 +239,7 @@ export function ProfileBuilder() {
           inverted={draft !== 'NonBinary'}
           onClick={() => setDraft('NonBinary')}
         >
-          <span className="icon">
+          <span className='icon'>
             <FontAwesomeIcon icon={faPlus} />
           </span>
           <span>{ t('gender_non_binary') }</span>
@@ -253,19 +258,19 @@ export function ProfileBuilder() {
         if (!draftArr.length) {
           return
         }
-        const { status, struct, data } = await updateDatingProfile({
-          wanting: draftArr
+        const { status, struct, data, } = await updateDatingProfile({
+          wanting: draftArr,
         })
         if (status === 200 && struct === 'DatingProfile') {
           dispatch(
-            setProfile(data)
+            setProfile(data),
           )
           setDraft('')
           setDraftArr([])
         }
       }}
     >
-      <div className="block buttons is-centered">
+      <div className='block buttons is-centered'>
         <Button
           info
           fullwidth
@@ -273,10 +278,10 @@ export function ProfileBuilder() {
           inverted={!draftArr.includes('Male')}
           onClick={() => draftArr.includes('Male')
             ? setDraftArr(draftArr.filter(gender => gender !== 'Male'))
-            : setDraftArr([ ...draftArr, 'Male' ])
+            : setDraftArr([ ...draftArr, 'Male', ])
           }
         >
-          <span className="icon">
+          <span className='icon'>
             <FontAwesomeIcon icon={faMars} />
           </span>
           <span>{ t('gender_male_plural') }</span>
@@ -288,10 +293,10 @@ export function ProfileBuilder() {
           inverted={!draftArr.includes('Female')}
           onClick={() => draftArr.includes('Female')
             ? setDraftArr(draftArr.filter(gender => gender !== 'Female'))
-            : setDraftArr([ ...draftArr, 'Female' ])
+            : setDraftArr([ ...draftArr, 'Female', ])
           }
         >
-          <span className="icon">
+          <span className='icon'>
             <FontAwesomeIcon icon={faVenus} />
           </span>
           <span>{ t('gender_female_plural') }</span>
@@ -303,10 +308,10 @@ export function ProfileBuilder() {
           inverted={!draftArr.includes('NonBinary')}
           onClick={() => draftArr.includes('NonBinary')
             ? setDraftArr(draftArr.filter(gender => gender !== 'NonBinary'))
-            : setDraftArr([ ...draftArr, 'NonBinary' ])
+            : setDraftArr([ ...draftArr, 'NonBinary', ])
           }
         >
-          <span className="icon">
+          <span className='icon'>
             <FontAwesomeIcon icon={faPlus} />
           </span>
           <span>{ t('gender_non_binary_plural') }</span>
@@ -319,14 +324,14 @@ export function ProfileBuilder() {
     if (confirm) {
       const yearsFromNow = Math.abs(moment(draft).diff(moment(), 'years'))
       return <Confirm
-        title={t('confirm_birthday', { age_years: yearsFromNow })}
+        title={t('confirm_birthday', { age_years: yearsFromNow, })}
         onYes={async () => {
-          const { status, struct, data } = await updateDatingProfile({
-            birthday: draft
+          const { status, struct, data, } = await updateDatingProfile({
+            birthday: draft,
           })
           if (status === 200 && struct === 'DatingProfile') {
             dispatch(
-              setProfile(data)
+              setProfile(data),
             )
             setDraft('')
             setConfirm(false)
@@ -335,7 +340,7 @@ export function ProfileBuilder() {
         onNo={() => setConfirm(false)}
         onCancel={() => setConfirm(false)}
       >
-        <div className="block">
+        <div className='block'>
           <p>{ t('confirm_birthday_warning') }</p>
         </div>
       </Confirm>
@@ -352,16 +357,16 @@ export function ProfileBuilder() {
         setConfirm(true)
       }}
     >
-      <div className="field">
-        <div className="control has-icons-left">
+      <div className='field'>
+        <div className='control has-icons-left'>
           <input
             autoFocus
-            className="input is-fullwidth"
-            type="date"
+            className='input is-fullwidth'
+            type='date'
             value={draft}
             onChange={e => setDraft(e.target.value)}
           />
-          <span className="icon is-left">
+          <span className='icon is-left'>
             <FontAwesomeIcon icon={faChevronRight} />
           </span>
         </div>

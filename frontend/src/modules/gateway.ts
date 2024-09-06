@@ -23,7 +23,7 @@ type ChangeEvent<K extends keyof IChangeEvent> = RequiredProperty<IChangeEvent, 
 // type ChangeType = "CREATE" | "UPDATE" | "DELETE"
 
 const io = socketio(GATEWAY_URL, {
-  transports: [ 'websocket' ]
+  transports: [ 'websocket', ],
 })
 
 let disconnectTimeout: ReturnType<typeof setTimeout>
@@ -32,17 +32,18 @@ io.on('connect', () => {
   console.log('Connected to gateway')
 
   clearTimeout(
-    disconnectTimeout
+    disconnectTimeout,
   )
 
   dispatch(
-    setGatewayConnected(true)
+    setGatewayConnected(true),
   )
 
   // Reinitialize the app, in case we missed any data while the gateway was down!
   if (needToReInit) {
     needToReInit = false
-    // TODO: Maybe it'd be better to just refresh the page and let the main catch function deal with it?
+    // TODO: Maybe it'd be better to just refresh the page 
+    // and let the main catch function deal with it?
     init().catch(console.error)
   }
 })
@@ -55,18 +56,21 @@ io.on('disconnect', () => {
   // This will show the user that the connection is lost after 5 seconds!
   disconnectTimeout = setTimeout(() => {
     dispatch(
-      setGatewayConnected(false)
+      setGatewayConnected(false),
     )
     needToReInit = true
   }, 5_000)
 })
 
-function parseProto<T extends keyof typeof ProtoBufs, K = any>(struct: T, rawResponse: ArrayBuffer): K | undefined {
+function parseProto<T extends keyof typeof ProtoBufs, K = any>(
+  struct: T,
+  rawResponse: ArrayBuffer,
+): K | undefined {
   const returnConstruct = ProtoBufs[struct]
 
   try {
     const body = returnConstruct.decode(
-      new Uint8Array(rawResponse)
+      new Uint8Array(rawResponse),
     )
 
     const data = body.toJSON()
@@ -86,7 +90,7 @@ function parseProto<T extends keyof typeof ProtoBufs, K = any>(struct: T, rawRes
 // User
 
 io.on('User', (data: ArrayBuffer) => {
-  const { user } = parseProto('User', data) as ChangeEvent<'user'>
+  const { user, } = parseProto('User', data) as ChangeEvent<'user'>
   if (!user) {
     console.error('User not found in published data down user stream? ', data)
     return
@@ -95,7 +99,7 @@ io.on('User', (data: ArrayBuffer) => {
   console.log('User changed: ', data)
 })
 io.on('Preferences', (data: ArrayBuffer) => {
-  const { preferences } = parseProto('Preferences', data) as ChangeEvent<'preferences'>
+  const { preferences, } = parseProto('Preferences', data) as ChangeEvent<'preferences'>
   if (!preferences) {
     console.error('Preferences not found in published data down preferences stream? ', data)
     return
@@ -104,7 +108,7 @@ io.on('Preferences', (data: ArrayBuffer) => {
   console.log('Preferences changed: ', data)
 })
 io.on('Limits', (data: ArrayBuffer) => {
-  const { limits } = parseProto('Limits', data) as ChangeEvent<'limits'>
+  const { limits, } = parseProto('Limits', data) as ChangeEvent<'limits'>
   if (!limits) {
     console.error('Limits not found in published data down preferences stream? ', data)
     return
@@ -117,7 +121,7 @@ io.on('Limits', (data: ArrayBuffer) => {
 // Likes reducer
 
 io.on('Likes', (data: ArrayBuffer) => {
-  const { likes } = parseProto('Likes', data) as ChangeEvent<'likes'>
+  const { likes, } = parseProto('Likes', data) as ChangeEvent<'likes'>
   if (!likes) {
     console.error('Likes not found in published data down preferences stream? ', data)
     return
@@ -126,7 +130,7 @@ io.on('Likes', (data: ArrayBuffer) => {
   console.log('Likes changed: ', data)
 })
 io.on('Dislikes', (data: ArrayBuffer) => {
-  const { dislikes } = parseProto('Dislikes', data) as ChangeEvent<'dislikes'>
+  const { dislikes, } = parseProto('Dislikes', data) as ChangeEvent<'dislikes'>
   if (!dislikes) {
     console.error('Dislikes not found in published data down preferences stream? ', data)
     return
@@ -139,7 +143,9 @@ io.on('Dislikes', (data: ArrayBuffer) => {
 // Profile reducer
 
 io.on('DatingProfile', (data: ArrayBuffer) => {
-  const { dating_profile: datingProfile } = parseProto('DatingProfile', data) as ChangeEvent<'dating_profile'>
+  const {
+    dating_profile: datingProfile,
+  } = parseProto('DatingProfile', data) as ChangeEvent<'dating_profile'>
   if (!datingProfile) {
     console.error('datingProfile not found in published data down preferences stream? ', data)
     return
@@ -148,7 +154,7 @@ io.on('DatingProfile', (data: ArrayBuffer) => {
   console.log('DatingProfile changed: ', data)
 })
 io.on('Media', (data: ArrayBuffer) => {
-  const { media } = parseProto('Media', data) as ChangeEvent<'media'>
+  const { media, } = parseProto('Media', data) as ChangeEvent<'media'>
   if (!media) {
     console.error('Media not found in published data down preferences stream? ', data)
     return
@@ -157,7 +163,7 @@ io.on('Media', (data: ArrayBuffer) => {
   console.log('Media changed: ', data)
 })
 io.on('Status', (data: ArrayBuffer) => {
-  const { status } = parseProto('Status', data) as ChangeEvent<'status'>
+  const { status, } = parseProto('Status', data) as ChangeEvent<'status'>
   if (!status) {
     console.error('Status not found in published data down preferences stream? ', data)
     return
@@ -170,7 +176,7 @@ io.on('Status', (data: ArrayBuffer) => {
 // Messages reducer
 
 io.on('Conversations', (data: ArrayBuffer) => {
-  const { conversations } = parseProto('Conversations', data) as ChangeEvent<'conversations'>
+  const { conversations, } = parseProto('Conversations', data) as ChangeEvent<'conversations'>
   if (!conversations) {
     console.error('Conversations not found in published data down preferences stream? ', data)
     return
@@ -179,7 +185,7 @@ io.on('Conversations', (data: ArrayBuffer) => {
   console.log('Conversations changed: ', data)
 })
 io.on('Messages', (data: ArrayBuffer) => {
-  const { messages } = parseProto('Messages', data) as ChangeEvent<'messages'>
+  const { messages, } = parseProto('Messages', data) as ChangeEvent<'messages'>
   if (!messages) {
     console.error('Messages not found in published data down preferences stream? ', data)
     return

@@ -6,7 +6,7 @@ import { API_URL, NODE_ENV } from '@/env'
 
 // This should be synced with the user's preferences eventually!
 const defaults: Record<string, string> = {
-  language: localStorage.getItem('language') || defaultLanguage
+  language: localStorage.getItem('language') || defaultLanguage,
 }
 
 Object.keys(defaults).forEach(key => {
@@ -35,7 +35,12 @@ type NonFunctionProperties<T> = {
 
 type NonFunction<T> = Pick<T, NonFunctionProperties<T>>;
 
-export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: string, struct: T, data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>, method = 'POST'): Promise<K> {
+export async function sendProto<K = any, T extends ProtoBufMessages = any>(
+  url: string,
+  struct: T,
+  data: Partial<NonFunction<ReturnType<typeof ProtoBufs[T]['create']>>>,
+  method = 'POST',
+): Promise<K> {
   const Construct = ProtoBufs[struct]
   const buffer = Construct.fromObject(data)
 
@@ -50,12 +55,12 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
       headers: {
         'Content-Type': 'Application/X-Protobuf',
         'X-Protobuf-Struct': struct,
-        'Accept-Language': defaults.language
+        'Accept-Language': defaults.language,
       },
       // @ts-ignore
       body: method === 'GET' ? undefined : Construct.encode(buffer).finish(),
-      credentials: 'include'
-    }
+      credentials: 'include',
+    },
   )
 
   const rawResponse = await response.arrayBuffer()
@@ -69,7 +74,7 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
       headers: response.headers,
       // @ts-ignore
       data: undefined,
-      struct: 'Blank'
+      struct: 'Blank',
     } as ProtoResponse
   }
 
@@ -90,13 +95,13 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
       headers: response.headers,
       // @ts-ignore
       data: undefined,
-      struct: 'Blank'
+      struct: 'Blank',
     } as ProtoResponse
   }
     
   try {
     const body = returnConstruct.decode(
-      new Uint8Array(rawResponse)
+      new Uint8Array(rawResponse),
     )
 
     const data = body.toJSON()
@@ -109,7 +114,7 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
       data,
       status: response.status,
       headers: response.headers,
-      struct: returnStruct
+      struct: returnStruct,
     } as ProtoResponse
   }
   catch (error: any){
@@ -121,7 +126,7 @@ export async function sendProto<K = any, T extends ProtoBufMessages = any>(url: 
       headers: response.headers,
       // @ts-ignore
       data: undefined,
-      struct: 'Blank'
+      struct: 'Blank',
     } as ProtoResponse
   }
 }

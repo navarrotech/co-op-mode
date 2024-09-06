@@ -1,76 +1,66 @@
 // Copyright © 2024 Navarrotech
 
-// React.js
-import { useState } from 'react'
-// import { NavLink } from 'react-router-dom'
+// Core
 import { useTranslation } from 'react-i18next'
 
+// Typescript
+import type { ReactNode } from 'react'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
+
 // Iconography
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faUser } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-// Redux
-import { useSelector } from '@/store'
+type Props = {
+  id?: string
+  title?: string | ReactNode
+  noLogo?: boolean
+  icon?: IconDefinition
+  onLogoClick?: () => void
+  children?: ReactNode
+}
 
-// Components
-// import Dropdown from '../../elements/Dropdown'
+export function Topbar(props: Props) {
+  const {
+    id,
+    icon,
+    noLogo = false,
+    title,
+    children = <></>,
+    onLogoClick,
+  } = props
 
-export function Topbar() {
-  const [ showMobileMenu, setShowMobileMenu ] = useState<boolean>(false)
-  const user = useSelector(state => state.user.current)
-  const { t } = useTranslation()
+  const { t, } = useTranslation()
 
-  if (!user) {
-    return <></>
-  }
-
-  return (
-    <nav className="navbar" role="navigation" aria-label="main navigation">
-      <div className="navbar-brand">
-        <div className="navbar-item">
-          <img src="/logo.png" width="28" height="28" alt="Navarrotech" />
-          <h1 className="title is-5 ml-3">{ t('brand_name') }</h1>
-        </div>
-        <div
-          role="button"
-          className={'navbar-burger' + (showMobileMenu ? ' is-active' : '')}
-          aria-label="menu"
-          aria-expanded="false"
-          onClick={() => setShowMobileMenu(!showMobileMenu)}
-        >
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </div>
+  return <nav
+    id={id}
+    className='navbar'
+    role='navigation'
+    aria-label='main navigation'
+  >
+    <div className='navbar-brand'>
+      <div className='navbar-item' onClick={onLogoClick}>
+        { icon 
+          ? <span className='icon'>
+            <FontAwesomeIcon
+              icon={icon}
+              size='lg'
+            />
+          </span>
+          : noLogo
+            ? <></>
+            : <img src='/logo.png' width='28' height='28' alt='Navarrotech' />
+        }
+        {
+          !title
+            ? <h1 className='title is-5 ml-3'>{ t('brand.name') }</h1>
+            : typeof title === 'string'
+              ? <h1 className='is-size-6 ml-3'>{ t(title) }</h1>
+              : title
+        }
       </div>
-
-      <div className={'navbar-menu' + (showMobileMenu ? ' is-active' : '')}>
-        <div className="navbar-start">
-          <hr className="navbar-divider is-hidden-desktop" />
-          {/* <NavLink
-            to="/logout"
-            className="navbar-item is-hidden-desktop"
-            onClick={() => setShowMobileMenu(false)}
-          >Logout</NavLink> */}
-        </div>
-
-        <div className="navbar-end is-hidden-touch">
-          <div className="navbar-item">
-            {/* <Dropdown
-              isTriggerRounded
-              className="is-right"
-              trigger={<div className="icon">
-                <FontAwesomeIcon icon={faUser} />
-              </div>}
-            >
-              <NavLink to="/account" className="dropdown-item">Account (Coming soon)</NavLink>
-              <hr className="dropdown-divider" />
-              <NavLink to="/logout" className="dropdown-item">Logout</NavLink>
-            </Dropdown> */}
-          </div>
-        </div>
-      </div>
-    </nav>
-  )
+    </div>
+    <div className='navbar-menu'>
+      { children }
+    </div>
+  </nav>
 }

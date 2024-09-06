@@ -22,6 +22,7 @@ import { DiscoverPage } from './dating/DiscoverPage'
 import { MatchesPage } from './dating/MatchesPage'
 import { ConversationsPage } from './messages/ConversationsPage'
 import { AccountPage } from './profile/AccountPage'
+import { SettingsView } from './profile/Settings'
 
 /*
  * Homepage and marketing should be in a separate repository!
@@ -46,13 +47,15 @@ export function Router() {
       <Route path={urls.app} element={<AuthorizedOutlet />}>
         <Route path={urls.buildProfile} element={<ProfileBuilder />} />
 
-        {/* This route ensures that the user's profile is fully completed before letting users access these nested routes */}
+        {/* This route ensures that the user's profile is fully completed
+         before letting users access these nested routes */}
         <Route path={urls.dashboard} element={<ProfileCompletionOutlet />}>
           <Route path={urls.matching} element={<MatchingPage />} />
           <Route path={urls.discover} element={<DiscoverPage />} />
           <Route path={urls.likes} element={<MatchesPage />} />
           <Route path={urls.messages} element={<ConversationsPage />} />
           <Route path={urls.profile} element={<AccountPage />} />
+          <Route path={urls.settings} element={<SettingsView />} />
         </Route>
 
         <Route path={urls.dashboard} element={<Navigate to={urls.matching} />} />
@@ -64,7 +67,7 @@ export function Router() {
       <Route path={urls.privacyPolicy} element={<h1></h1>} />
 
       {/* Catch-all 404 */}
-      <Route path="*" element={<Navigate to={urls.welcome} />} />
+      <Route path='*' element={<Navigate to={urls.welcome} />} />
     </Routes>
   </BrowserRouter>
 }

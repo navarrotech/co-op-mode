@@ -10,8 +10,8 @@ export const i18Instance = i18next
   .use(LanguageDetector)
   .use(Backend)
   .init({
-    ns: [ 'translation' ],
+    ns: [ 'translation', ],
     defaultNS: 'translation',
     lng: 'en',
-    fallbackLng: 'en'
+    fallbackLng: 'en',
   })

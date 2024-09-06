@@ -405,7 +405,7 @@ export type Types = {
 }
 
 export const Routes = {
-    authorizeByPhone,
+	authorizeByPhone,
 	logout,
 	check,
 	sync,

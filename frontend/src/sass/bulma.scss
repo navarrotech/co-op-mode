@@ -11,7 +11,9 @@ $family-primary: "Montserrat", Arial, sans-serif;
   $link: $link,
   $info: $info,
   $title-family: $family-titles,
-  $input-shadow: none
+  $input-shadow: none,
+  $button-ghost-color: $white,
+  $button-ghost-hover-color: $white
 );
 
 // Navarrotech
@@ -22,6 +24,37 @@ $family-primary: "Montserrat", Arial, sans-serif;
 
 // Bulma extensions
 @import "bulma-divider";
+
+.has-divider {
+  position: relative;
+
+  span {
+    margin-left: 1em;
+    display: inline-block;
+    padding-left: 0.6em;
+    padding-right: 0.6em;
+    position: relative;
+  }
+
+  &::before {
+    content: " ";
+    position: absolute;
+    right: 0;
+    left: 0;
+    display: block;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.3);
+    margin-top: 1rem;
+    top: -0.25em;
+  }
+
+  &.is-centered {
+    text-align: center;
+    span {
+      margin-left: auto;
+    }
+  }
+}
 
 .theme-light {
   p {
@@ -44,6 +77,17 @@ $family-primary: "Montserrat", Arial, sans-serif;
       }
     }
   }
+
+  .has-divider span {
+    background: $white;
+  }
+
+  .box:has(> .box-label) {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    .box-label {
+      background: $white;
+    }
+  }
 }
 
 .theme-dark {
@@ -57,6 +101,17 @@ $family-primary: "Montserrat", Arial, sans-serif;
       &.is-inverted {
         color: white !important;
       }
+    }
+  }
+
+  .has-divider span {
+    background: $black;
+  }
+
+  .box:has(> .box-label) {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    .box-label {
+      background: $black;
     }
   }
 }
@@ -112,7 +167,21 @@ $family-primary: "Montserrat", Arial, sans-serif;
 }
 
 .navbar {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
   height: $topbarHeight;
+
+  .navbar-menu {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 0.5em;
+  }
+}
+
+.is-borderless {
+  border: none !important;
 }
 
 .useTitleFont {
@@ -171,6 +240,49 @@ textarea {
   }
 }
 
+svg.custom-icon {
+  display: inline-block;
+  height: 1em;
+  overflow: visible;
+  vertical-align: -0.125em;
+  overflow: visible;
+  box-sizing: content-box;
+
+  &.is-large {
+    font-size: 1.5em;
+    line-height: 0.0416666682em;
+    vertical-align: -0.25em;
+  }
+}
+
+.box {
+  position: relative;
+
+  &:has(> .box-label) {
+    padding-top: 1.75em;
+    padding-bottom: 1.5em;
+
+    .box-label {
+      position: absolute;
+      top: -0.5em;
+      left: 0.75em;
+      margin-bottom: 0;
+      font-weight: 300;
+      padding: 0 0.35em;
+      height: 0.6em;
+      line-height: 1;
+      font-weight: 500;
+
+      &.is-centered {
+        margin-left: auto;
+        margin-right: auto;
+        right: 0;
+        left: 0;
+        width: fit-content;
+      }
+    }
+  }
+}
 
 @media only screen and (max-width: $tablet) {
   .section {
@@ -235,9 +347,22 @@ textarea {
       }
     }
   }
+
   .theme-light {
     .dropdown.is-active::before {
       background: rgba(0, 0, 0, 0.5) !important;
     }
   }
+
+  .field > .label {
+    font-size: 0.875rem;
+  }
+  .input,
+  .textarea {
+    font-size: 0.9rem;
+  }
+}
+
+.level.is-mobile > .field {
+  margin-bottom: 0 !important;
 }

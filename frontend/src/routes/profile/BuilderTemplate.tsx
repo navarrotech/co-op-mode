@@ -16,7 +16,7 @@ type Props = {
   nextText: string
 }
 
-export function BuilderTemplate({ title, onNext, nextText, errors, disabled, children }: Props) {
+export function BuilderTemplate({ title, onNext, nextText, errors, disabled, children, }: Props) {
 
   useEffect(() => {
     const keyListener = (e: KeyboardEvent) => {
@@ -28,24 +28,27 @@ export function BuilderTemplate({ title, onNext, nextText, errors, disabled, chi
     return () => {
       document.removeEventListener('keydown', keyListener)
     }
-  }, [ onNext ])
+  }, [ onNext, ])
 
-  return <section className="section is-stacked">
-    <figure className="block image is-64x64 is-centered">
-      <img src="/logo.png" alt="Co-Op Mode" />
+  return <section className='section is-stacked'>
+    <figure className='block image is-64x64 is-centered'>
+      <img src='/logo.png' alt='Co-Op Mode' />
     </figure>
-    <div className="block has-text-centered has-text-pretty">
-      <h1 className="title is-size-4">{ title }</h1>
+    <div className='block has-text-centered has-text-pretty'>
+      <h1 className='title is-size-4'>{ title }</h1>
     </div>
-    <div className="block">
+    <div className='block'>
       { children }
     </div>
     { errors?.length
-      ? errors.map(({ key, message }) => <div key={key} className="block notification is-danger">{ message }</div>)
+      ? errors.map(({ key, message, }) => <div
+        key={key}
+        className='block notification is-danger'
+      >{ message }</div>)
       : <></>
     }
-    <div className="block v-spacer" />
-    <div className="block buttons is-centered">
+    <div className='block v-spacer' />
+    <div className='block buttons is-centered'>
       <Button
         primary
         fullwidth

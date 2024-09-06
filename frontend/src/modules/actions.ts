@@ -6,7 +6,7 @@ import { stopGateway } from './gateway'
 
 export async function shutdown() {
   await dispatch(
-    logout()
+    logout(),
   )
 
   await stopGateway()

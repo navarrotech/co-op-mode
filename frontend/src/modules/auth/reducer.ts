@@ -3,7 +3,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 import type { PayloadAction } from '@reduxjs/toolkit'
-import type { IPreferences, IUser, IDailyLimits, IMonthlyLimits, IPermanentLimits } from '../protobuf/schema'
+import type {
+  IPreferences,
+  IUser,
+  IDailyLimits,
+  IMonthlyLimits,
+  IPermanentLimits,
+} from '../protobuf/schema'
 
 export type State = {
   current: IUser | undefined
@@ -28,8 +34,8 @@ const initialState: State = {
   limits: {
     daily: undefined,
     monthly: undefined,
-    permanent: undefined
-  }
+    permanent: undefined,
+  },
 }
 
 export const slice = createSlice({
@@ -67,7 +73,7 @@ export const slice = createSlice({
       state = {
         ...initialState,
         authorized: false,
-        loading: false
+        loading: false,
       }
       return state
     },
@@ -76,8 +82,8 @@ export const slice = createSlice({
     },
     setGatewayConnected: (state, action: PayloadAction<boolean>) => {
       state.gatewayConnected = action.payload
-    }
-  }
+    },
+  },
 })
 
 export const {
@@ -90,5 +96,5 @@ export const {
 
   logout,
   setGatewayConnected,
-  finishInit
+  finishInit,
 } = slice.actions

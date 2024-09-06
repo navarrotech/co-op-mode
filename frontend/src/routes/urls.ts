@@ -24,12 +24,18 @@ export const urls = {
   likes: '/app/dashboard/likes',
   messages: '/app/dashboard/messages',
   profile: '/app/dashboard/profile',
+  editProfile: '/app/dashboard/profile/edit',
+  settings: '/app/dashboard/profile/settings',
+
+  // Community
+  support: '/support',
+  guidelines: '/community-guidelines',
 
   // Misc
   termsOfService: '/terms-of-service',
-  privacyPolicy: '/privacy-policy'
+  privacyPolicy: '/privacy-policy',
 }
 
 export const externalUrls = {
-  myPhoneNumberChanged: 'TODO'
+  myPhoneNumberChanged: 'TODO',
 }

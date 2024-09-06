@@ -15,7 +15,7 @@ module.exports = {
     'dist',
     'vite-env.d.ts',
     '.eslintrc.cjs',
-    'forge.config.ts',
+    '*.config.ts',
     'schema.d.ts',
     'routes.ts',
     'ProtoTypes.ts',
@@ -27,6 +27,7 @@ module.exports = {
     'react-refresh',
     'header',
     '@stylistic/js',
+    'import',
     'i18next'
   ],
   rules: {
@@ -54,12 +55,40 @@ module.exports = {
     //////////////////////////////////////////
     // Enforcing consistency
 
+
+    // Enforce consistent return https://eslint.org/docs/latest/rules/consistent-return
+    'consistent-return': 'error',
+    // Enforce no duplicate imports https://eslint.org/docs/latest/rules/no-extraneous-dependencies
+    'import/no-extraneous-dependencies': [
+      'warn',
+      {
+        devDependencies: false,
+        optionalDependencies: false,
+        peerDependencies: false,
+      },
+    ],
+    // Disable guard-for-in https://eslint.org/docs/latest/rules/guard-for-in
+    // This is enabled by default in the google style guide, but we're disabling it
+    'guard-for-in': 'off',
+    // Enforce no duplicate imports https://eslint.org/docs/latest/rules/no-duplicate-imports
+    'no-useless-return': 'error',
+    // Enforce no unreachable code https://eslint.org/docs/latest/rules/no-unreachable
+    'no-unreachable': 'error',
+
     // Enforce single quotes https://eslint.org/docs/latest/rules/quotes
-    quotes: ['error', 'single'],
+    'quotes': [ 'error', 'single', ],
+    // Enforce single quotes in JSX https://eslint.org/docs/latest/rules/jsx-quotes
+    'jsx-quotes': ['error', 'prefer-single'],
     // Enforce 2 spaces https://eslint.org/docs/latest/rules/indent
-    indent: ['error', 2],
+    'indent': [ 'error', 2, ],
     // Enforce no comma dangling https://eslint.org/docs/latest/rules/comma-dangle
-    'comma-dangle': ['error', 'never'],
+    'comma-dangle': ['error', {
+      'arrays': 'always',
+      'objects': 'always',
+      'imports': 'always-multiline',
+      'exports': 'always',
+      'functions': 'always-multiline'
+    }],
     // Camel case! https://eslint.org/docs/latest/rules/camelcase
     camelcase: 'off',
     // No unused vars https://eslint.org/docs/latest/rules/no-unused-vars
@@ -74,6 +103,8 @@ module.exports = {
     yoda: 'error',
     // Disable semi colons https://eslint.org/docs/latest/rules/semi
     semi: ['error', 'never'],
+    // Enforce operator linebreak https://eslint.org/docs/latest/rules/operator-linebreak
+    'operator-linebreak': [ 'error', 'before', ],
     // Ensure that we're using curly braces for all lines https://eslint.org/docs/latest/rules/curly
     'curly': ['error', 'all'],
     // No single-line magic: https://eslint.org/docs/latest/rules/brace-style
@@ -83,6 +114,16 @@ module.exports = {
     '@stylistic/js/eol-last': ['error', 'always'],
     // Enforce spacing https://eslint.org/docs/latest/rules/keyword-spacing
     'keyword-spacing': ['error', { before: true, after: true }],
+    // Disable default exports https://eslint.org/docs/latest/rules/no-default-export
+    // Google style guide: https://google.github.io/styleguide/tsguide.html#exports
+    'import/no-default-export': 'error',
+    // https://eslint.org/docs/latest/rules/no-restricted-exports
+    'no-restricted-exports': [
+      'error',
+      {
+        restrictedNamedExports: [ 'default', ],
+      },
+    ],
     // Array and object spacing https://eslint.org/docs/latest/rules/array-bracket-spacing
     'array-bracket-spacing': [
       'error',
@@ -105,8 +146,16 @@ module.exports = {
     //////////////////////////////////////////
     // Bad practices by Alex :)
 
+    // Vite does this for us as a built-in feature, there's no need for this rule extended by react-hooks/recommended
+    'react/react-in-jsx-scope': 'off',
     'react-refresh/only-export-components': 'off',
     'react-hooks/exhaustive-deps': 'off',
+
+    // Google ES2015 style guide wants us to use 'require-jsdoc' we're disabling it
+    'require-jsdoc': 'off',
+
+    // Google ES2015 limits the max length of lines to 80. This feels too strict. I've bumped it up.
+    'max-len': [ 'error', { code: 100, },],
 
     //////////////////////////////////////////
     // Best practices
@@ -124,4 +173,14 @@ module.exports = {
       }
     ]],
   },
+  overrides: [
+    // In test files, allow devDependencies and turn off the no-extraneous-dependencies rule
+    {
+      files: ['**/__test__/**/*.{js,ts}', '**/*.test.{js,ts}'],
+      rules: {
+        'import/no-extraneous-dependencies': 'off',
+        'i18next/no-literal-string': 'off',
+      },
+    },
+  ],
 };

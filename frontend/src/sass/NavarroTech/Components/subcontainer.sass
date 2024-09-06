@@ -4,9 +4,15 @@
 
 $subcontainer-max: $tablet !default
 $subcontainer-divide: 6
+
+// Is 5 / 6 of the tablet
 $subcontainer-large:  calc(math.div($subcontainer-max, $subcontainer-divide) * 5) !default
+// Is 4 / 6 of the tablet
 $subcontainer-medium: calc(math.div($subcontainer-max, $subcontainer-divide) * 4) !default
+// Is 3 / 6 of the tablet
 $subcontainer-small:  calc(math.div($subcontainer-max, $subcontainer-divide) * 3) !default
+// Is 1 / 2 of the tablet
+$subcontainer-mini: calc(math.div($subcontainer-max, $subcontainer-divide) * 2) !default
 
 .subcontainer
     display: block
@@ -39,7 +45,7 @@ $subcontainer-small:  calc(math.div($subcontainer-max, $subcontainer-divide) * 3
         max-width: $subcontainer-small
 
     &.is-mini
-        max-width: 400px
+        max-width: $subcontainer-mini
 
     &.is-fullwidth,
     &.is-expanded

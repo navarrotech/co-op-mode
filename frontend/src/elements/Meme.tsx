@@ -9,10 +9,10 @@ type Props = {
   className?: string
 }
 
-export function Meme({ imageUrl, className, topText, bottomText }: Props) {
+export function Meme({ imageUrl, className, topText, bottomText, }: Props) {
   return <div className={`${styles.meme} ${className}`}>
-    <figure className="image is-fluid">
-      <img src={imageUrl} alt="Meme" />
+    <figure className='image is-fluid'>
+      <img src={imageUrl} alt='Meme' />
     </figure>
     <div className={styles.top}>{topText}</div>
     <div className={styles.bottom}>{bottomText}</div>

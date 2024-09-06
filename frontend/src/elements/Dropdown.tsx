@@ -10,7 +10,7 @@ type Props = {
 }
 
 export function Dropdown({ children, trigger, className = '', ...props }: Props) {
-  const [ isOpen, setIsOpen ] = useState<boolean>(false)
+  const [ isOpen, setIsOpen, ] = useState<boolean>(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
   // Listen to clicks outside the dropdown
@@ -30,18 +30,18 @@ export function Dropdown({ children, trigger, className = '', ...props }: Props)
 
   return (
     <div className={`dropdown ${className} ${isOpen ? 'is-active' : ''}`} ref={dropdownRef}>
-      <div className="dropdown-trigger">
+      <div className='dropdown-trigger'>
         <button
           className={`button ${props.isTriggerRounded ? 'is-rounded' : ''}`}
-          aria-haspopup="true"
-          aria-controls="dropdown-menu"
+          aria-haspopup='true'
+          aria-controls='dropdown-menu'
           onClick={() => setIsOpen(!isOpen)}
         >
           { trigger }
         </button>
       </div>
-      <div className="dropdown-menu" role="menu">
-        <div className="dropdown-content">
+      <div className='dropdown-menu' role='menu'>
+        <div className='dropdown-content'>
           { children }
         </div>
       </div>

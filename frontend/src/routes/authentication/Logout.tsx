@@ -15,14 +15,14 @@ import { LoaderLayout } from '@/elements/Loader'
 import { urls } from '../urls'
 
 export function Logout() {
-  const [ isFinished, setFinished ] = useState<boolean>(false)
+  const [ isFinished, setFinished, ] = useState<boolean>(false)
 
   console.log('Logging out!')
 
   useEffect(() => {
     Promise.all([
       apiLogout().catch(console.error),
-      shutdown().catch(console.error)
+      shutdown().catch(console.error),
     ]).finally(() => {
       setFinished(true)
     })

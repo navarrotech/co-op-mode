@@ -17,14 +17,14 @@ export const store = configureStore({
     core: core.reducer,
     dating: dating.reducer,
     user: user.reducer,
-    messages: messages.reducer
+    messages: messages.reducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       thunk: true,
-      serializableCheck: false
+      serializableCheck: false,
     }),
-  devTools: NODE_ENV === 'development'
+  devTools: NODE_ENV === 'development',
 })
 
 export const dispatch = store.dispatch

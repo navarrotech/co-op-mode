@@ -5,7 +5,7 @@ const digitsOnlyRegex = /\D/gmi
 const additionalDigits = {
   '3': '-',
   '6': ') ',
-  '9': ' ('
+  '9': ' (',
 } as const
 
 type AdditionalDigitsKey = keyof typeof additionalDigits;
@@ -14,7 +14,7 @@ type Props = {
     phone: string
 }
 
-export function FormatNumber({ phone }: Props) {
+export function FormatNumber({ phone, }: Props) {
   return <>{ formatNumber(phone) }</>
 }
 

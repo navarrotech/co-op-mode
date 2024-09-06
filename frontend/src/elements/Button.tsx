@@ -3,6 +3,9 @@
 // Documentation:
 // https://bulma.io/documentation/elements/button/
 
+// Core
+import { useNavigate } from 'react-router'
+
 // Typescript
 import type { MouseEventHandler, ReactNode } from 'react'
 import type { BulmaColor } from '@/types'
@@ -25,8 +28,10 @@ export type ButtonProps = {
 
   title?: string
   inverted?: boolean
+  outlined?: boolean
   rounded?: boolean
 
+  to?: string
   disableFocusing?: boolean
   onClick?: MouseEventHandler<HTMLButtonElement>
 
@@ -41,6 +46,8 @@ export type ButtonProps = {
 } & React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>
 
 export function Button(props: ButtonProps) {
+  const navigate = useNavigate()
+
   const {
     primary,
     secondary,
@@ -57,8 +64,10 @@ export function Button(props: ButtonProps) {
     medium,
     large,
 
+    to,
     disableFocusing = false,
     inverted,
+    outlined,
     rounded,
 
     className,
@@ -81,6 +90,7 @@ export function Button(props: ButtonProps) {
 
     inverted && 'is-inverted',
     rounded && 'is-rounded',
+    outlined && 'is-outlined',
 
     small && 'is-small',
     medium && 'is-medium',
@@ -90,7 +100,7 @@ export function Button(props: ButtonProps) {
     disabled && 'is-disabled',
     loading && 'is-loading',
     dark && 'is-dark',
-    light && 'is-light'
+    light && 'is-light',
   ].filter(Boolean).join(' ')
 
   // On click middleware to ensure the JS protections match the CSS protections
@@ -120,7 +130,12 @@ export function Button(props: ButtonProps) {
         }
         props.onMouseDown?.(event)
       }}
-      onClick={onClick}
+      onClick={(event) => {
+        if (to) {
+          navigate(to)
+        }
+        onClick?.(event)
+      }}
     >
       {children}
     </button>
